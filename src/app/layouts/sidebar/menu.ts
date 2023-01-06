@@ -117,7 +117,7 @@ export const MANAGER_MENU: MenuItem[] = [
     id: 17,
     label: 'MANAGER_ITEMS.DOWNLOADED_EXAM.TEXT',
     link: '/manager/downloaded-exams',
-    icon: 'download',
+    icon: 'layers',
   },
   {
     id: 18,

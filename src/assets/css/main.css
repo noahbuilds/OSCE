@@ -1,0 +1,109 @@
+div .editor{
+  border: 1px solid #ccc;
+  width: 90%;
+}
+
+.mce-edit-focus:focus{
+  outline: none !important;
+}
+
+.mce-content-body{
+  min-height: 25px;
+  padding: 0px 10px;
+  padding-top: 3px !important;
+}
+
+.radio-background{
+  background-color: #eee;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 12px;
+}
+
+.option-margin{
+  margin-left: 10px;
+}
+
+.selected-option-style{
+  background-color: lightgreen;
+  border-left: 3px solid green;
+}
+
+.option-style{
+  background-color: #ccc;
+}
+
+.search{
+  border: none;
+  outline: none;
+  padding: 10px;
+  width: 90%;
+  background-color: #eee;
+}
+
+.item-search{
+  width: 250px;
+  display: flex;
+  padding: 0px 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  background-color: #eee;
+}
+
+.item-size{
+  height: 150px;
+  overflow: hidden;
+  /* transition: height .1s ease-in-out; */
+}
+
+.item-size-expand{
+  height: 400px !important;
+  overflow-y: scroll;
+  transition: height .5s ease-in-out;
+}
+
+.item-tags-size{
+  max-height: 90px;
+  overflow-y: hidden;
+}
+
+@media only screen and (max-width:300px) {
+  .item-size{
+    height:1200px;
+  }
+}
+
+.fs-20{
+  font-size: 20px !important;
+  margin-right: 3px;
+}
+
+.fs-16{
+  font-size: 16px !important;
+}
+
+.fs-14{
+  font-size: 14px !important;
+}
+
+.scrollable{
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.search-tags{
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  background-color: #eee;
+}
+
+@media screen and (max-width:375px) {
+  div .editor{
+    border: 1px solid #ccc;
+    width: 70%;
+  }
+}

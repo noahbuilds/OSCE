@@ -3,16 +3,14 @@ import { AuthenticationService } from '../authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { NotifierService } from 'angular-notifier';
 
 @Component({
-  selector: 'app-admin-login',
-  templateUrl: './admin-login.component.html',
-  styleUrls: ['./admin-login.component.scss']
+  selector: 'app-examiner-login',
+  templateUrl: './examiner-login.component.html',
+  styleUrls: ['./examiner-login.component.scss']
 })
-export class AdminLoginComponent implements OnInit {
-
+export class ExaminerLoginComponent implements OnInit {
   private readonly notifier: NotifierService;
   // Login Form
   loginForm!: FormGroup;
@@ -65,7 +63,7 @@ export class AdminLoginComponent implements OnInit {
     }
     console.log(this.loginForm.value);
     this.router
-    .navigate(['/admin/dashboard'])
+    .navigate(['/examiner'])
     .catch((reason) => console.log(reason));
 
     // stop here if form is invalid

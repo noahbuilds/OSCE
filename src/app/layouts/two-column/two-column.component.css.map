@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "two-column.component.scss"
+    ],
+    "names": [],
+    "file": "two-column.component.css"
+}

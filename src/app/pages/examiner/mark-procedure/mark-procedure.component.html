@@ -1,0 +1,137 @@
+<app-breadcrumbs
+  title="MARK PROCEDURE (ASSESSMENT 2)"
+  [breadcrumbItems]="breadCrumbItems"
+></app-breadcrumbs>
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-between gap-4">
+      <div class="mb-4">
+        <div class="input-group">
+          <input type="text" class="form-control" />
+          <button
+            (click)="findCandidate()"
+            class="btn btn-outline-primary"
+            type="button"
+            id="button-addon2"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <button
+          (click)="openMarkingGuide(markingGuide)"
+          class="btn btn-sm btn-soft-primary"
+        >
+          View marking guide
+        </button>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between" *ngIf="isFound">
+      <div class="mb-0">
+        <p><strong> Candidate Name:</strong> Noah Edet</p>
+          <p><strong> Exam Number:</strong> 17CD005322</p>
+          <p><strong> Program:</strong> Basic Nursing</p>
+          <p><strong> Institution:</strong> MSSP</p>
+        <button class="btn btn-sm btn-outline-danger">Start Assesment</button>
+      </div>
+
+      <div>
+        <div class="d-flex justify-content-center rounded-3 gap-2 bg-danger text-white text-center p-2">
+          <i class="ri-timer-line align-middle text-white"></i>
+          <span class="text-white align-middle"> 20:23 </span>
+        </div>
+        <img
+          class="img-thumbnail mb-3 w-100 text-center"
+          style="max-height: 90px;"
+          src="/assets/images/users/avatar-8.jpg"
+          alt="candidate-image"
+        />
+      </div>
+    </div>
+
+    
+    <div class="d-flex justify-content-between card-header mt-5 p-0">
+      <h5>Activities</h5>
+      <p>Completed 0 of 5</p>
+    </div>
+    
+      <div *ngIf="isFound" style="height: 50vh;">
+        <ngx-simplebar style="max-height:90%;" >
+      <ol class="mt-3">
+        <li
+          style="font-size: 16px"
+          *ngFor="let procedure of procedures; let i = index"
+        >
+          {{ procedure.name }}
+
+          <div class="btn-group w-100 mt-4 mb-5">
+            <button
+              *ngFor="let grade of grades"
+              class="btn btn-sm btn-soft-primary pt-3 pb-3"
+            >
+              {{ grade }}
+            </button>
+          </div>
+        </li>
+      </ol>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-primary">Save</button>
+    </div>
+  </ngx-simplebar>
+    </div>
+    
+ 
+  </div>
+</div>
+
+<ng-template #markingGuide role="document" let-modal>
+  <div class="card">
+    <div class="text-center mt-1">
+      <div class="card-header">
+        <h3>Marking Guide</h3>
+        <p class="text-muted mb-0">
+          This will guide you on how to grade cadidate's in this section
+        </p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="mb-1">
+        <ol>
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugit
+            aut numquam repudiandae, nam eligendi sapiente eveniet corrupti
+            fugiat officiis quam qui suscipit. Veritatis cupiditate animi nihil!
+            Est, deleniti quia. <strong> (5marks)</strong>
+          </li>
+          <br />
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugit
+            aut numquam repudiandae, nam eligendi sapiente eveniet corrupti
+            fugiat officiis quam qui suscipit. Veritatis cupiditate animi nihil!
+            Est, deleniti quia. <strong> (5marks)</strong>
+          </li>
+          <br />
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugit
+            aut numquam repudiandae, nam eligendi sapiente eveniet corrupti
+            fugiat officiis quam qui suscipit. Veritatis cupiditate animi nihil!
+            Est, deleniti quia. <strong> (5marks)</strong>
+          </li>
+          <br />
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugit
+            aut numquam repudiandae, nam eligendi sapiente eveniet corrupti
+            fugiat officiis quam qui suscipit. Veritatis cupiditate animi nihil!
+            Est, deleniti quia. <strong> (5marks)</strong>
+          </li>
+        </ol>
+      </div>
+      <button (click)="cancel()" class="btn btn-danger float-end">Close</button>
+    </div>
+  </div>
+</ng-template>
+
+

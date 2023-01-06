@@ -1,0 +1,33 @@
+<app-breadcrumbs
+  title="WHITE LIST"
+  [breadcrumbItems]="breadCrumbItems"
+></app-breadcrumbs>
+
+<div class="card card-body">
+    <div class="mb-4 d-flex mx-auto my-auto gap-1">
+ 
+            <input type="text" class="form-control" placeholder="add IP">
+            <button class="btn btn-primary">Add</button>
+            
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-gridjs">
+          <thead>
+          <tr>
+          <th class="sort" data-sort="name">ID</th>
+          <th class="sort" data-sort="email">IP ADDRESS</th>
+          <th class="sort" data-sort="country">ACTION</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>89</td>
+            <td>190:239:9349</td>
+            <td> <button class="btn btn-sm btn-danger"> Delete</button></td>
+           </tr> 
+          </tbody>
+        </table>
+      </div>
+</div>
+

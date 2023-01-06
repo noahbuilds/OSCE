@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "currencies.component.scss"
+    ],
+    "names": [],
+    "file": "currencies.component.css"
+}

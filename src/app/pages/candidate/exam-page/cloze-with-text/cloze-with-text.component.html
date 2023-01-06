@@ -1,0 +1,23 @@
+<div class="card p-2" style="height: 70vh;">
+  <div class="row pt-3 pb-3">
+    <div class="col d-flex">
+      <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12 align-items-center">
+        <span
+          class="fw-normal"
+          *ngFor="let item of clozeRenderArray; let i = index"
+        >
+          {{ item.text }}
+
+          <input
+            *ngIf="item.textBox == true"
+            class="mb-2 border"
+            type="text"
+            #boxRef
+            [ngModel]="currentQuestion.answers[i]"
+            (keyup)="captureResponses(i, boxRef.value)"
+          />
+        </span>
+      </div>
+    </div> 
+  </div>
+</div>

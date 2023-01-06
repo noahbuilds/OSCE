@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "deals-status.component.scss"
+    ],
+    "names": [],
+    "file": "deals-status.component.css"
+}

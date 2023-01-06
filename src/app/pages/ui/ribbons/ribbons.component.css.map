@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "ribbons.component.scss"
+    ],
+    "names": [],
+    "file": "ribbons.component.css"
+}

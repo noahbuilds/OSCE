@@ -1,0 +1,34 @@
+<div class="card p-2" style="height: 70vh">
+  <div class="row">
+    <div class="col d-flex">
+      <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12">
+        <span
+          class="fw-normal"
+          *ngFor="let item of clozeRenderArray; let i = index"
+        >
+          {{ item.text }}
+
+          <ng-container>
+            <select
+              class="form-select-sm mt-0 m-2"
+              *ngIf="item.dropBox == true"
+              aria-label=".form-select-sm"
+              #dropBoxRef
+              (change)="captureResponses(i, dropBoxRef.value)"
+            >
+              <option selected>{{ currentQuestion.answers[i] }}</option>
+
+              <option
+                *ngFor="
+                  let response of currentQuestion.possibleResponses[i].responses
+                "
+              >
+                {{ response }}
+              </option>
+            </select>
+          </ng-container>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

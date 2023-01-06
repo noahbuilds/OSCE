@@ -1,0 +1,30 @@
+<div class="d-flex align-center align-items-center">
+  <div class="sections">
+    <div class="d-flex align-items-center justify-content-center gap-1">
+      <p class="mb-0">
+        {{ currentPaper }} of
+        {{ papers.length }}
+      </p>
+
+      <div>
+        <!-- <div class="col-lg-4 col-md-6 w-100">
+          <ng-select
+            [items]="papers"
+            bindLabel="name"
+            [(ngModel)]="currentPaper"
+          >
+          </ng-select>
+        </div> -->
+        <select class="form-select-sm mt-0" aria-label="currentPaper">
+          <!-- <option selected="{{currentPaper}}">{{currentPaper}}</option> -->
+          <option *ngFor="let paper of papers" value="1">{{ paper }}</option>
+        </select>
+    </div>
+    </div>
+  </div>
+  <!-- <div class="p-3"> -->
+    <!-- <p-paginator [rows]="10" [totalRecords]="120" [rowsPerPageOptions]="[10,20,30]">
+
+        </p-paginator> -->
+  <!-- </div> -->
+</div>

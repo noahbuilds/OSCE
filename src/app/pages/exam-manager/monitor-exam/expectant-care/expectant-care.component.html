@@ -1,0 +1,218 @@
+<app-breadcrumbs
+  title="MONITOR EXPECTANT CARE"
+  [breadcrumbItems]="breadCrumbItems"
+></app-breadcrumbs>
+
+<div class="row">
+  <div class="col-12">
+      <div class="row">
+        <div class="col-xxl-4 col-lg-6">
+          <div class="card card-body card-hover ">
+            <div class="d-flex justify-content-between">
+              <div class="avatar-sm">
+
+                <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                    <i class="ri-time-line"></i>
+                </div>
+
+            </div>
+            <div class="text-end">
+              <h6>Exam Timer</h6>
+              <h2>12:45</h2>
+            </div>
+       
+          </div>
+              
+              
+                  
+             
+
+             
+          </div>
+      </div>
+
+      <div class="col-xxl-4 col-lg-6">
+        <div class="card card-body card-hover ">
+          <div class="d-flex justify-content-between">
+            <div class="avatar-sm">
+
+              <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                  <i class="ri-shut-down-line"></i>
+              </div>
+
+          </div>
+          <div class="text-end">
+            <h6>Active Systems</h6>
+            <h2>4</h2>
+          </div>
+     
+        </div>
+            
+            
+                
+           
+
+           
+        </div>
+    </div>
+
+    <div class="col-xxl-4 col-lg-6">
+      <div class="card card-body card-hover ">
+        <div class="d-flex justify-content-between">
+          <div class="avatar-sm">
+
+            <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                <i class=" ri-radar-line"></i>
+            </div>
+
+        </div>
+        <div class="text-end">
+          <h6>Monitoring Server</h6>
+          <h2 class="text-success">YES</h2>
+        </div>
+   
+      </div>
+          
+          
+              
+         
+
+         
+      </div>
+  </div>
+
+
+  <div class="col-xxl-12">
+    <div class="card card-height-100">
+      <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Expectant care Progress</h4>
+      </div>
+      <!-- end card header -->
+
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            class="table table-bordered table-nowrap align-middle mb-0"
+          >
+            <thead>
+              <tr>
+                <th scope="col" style="width: 30%">Program</th>
+                <th scope="col" style="width: 30%">Total Completed</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Name</td>
+                <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
+                <a href="javascript:void(0);" class="text-body fw-medium"
+                  >40</a
+                >
+               
+              </tr>
+              <tr>
+                <td>Name</td>
+                <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
+                <a href="javascript:void(0);" class="text-body fw-medium"
+                  >40</a
+                >
+                
+              </tr>
+              <tr>
+                <td>Name</td>
+                <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
+                <a href="javascript:void(0);" class="text-body fw-medium"
+                  >40</a
+                >
+             
+              </tr>
+              <tr>
+                <td>Name</td>
+                <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
+                <a href="javascript:void(0);" class="text-body fw-medium"
+                  >40</a
+                >
+               
+              </tr>
+              <tr>
+                <td>Name</td>
+                <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
+                <a href="javascript:void(0);" class="text-body fw-medium"
+                  >40</a
+                >
+               
+              </tr>
+              <tr>
+                <td>Name</td>
+                <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
+                <a href="javascript:void(0);" class="text-body fw-medium"
+                  >40</a
+                >
+              
+              </tr>
+            </tbody>
+            <!-- end tbody -->
+          </table>
+          <!-- end table -->
+        </div>
+        <!-- end table responsive -->
+      </div>
+      <!-- end card body -->
+    </div>
+    <!-- end card -->
+  </div>
+        
+      </div><!-- end row -->
+  </div><!-- end col -->
+</div><!-- end row -->
+
+<div class="card">
+  <div class="card-body">
+    <h6 class="mb-3">All candidates assigned to this exam</h6>
+    <div class="d-flex justify-content-between">
+
+    
+    <div class="search-box d-inline-block mb-2">
+      <input type="text" class="form-control search" placeholder="Search..." />
+      <i class="ri-search-line search-icon"></i>
+    </div>
+
+    <select class="form-select  mb-3 w-25" aria-label="Default select example">
+        <option selected>Filter</option>
+        <option value="1">BASIC NURSING</option>
+        <option value="2">ORTHOLOGY</option>
+        <option value="3">NURSING MATHS</option>
+        </select>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-gridjs">
+        <thead>
+          <tr>
+            <th class="sort" data-sort="name">Name</th>
+            <th class="sort" data-sort="email">Exam NO.</th>
+            <th class="sort" data-sort="email">Program</th>
+            <th class="sort" data-sort="email">Examiner</th>
+            <th class="sort" data-sort="position">Status</th>
+            <th class="sort" data-sort="company">Time</th>
+            <!-- <th class="sort" data-sort="country">End-Time</th> -->
+            <!-- <th class="sort" data-sort="country">Ip-Address</th> -->
+            <!-- <th class="sort" data-sort="country">Candidate-Systems</th> -->
+            <!-- <th class="sort" data-sort="country">Responses Count</th> -->
+            <!-- <th class="sort" data-sort="country">Connected</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Noah Edet</td>
+            <td>17CD00GH</td>
+            <td>BASIC NURSING</td>
+            <td>Patrick Johnson</td>
+            <td><button class="btn btn-sm btn-success">Completed</button></td>
+            <td>09:43</td>
+            <!-- <td>10:43</td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

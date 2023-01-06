@@ -1,0 +1,390 @@
+<!-- auth-page wrapper -->
+<div
+  class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100"
+>
+  <div class="bg-overlay"></div>
+
+  <!-- auth-page content -->
+  <div class="auth-page-content overflow-hidden pt-lg-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card overflow-hidden border-0 m-0">
+            <div class="row justify-content-center g-0">
+              <div class="col-lg-6">
+                <div class="p-lg-5 p-4 auth-one-bg h-100">
+                  <div class="bg-overlay"></div>
+                  <div class="position-relative h-100 d-flex flex-column">
+                    <div class="mb-4">
+                      <a routerLink="/" class="d-block">
+                        <img
+                          src="assets/images/logo-light.png"
+                          alt=""
+                          height="18"
+                        />
+                      </a>
+                    </div>
+                    <div class="mt-auto">
+                      <div class="mb-3">
+                        <i
+                          class="ri-double-quotes-l display-4 text-success"
+                        ></i>
+                      </div>
+
+                      <ngb-carousel
+                        [showNavigationArrows]="showNavigationArrows"
+                      >
+                        <ng-template ngbSlide>
+                          <div
+                            class="carousel-inner text-center text-white pb-5"
+                          >
+                            <div class="carousel-item active">
+                              <p class="fs-15 fst-italic">
+                                " Great! Clean code, clean design, easy for
+                                customization. Thanks very much! "
+                              </p>
+                            </div>
+                          </div>
+                        </ng-template>
+                        <ng-template ngbSlide>
+                          <div
+                            class="carousel-inner text-center text-white pb-5"
+                          >
+                            <div class="carousel-item active">
+                              <p class="fs-15 fst-italic">
+                                " The theme is really great with an amazing
+                                customer support."
+                              </p>
+                            </div>
+                          </div>
+                        </ng-template>
+                        <ng-template ngbSlide>
+                          <div
+                            class="carousel-inner text-center text-white pb-5"
+                          >
+                            <div class="carousel-item active">
+                              <p class="fs-15 fst-italic">
+                                " Great! Clean code, clean design, easy for
+                                customization. Thanks very much! "
+                              </p>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </ngb-carousel>
+                      <!-- end carousel -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="p-lg-5 p-4">
+                  <div>
+                    <h5 class="text-primary">Create Account</h5>
+                    <p class="text-muted">Get your own account now.</p>
+                  </div>
+
+                  <div class="mt-4">
+                    <form
+                      [formGroup]="SignupForm"
+                      #form
+                      (ngSubmit)="onSubmit(SignupForm)"
+                    >
+                      <div class="row">
+                        <div class="col-xl-6 mb-3">
+                          <label for="firstName" class="form-label"
+                            >Firstname <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="firstName"
+                            placeholder="Enter firstname"
+                            required
+                            formControlName="firstName"
+                            [ngClass]="{
+                              'is-invalid': submitted && f['firstName'].errors
+                            }"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter firstname
+                          </div>
+                        </div>
+
+                        <div class="col-xl-6 mb-3">
+                          <label for="lastName" class="form-label"
+                            >Lastname <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="lastName"
+                            placeholder="Enter lastname"
+                            required
+                            formControlName="lastName"
+                            [ngClass]="{
+                              'is-invalid': submitted && f['lastName'].errors
+                            }"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter lastname
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xl-6 mb-3">
+                          <label for="email" class="form-label"
+                            >Email <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            placeholder="Enter email address"
+                            required
+                            formControlName="email"
+                            [ngClass]="{
+                              'is-invalid': submitted && f['email'].errors
+                            }"
+                          />
+                          <div class="invalid-feedback">Please enter email</div>
+                        </div>
+
+                        <div class="col-xl-6 mb-3">
+                          <label for="phoneNumber" class="form-label"
+                            >Phone <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="phoneNumber"
+                            placeholder="Enter phone number"
+                            required
+                            formControlName="phoneNumber"
+                            [ngClass]="{
+                              'is-invalid': submitted && f['phoneNumber'].errors
+                            }"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter phone number
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="username" class="form-label"
+                          >Username <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          placeholder="Enter username"
+                          required
+                          formControlName="username"
+                          [ngClass]="{
+                            'is-invalid': submitted && f['username'].errors
+                          }"
+                        />
+                        <div class="invalid-feedback">
+                          Please enter username
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xl-6 mb-2">
+                          <label for="password" class="form-label"
+                            >Password <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            placeholder="Enter password"
+                            required
+                            formControlName="password"
+                            [ngClass]="{
+                              'is-invalid': submitted && f['password'].errors
+                            }"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter password
+                          </div>
+                        </div>
+
+                        <div class="col-xl-6 mb-2">
+                          <label for="passwordConfirmation" class="form-label"
+                            >Confirm Password
+                            <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="passwordConfirmation"
+                            placeholder="Confirm password"
+                            required
+                            formControlName="passwordConfirmation"
+                            [ngClass]="{
+                              'is-invalid':
+                                submitted && f['passwordConfirmation'].errors
+                            }"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter password
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-2">
+                        <label for="organizationName" class="form-label"
+                          >organization
+                          <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="organizationName"
+                          placeholder="Enter Name of Organization"
+                          required
+                          formControlName="organizationName"
+                          [ngClass]="{
+                            'is-invalid':
+                              submitted && f['organizationName'].errors
+                          }"
+                        />
+                        <div class="invalid-feedback">
+                          Please enter the name of your organization
+                        </div>
+                      </div>
+
+                      <div class="mb-2">
+                        <label for="addressLine1" class="form-label"
+                          >Address <span class="text-danger">*</span></label
+                        >
+                        <textarea
+                          rows="2"
+                          class="form-control"
+                          id="addressLine1"
+                          placeholder="Enter your address"
+                          required
+                          formControlName="addressLine1"
+                          [ngClass]="{
+                            'is-invalid': submitted && f['addressLine1'].errors
+                          }"
+                        ></textarea>
+                        <div class="invalid-feedback">
+                          Please enter an address
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xl-6 mb-3">
+                          <label for="state" class="form-label"
+                            >state <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="state"
+                            placeholder="Enter state"
+                            required
+                            formControlName="state"
+                            [ngClass]="{
+                              'is-invalid': submitted && f['state'].errors
+                            }"
+                          />
+                          <div class="invalid-feedback">Please enter state</div>
+                        </div>
+
+                        <div class="col-xl-6 mb-3">
+                          <label for="country" class="form-label"
+                            >country <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="country"
+                            placeholder="Enter country"
+                            required
+                            formControlName="country"
+                            [ngClass]="{
+                              'is-invalid': submitted && f['country'].errors
+                            }"
+                          />
+                          <div class="invalid-feedback">
+                            Please enter country
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-4">
+                        <p class="mb-0 fs-12 text-muted fst-italic">
+                          By signing up you agree to our
+                          <a
+                            href=""
+                            class="text-primary text-decoration-underline fst-normal fw-medium"
+                            >Terms of Use</a
+                          >
+                        </p>
+                      </div>
+
+                      <div class="mt-4">
+                        <button
+                          class="btn btn-success w-100"
+                          type="submit"
+                          [disabled]="processing === true"
+                        >
+                          {{
+                            processing === false
+                              ? 'Sign Up'
+                              : 'Creating Account...'
+                          }}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="mt-5 text-center">
+                    <p class="mb-0">
+                      Already have an account ?
+                      <a
+                        routerLink="/authenticate/sign-in"
+                        class="fw-semibold text-primary text-decoration-underline"
+                      >
+                        Signin</a
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end card -->
+        </div>
+        <!-- end col -->
+      </div>
+      <!-- end row -->
+    </div>
+    <!-- end container -->
+  </div>
+  <!-- end auth page content -->
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="text-center">
+            <p class="mb-0">
+              &copy; {{ year }} Multilent Softwares. Crafted with
+              <i class="mdi mdi-heart text-danger"></i> by Multilent Softwares
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- end Footer -->
+</div>
+<!-- end auth-page-wrapper -->

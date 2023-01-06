@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "two-column-sidebar.component.scss"
+    ],
+    "names": [],
+    "file": "two-column-sidebar.component.css"
+}

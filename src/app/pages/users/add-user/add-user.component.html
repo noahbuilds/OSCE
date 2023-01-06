@@ -1,0 +1,241 @@
+<app-breadcrumbs
+  title="ADD-USER"
+  [breadcrumbItems]="breadCrumbItems"
+></app-breadcrumbs>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="live-preview">
+          <form
+            class="row g-3"
+            #userForm="ngForm"
+            (ngSubmit)="createUser(userForm.value)"
+          >
+            <div class="col-md-6">
+              <label for="firstname" class="form-label"
+                >Firstname <span [ngStyle]="{ color: 'red' }">*</span></label
+              >
+              <input
+                type="text"
+                name="firstname"
+                #firstname="ngModel"
+                class="form-control"
+                id="firstname"
+                placeholder="Enter your First name"
+                [class.is-invalid]="firstname.invalid && firstname.touched"
+                required
+                ngModel
+              />
+              <span
+                *ngIf="firstname.invalid && firstname.touched"
+                [ngStyle]="{ color: 'red' }"
+                >Firstname is required.</span
+              >
+            </div>
+            <div class="col-md-6">
+              <label for="lastnameInput" class="form-label"
+                >Lastname <span [ngStyle]="{ color: 'red' }">*</span></label
+              >
+              <input
+                type="text"
+                name="lastname"
+                #lastname="ngModel"
+                class="form-control"
+                id="lastnameInput"
+                placeholder="Enter your Lastname"
+                [class.is-invalid]="lastname.invalid && lastname.touched"
+                required
+                ngModel
+              />
+              <span
+                *ngIf="lastname.invalid && lastname.touched"
+                [ngStyle]="{ color: 'red' }"
+                >Lastname is required.</span
+              >
+            </div>
+            <div class="col-md-6">
+              <label for="usernameInput" class="form-label"
+                >Username <span [ngStyle]="{ color: 'red' }">*</span></label
+              >
+              <input
+                type="text"
+                name="username"
+                #username="ngModel"
+                class="form-control"
+                id="usernameInput"
+                placeholder="Enter your Username"
+                [class.is-invalid]="username.invalid && username.touched"
+                required
+                ngModel
+              />
+              <span
+                *ngIf="username.invalid && username.touched"
+                [ngStyle]="{ color: 'red' }"
+                >Username is required.</span
+              >
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label"
+                >Email <span [ngStyle]="{ color: 'red' }">*</span></label
+              >
+              <input
+                type="email"
+                name="email"
+                #emailRef="ngModel"
+                class="form-control"
+                id="email"
+                placeholder="enter email"
+                pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                [class.is-invalid]="emailRef.invalid && emailRef.touched"
+                required
+                ngModel
+              />
+              <div *ngIf="emailRef.invalid && emailRef.touched">
+                <span
+                  *ngIf="emailRef.errors?.['required']"
+                  [ngStyle]="{ color: 'red' }"
+                  >Email is required.</span
+                >
+                <span
+                  *ngIf="emailRef.errors?.['pattern']"
+                  [ngStyle]="{ color: 'red' }"
+                  >Invalid Email</span
+                >
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="phone" class="form-label"
+                >Phone number <span [ngStyle]="{ color: 'red' }">*</span></label
+              >
+              <input
+                type="text"
+                name="phone"
+                #phone="ngModel"
+                class="form-control"
+                id="phone"
+                placeholder="enter your phone number"
+                [class.is-invalid]="phone.invalid && phone.touched"
+                required
+                ngModel
+              />
+              <span
+                *ngIf="phone.invalid && phone.touched"
+                [ngStyle]="{ color: 'red' }"
+                >Please enter phone number.</span
+              >
+            </div>
+            <div class="col-md-6">
+              <label for="inputRole" class="form-label"
+                >Role <span [ngStyle]="{ color: 'red' }">*</span></label
+              >
+              <select
+                id="inputRole"
+                name="role"
+                class="form-select"
+                data-choices
+                data-choices-sorting="true"
+                ngModel
+              >
+                <option
+                  *ngFor="let role of appRoles$ | async"
+                  value="{{ role.id }}"
+                >
+                  {{ role.role }}
+                </option>
+              </select>
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="choices-multiple-default" class="form-label"
+                  >Tags <span [ngStyle]="{ color: 'red' }">*</span></label
+                >
+                <ng-select
+                  [items]="_tags$ | async"
+                  [multiple]="true"
+                  [minTermLength]="minLengthTerm"
+                  [trackByFn]="trackByFn"
+                  bindLabel="tagName"
+                  name="tag"
+                  (search)="showSelect($event)"
+                  [loading]="tagsLoading"
+                  typeToSearchText="Enter tag name to search"
+                  [typeahead]="tagsSearchInput$"
+                  [(ngModel)]="Tag"
+                >
+                  <ng-template ng-optgroup-tmp let-item="item">
+                    {{ item[0].tagName | uppercase }}
+                  </ng-template>
+                </ng-select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="inputPassword4" class="form-label"
+                >Password <span [ngStyle]="{ color: 'red' }">*</span></label
+              >
+              <input
+                type="password"
+                name="password"
+                #password="ngModel"
+                class="form-control"
+                id="inputPassword4"
+                placeholder="Password"
+                [class.is-invalid]="password.invalid && password.touched"
+                required
+                ngModel
+              />
+              <span
+                *ngIf="password.invalid && password.touched"
+                [ngStyle]="{ color: 'red' }"
+                >Password is required.</span
+              >
+            </div>
+            <div class="col-md-6">
+              <label for="confirmPassword" class="form-label"
+                >Confirm Password
+                <span [ngStyle]="{ color: 'red' }">*</span></label
+              >
+              <input
+                type="password"
+                name="confirmPassword"
+                #confirmPassword="ngModel"
+                class="form-control"
+                placeholder="re-enter your password"
+                [class.is-invalid]="
+                  confirmPassword.invalid && confirmPassword.touched
+                "
+                required
+                ngModel
+              />
+
+              <span
+                *ngIf="confirmPassword.errors?.['required'] && confirmPassword.touched"
+                [ngStyle]="{ color: 'red' }"
+              >
+                Please re-enter password
+              </span>
+              <span
+                *ngIf="confirmPassword.value !== password.value"
+                [ngStyle]="{ color: 'red' }"
+                >Password Mismatch.</span
+              >
+            </div>
+            <div class="col-12">
+              <div class="text-end">
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="userForm.invalid"
+                >
+                  Create User
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end col -->
+</div>

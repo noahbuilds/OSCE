@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "horizontal-topbar.component.scss"
+    ],
+    "names": [],
+    "file": "horizontal-topbar.component.css"
+}

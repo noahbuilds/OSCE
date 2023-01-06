@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "crypto-stat.component.scss"
+    ],
+    "names": [],
+    "file": "crypto-stat.component.css"
+}

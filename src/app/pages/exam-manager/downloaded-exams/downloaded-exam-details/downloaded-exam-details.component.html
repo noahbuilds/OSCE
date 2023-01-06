@@ -1,0 +1,55 @@
+<app-breadcrumbs
+  title="DOWNLOADED EXAMS > DETAILS"
+  [breadcrumbItems]="breadCrumbItems"
+></app-breadcrumbs>
+
+<div class="card">
+    <div class="card-body">
+      <h6 class="mb-3">Examiners</h6>
+      <div class="d-flex justify-content-between">
+  
+      
+      <div class="search-box d-inline-block mb-2">
+        <input type="text" class="form-control search" placeholder="Search..." />
+        <i class="ri-search-line search-icon"></i>
+      </div>
+  
+      <select class="form-select  mb-3 w-25" aria-label="Default select example">
+          <option selected>Filter</option>
+          <option value="1">BASIC NURSING</option>
+          <option value="2">ORTHOLOGY</option>
+          <option value="3">NURSING MATHS</option>
+          </select>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-gridjs">
+          <thead>
+            <tr>
+              <th class="sort" data-sort="name">Name</th>
+              <th class="sort" data-sort="email">Username</th>
+              <th class="sort" data-sort="email">Email</th>
+              <th class="sort" data-sort="email">Phone number</th>
+              <th class="sort" data-sort="position">Program</th>
+              <th class="sort" data-sort="position">Role</th>
+              <!-- <th class="sort" data-sort="company">Time</th> -->
+              <!-- <th class="sort" data-sort="country">End-Time</th> -->
+              <!-- <th class="sort" data-sort="country">Ip-Address</th> -->
+              <!-- <th class="sort" data-sort="country">Candidate-Systems</th> -->
+              <!-- <th class="sort" data-sort="country">Responses Count</th> -->
+              <!-- <th class="sort" data-sort="country">Connected</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Noah Edet</td>
+              <td>17CD00GH</td>
+              <td>BASIC NURSING</td>
+              <td>0903483492</td>        
+              <td>MNSSO</td>
+              <td><button class="btn btn-sm btn-primary"> LEAD EXAMINER</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

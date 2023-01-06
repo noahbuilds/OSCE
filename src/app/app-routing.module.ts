@@ -9,20 +9,14 @@ import { LayoutComponent } from './layouts/layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   loadChildren: () =>
-  //     import('./authentication/authentication.module').then(
-  //       (m) => m.AuthenticationModule
-  //     ),
-  // },
   {
-    path: 'itembank',
-    component: LayoutComponent,
+    path: '',
     loadChildren: () =>
-      import('./pages/pages.module').then((m) => m.PagesModule),
-  
+      import('./authentication/authentication.module').then(
+        (m) => m.AuthenticationModule
+      ),
   },
+  
   // {
   //   path: 'authenticate',
   //   loadChildren: () =>

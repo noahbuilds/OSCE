@@ -22,4 +22,8 @@ export class MarkVivaComponent implements OnInit {
   openGrader(content:any){
     this.modalService.open(content, { size: 'md', centered: true })
   }
+
+  cancel(){
+    this.modalService.dismissAll()
+  }
 }

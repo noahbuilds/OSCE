@@ -1,5 +1,5 @@
 <app-breadcrumbs
-  title="MARK EXPECTANT CARE"
+  title="MARK EXPECTANT CARE > BASIC MIDWIFERY"
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 <div class="card">
@@ -21,7 +21,7 @@
        
         
     <h6 class="mb-3">All graded candidate(s)</h6> 
-    <!-- <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between">
   
       
         <div class="search-box d-inline-block mb-2">
@@ -35,7 +35,7 @@
             <option value="2">ORTHOLOGY</option>
             <option value="3">NURSING MATHS</option>
             </select>
-        </div> -->
+        </div>
     <div class="table-responsive">
       <table class="table table-gridjs">
         <thead>
@@ -113,11 +113,16 @@
 
         <ng-template #grader>
             <div class="card ">
+                <div class="d-flex justify-content-end">
+                    <i class="btn btn-close p-3" (click)="cancel()"></i>
+                </div>
+                
                 <div class="text-center mt-1 card-header">
                     <h3>Candidate Grading</h3>
                     <p class="text-muted mb-0"> You are about to grade Candidate with the following details below</p>
                    
                 </div>
+               
                 <div class="mt-4 card-body">
                     <div class="mb-3">
                        
@@ -128,6 +133,7 @@
                        <div class="text-start">
                         <p> <strong> Candidate Name:</strong> Noah Edet</p>
                         <p> <strong> Exam Number:</strong>  17CD005322</p>  
+                        <p> <strong> Program:</strong>  NMCM PROGRAM</p>  
                         <p> <strong> Institution:</strong>  MSSP</p> 
                        </div>
 

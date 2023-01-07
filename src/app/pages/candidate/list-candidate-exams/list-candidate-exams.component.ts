@@ -27,11 +27,7 @@ export class ListCandidateExamsComponent implements OnInit {
       "name": "Examination 4",
       "duration": "20mins",
       "code": "MNCN06"
-    }, {
-      "name": "Examination 5",
-      "duration": "30mins",
-      "code": "MNCN09"
-    },
+    }
   ]
   constructor( private router: Router) { }
 

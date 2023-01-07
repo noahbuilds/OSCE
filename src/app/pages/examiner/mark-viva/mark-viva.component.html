@@ -1,5 +1,5 @@
 <app-breadcrumbs
-  title="MARK VIVA (NMCN PROGRAM)"
+  title="MARK VIVA > BASIC NURSING"
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 <div class="card">
@@ -112,7 +112,7 @@
     
                     
                 </div>
-                <button class="btn  btn-danger float-end">
+                <button class="btn  btn-danger float-end" (click)="cancel()">
                     Close
                 </button>
     
@@ -123,11 +123,16 @@
 
         <ng-template #grader>
             <div class="card ">
+                <div class="d-flex justify-content-end">
+                    <i class="btn btn-close p-3" (click)="cancel()"></i>
+                </div>
+                
                 <div class="text-center mt-1 card-header">
                     <h3>Candidate Grading</h3>
                     <p class="text-muted mb-0"> You are about to grade Candidate with the following details below</p>
                    
                 </div>
+               
                 <div class="mt-4 card-body">
                     <div class="mb-3">
                        
@@ -138,6 +143,7 @@
                        <div class="text-start">
                         <p> <strong> Candidate Name:</strong> Noah Edet</p>
                         <p> <strong> Exam Number:</strong>  17CD005322</p>  
+                        <p> <strong> Program:</strong>  NMCM PROGRAM</p>  
                         <p> <strong> Institution:</strong>  MSSP</p> 
                        </div>
 

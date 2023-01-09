@@ -69,25 +69,25 @@ export class SignInComponent implements OnInit {
     .catch((reason) => console.log(reason));
 
     // stop here if form is invalid
-    if (this.loginForm.invalid) {
-      this.submitted = false;
-    } else {
-      this.http.login(this.loginForm.value).subscribe(
-        (value) => {
-          //todo: navigate
-          console.log(value);
-          this.router
-            .navigate(['itembank'])
-            .catch((reason) => console.log(reason));
-        },
-        (err: HttpErrorResponse) => {
-          //todo: show error
-          this.error = true;
-          this.error_msg = err.error;
-          this.submitted = false;
-        }
-      );
-    }
+    // if (this.loginForm.invalid) {
+    //   this.submitted = false;
+    // } else {
+    //   this.http.login(this.loginForm.value).subscribe(
+    //     (value) => {
+    //       //todo: navigate
+    //       console.log(value);
+    //       this.router
+    //         .navigate(['itembank'])
+    //         .catch((reason) => console.log(reason));
+    //     },
+    //     (err: HttpErrorResponse) => {
+    //       //todo: show error
+    //       this.error = true;
+    //       this.error_msg = err.error;
+    //       this.submitted = false;
+    //     }
+    //   );
+    // }
   }
 
   /**

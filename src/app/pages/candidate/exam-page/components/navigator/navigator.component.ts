@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
+// import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-navigator',
@@ -10,12 +10,12 @@ export class NavigatorComponent implements OnInit {
 
 
 
-  constructor(private primeNGConfig: PrimeNGConfig) {}
+  constructor() {}
   
  
   ngOnInit(): void {
     
-    this.primeNGConfig.ripple = true;
+    // this.primeNGConfig.ripple = true;
   }
   currentPaper = 'Section 1';
   papers = [

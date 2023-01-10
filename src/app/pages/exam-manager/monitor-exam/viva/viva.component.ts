@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VivaComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
+  viva: Array<any> = [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+  ]
 
   constructor() { }
 

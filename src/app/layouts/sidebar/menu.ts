@@ -18,21 +18,21 @@ export const EXAMINER_MENU: MenuItem[] = [
         label: 'EXAMINER_ITEMS.MARK.LIST.MARK_VIVA',
         link: '/examiner/mark-viva',
       },
-      {
-        id: 2,
-        label: 'EXAMINER_ITEMS.MARK.LIST.MARK_RESEARCH',
-        link: '/examiner/mark-research',
-      },
+      // {
+      //   id: 2,
+      //   label: 'EXAMINER_ITEMS.MARK.LIST.MARK_RESEARCH',
+      //   link: '/examiner/mark-research',
+      // },
       {
         id: 3,
         label: 'EXAMINER_ITEMS.MARK.LIST.MARK_PROCEDURE',
         link: '/examiner/mark-procedure',
       },
-      {
-        id: 4,
-        label: 'EXAMINER_ITEMS.MARK.LIST.MARK_EXPECTANT_CARE',
-        link: '/examiner/mark-expectant-care',
-      }
+      // {
+      //   id: 4,
+      //   label: 'EXAMINER_ITEMS.MARK.LIST.MARK_EXPECTANT_CARE',
+      //   link: '/examiner/mark-expectant-care',
+      // }
     ]
   },
 
@@ -90,21 +90,21 @@ export const MANAGER_MENU: MenuItem[] = [
         label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.VIVA',
         link: '/manager/monitor-exam/viva',
       },
-      {
-        id: 2,
-        label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.RESEARCH',
-        link: '/manager/monitor-exam/research',
-      },
+      // {
+      //   id: 2,
+      //   label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.RESEARCH',
+      //   link: '/manager/monitor-exam/research',
+      // },
       {
         id: 3,
         label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.OSCE',
         link: '/manager/monitor-exam/osce',
       },
-      {
-        id: 4,
-        label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.EXPECTANT_CARE',
-        link: '/manager/monitor-exam/expectant-care',
-      },
+      // {
+      //   id: 4,
+      //   label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.EXPECTANT_CARE',
+      //   link: '/manager/monitor-exam/expectant-care',
+      // },
     ]
   },
   {

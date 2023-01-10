@@ -8,6 +8,14 @@ import { Component, OnInit } from '@angular/core';
 export class OsceComponent implements OnInit {
 
   breadCrumbItems!: Array<{}>;
+  osce: Array<any> = [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+  ]
 
   constructor() { }
 
@@ -17,4 +25,7 @@ export class OsceComponent implements OnInit {
       { label: 'Monitor OSCE', active: true },
     ];
   }
+
+
+
 }

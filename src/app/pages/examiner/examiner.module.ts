@@ -17,6 +17,7 @@ import { MarkProcedureComponent } from './mark-procedure/mark-procedure.componen
 import { ActivitiesLogComponent } from './activities-log/activities-log.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SimplebarAngularModule } from "simplebar-angular";
+import { MonitorProcedureTableComponent } from './monitor/monitor-procedure-table/monitor-procedure-table.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { SimplebarAngularModule } from "simplebar-angular";
     MonitorResearchComponent,
     MonitorVivaComponent,
     MarkProcedureComponent,
-    ActivitiesLogComponent
+    ActivitiesLogComponent,
+    MonitorProcedureTableComponent
   ],
   imports: [
     CommonModule,

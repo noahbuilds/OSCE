@@ -2,35 +2,45 @@
   title="MARK VIVA > BASIC NURSING"
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
-<div class="card">
-    <div class="card-body">
-        <div class="d-flex justify-content-between gap-4">
+
+<div class="d-flex justify-content-between gap-4">
          
-                <div class="mb-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <button (click)="openGrader(grader)"class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
-                        </div>
-                </div>
-                
-          
-            <div>
-                    <button (click)="openMarkingGuide(markingGuide)" class="btn btn-sm btn-soft-primary">View marking guide</button>
+    <div class="mb-4">
+        <h6 class="text-muted">Enter exam number of candidate to grade</h6>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Enter exam number">
+            <button (click)="openGrader(grader)"class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
             </div>
-        </div>
+    </div>
+    
+
+<div>
+        <button (click)="openMarkingGuide(markingGuide)" class="btn btn-sm btn-soft-primary">View marking guide</button>
+</div>
+</div>
+<div class="card">
+
+    
+    <div class="card-body">
+       
        
         
-    <h6 class="mb-3">All graded candidate(s)</h6> 
+        <div class="d-flex justify-content-between">
+            <h6 class="mb-3">All graded candidate(s)</h6>
+            <h6 class="mb-3">Completed (0 of 20)</h6>
+             
+        </div>
+    
     <div class="d-flex justify-content-between">
   
       
         <div class="search-box d-inline-block mb-2">
-          <input type="text" class="form-control search" placeholder="Search..." />
+          <input type="text" class="form-control search" placeholder="Enter exam number..." />
           <i class="ri-search-line search-icon"></i>
         </div>
     
         <select class="form-select  mb-3 w-25" aria-label="Default select example">
-            <option selected>Filter</option>
+            <option selected>Filter by program</option>
             <option value="1">BASIC NURSING</option>
             <option value="2">ORTHOLOGY</option>
             <option value="3">NURSING MATHS</option>

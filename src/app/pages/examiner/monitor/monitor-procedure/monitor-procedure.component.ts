@@ -19,6 +19,12 @@ export class MonitorProcedureComponent implements OnInit {
     },
     {
       
+    },
+    {
+      
+    },
+    {
+      
     }
   ]
   constructor() { }

@@ -18,7 +18,8 @@ import { AllowReloginComponent } from './manage-exam/allow-relogin/allow-relogin
 import { DownloadedExamsComponent } from './downloaded-exams/downloaded-exams.component';
 import { OsceComponent } from './monitor-exam/osce/osce.component';
 import { DownloadedExamDetailsComponent } from './downloaded-exams/downloaded-exam-details/downloaded-exam-details.component';
-
+import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+// import { defineLordIconElement } from 'lord-icon-element';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,9 @@ import { DownloadedExamDetailsComponent } from './downloaded-exams/downloaded-ex
   imports: [
     CommonModule,
     ExamManagerRoutingModule,
-    SharedModule
+    SharedModule,
+    NgbDropdownModule,
+    NgbNavModule,
 
   ]
 })

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { SignIn } from "../model/sign-in";
-import { Account } from "../model/account.model";
+import { ExaminerAccount } from "../model/examiner-account";
 import { map, mergeMap } from "rxjs/operators";
 import { Observable } from "rxjs";
 
@@ -12,7 +12,7 @@ import { Observable } from "rxjs";
 export class ExaminerAuthService {
   constructor(private http: HttpClient) {}
 
-  login(signInModel: SignIn): Observable<Account> {
+  login(signInModel: SignIn): Observable<ExaminerAccount> {
     const loginData =
       `username=${encodeURIComponent(signInModel.username)}` +
       `&password=${encodeURIComponent(signInModel.password)}` +
@@ -32,8 +32,8 @@ export class ExaminerAuthService {
       .pipe(mergeMap(() => this.getLoggedInAccount()));
   }
 
-  getLoggedInAccount(): Observable<Account> {
-    return this.http.get<Account>(
+  getLoggedInAccount(): Observable<ExaminerAccount> {
+    return this.http.get<ExaminerAccount>(
       `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/account`,
       { withCredentials: true }
     );

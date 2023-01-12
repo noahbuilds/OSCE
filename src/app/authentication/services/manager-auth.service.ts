@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { SignIn } from "../model/sign-in";
-import { Account } from "../model/account.model";
+import { ManagerAccount } from "../model/manager-account";
 import { map, mergeMap } from "rxjs/operators";
 import { Observable } from "rxjs";
 
@@ -13,7 +13,7 @@ export class ManagerAuthService {
 
   constructor( private http: HttpClient) { }
 
-  login(signInModel: SignIn): Observable<Account>{
+  login(signInModel: SignIn): Observable<ManagerAccount>{
 
     const loginData =
     `username=${encodeURIComponent(signInModel.username)}` +
@@ -33,8 +33,8 @@ export class ManagerAuthService {
   .pipe(mergeMap(() => this.getLoggedInAccount()));
   }
 
-  getLoggedInAccount(): Observable<Account> {
-    return this.http.get<Account>(
+  getLoggedInAccount(): Observable<ManagerAccount> {
+    return this.http.get<ManagerAccount>(
       `http://${environment.developmentIP}/caosce/examdelivery/api/manager/account`,
       { withCredentials: true }
     ).pipe(

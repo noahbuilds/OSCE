@@ -17,5 +17,12 @@ export class DownloadedExamsService {
       { withCredentials: true }
     )
   }
+
+  getExaminersForAnExam(examId: string, programId: string){
+    return this.http.get<DownloadedExams[]>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams/exam/${examId}/program/${programId}`,
+      { withCredentials: true }
+    )
+  }
   
 }

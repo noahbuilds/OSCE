@@ -15,50 +15,46 @@
     <div class="sticky-side-div">
         <div class="card">
             <div class="card-header border-bottom-dashed">
-                <h5 class="card-title mb-0">POST BASIC EXAM DOWNLOADED </h5>
+                <h5 class="card-title mb-0">POST BASIC EXAM </h5>
             </div>
-            <!-- <div class="card-header bg-soft-light border-bottom-dashed">
-                <div class="text-center">
-                    <h6 class="mb-2">Have a <span class="fw-semibold">promo</span> code ?</h6>
-                </div>
-                <div class="hstack gap-3 px-3 mx-n3">
-                    <input class="form-control me-auto" type="text" placeholder="Enter coupon code" aria-label="Add Promo Code here...">
-                    <button type="button" class="btn btn-primary w-xs">Apply</button>
-                </div>
-            </div> -->
-            <div class="card-body pt-2">
-                <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
-                        <tbody>
-                            <tr>
-                                <td class="fw-medium">Total examiners : </td>
-                                <td class="text-end" id="cart-discount"> 30</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-medium">Total candidates : </td>
-                                <td class="text-end" id="cart-discount"> 30</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-medium">Total programs : </td>
-                                <td class="text-end" id="cart-discount"> 30</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-medium">OSCE date : </td>
-                                <td class="text-end" id="cart-discount"> 30</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-medium">VIVA date : </td>
-                                <td class="text-end" id="cart-discount"> 30</td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-
-                    <div class="text-center">
-                        <button type="button" class="btn btn-sm btn-primary w-xs" (click)="showProgramDetails()">View program details</button>
+            <div class="mb-3">
+                <div class="card-body">
+                    
+                    <div class="table-card">
+                        <table class="table mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-medium">Total Examiner(s)</td>
+                                    <td>56</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">Total Candidate(s)</td>
+                                    <td>3000</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">Total Program(s)</td>
+                                    <td>25</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td class="fw-medium">OSCE Date</td>
+                                    <td><span class="badge badge-soft-primary">2023-01-12</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">VIVA Date</td>
+                                    <td><span class="badge badge-soft-success">2023-01-12</span></td>
+                                </tr> -->
+                                <tr>
+                                    <td class="fw-medium">VIVA Date</td>
+                                    <td>05 Jan, 2022</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium">OSCE Date</td>
+                                    <td>05 Jan, 2022</td>
+                                </tr>
+                            </tbody>
+                        </table><!--end table-->
                     </div>
                 </div>
-                <!-- end table-responsive -->
             </div>
         </div>
         </div>
@@ -66,7 +62,7 @@
   
 
 
-        <div class="card col-8" *ngIf="showDetails">
+        <!-- <div class="card col-8">
             <div class="card-body">
               <h6 class="mb-3">Program Details</h6>
               <div class="d-flex justify-content-between">
@@ -104,7 +100,43 @@
                 </table>
               </div>
             </div>
-          </div>
+          </div> -->
+
+          
+          <div class="col-xl-8">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Program Details</h4>
+                    <!-- <div class="flex-shrink-0">
+                        <button type="button" class="btn btn-soft-info btn-sm">
+                            <i class="ri-file-list-3-line align-middle"></i> Generate Report
+                        </button>
+                    </div> -->
+                </div><!-- end card header -->
+
+                
+                    <div class="table-responsive card-body">
+                        <table class="table table-gridjs">
+                            <thead>
+                              <tr>
+                                <th class="sort" data-sort="name">Program name</th>
+                                <th class="sort" data-sort="email">Total Examiner(s)</th>
+                                <th class="sort" data-sort="position">Total Candidate(s)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let item of items">
+                                <td>BASIC NURSING</td>
+                                <td>20</td>
+                                <td>200</td>
+                                
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                
+            </div> <!-- .card-->
+        </div> <!-- .col-->
 </div>
 
 

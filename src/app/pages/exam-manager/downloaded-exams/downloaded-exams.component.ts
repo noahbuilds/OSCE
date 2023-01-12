@@ -8,7 +8,23 @@ import { Router } from '@angular/router';
 })
 export class DownloadedExamsComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-
+  items: any = [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+  ]
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -18,7 +34,7 @@ export class DownloadedExamsComponent implements OnInit {
     ];
   }
 
-  viewExaminer(){
+  viewDetails(){
     this.router.navigate(['manager/downloaded-exams/details'])
   }
 

@@ -10,16 +10,16 @@
   
       
       <div class="search-box d-inline-block mb-2">
-        <input type="text" class="form-control search" placeholder="Search..." />
+        <input type="text" class="form-control search" placeholder="Search for examiner" />
         <i class="ri-search-line search-icon"></i>
       </div>
   
-      <select class="form-select  mb-3 w-25" aria-label="Default select example">
+      <!-- <select class="form-select  mb-3 w-25" aria-label="Default select example">
           <option  disabled selected>Filter by program</option>
           <option value="1">BASIC NURSING</option>
           <option value="2">ORTHOLOGY</option>
           <option value="3">NURSING MATHS</option>
-          </select>
+          </select> -->
       </div>
       <div class="table-responsive">
         <table class="table table-gridjs">
@@ -30,7 +30,9 @@
               <th class="sort" data-sort="email">Email</th>
               <th class="sort" data-sort="email">Phone number</th>
               <th class="sort" data-sort="position">Program</th>
+              <th class="sort" data-sort="position">Procedure</th>
               <th class="sort" data-sort="position">Role</th>
+              <th class="sort" data-sort="position">Actions</th>
               <!-- <th class="sort" data-sort="company">Time</th> -->
               <!-- <th class="sort" data-sort="country">End-Time</th> -->
               <!-- <th class="sort" data-sort="country">Ip-Address</th> -->
@@ -47,10 +49,64 @@
               <td>BASIC NURSING</td>
               <td>0903483492</td>        
               <td>MNSSO</td>
-              <td><button class="btn btn-sm btn-primary"> LEAD EXAMINER</button></td>
+              <td></td>
+              <td><span class="badge badge-soft-primary"> LEAD EXAMINER</span></td>
+              <td><button class="btn btn-sm btn-primary" (click)="openAddProcedureModal(addProcedureModal)"> Add procedure</button></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+
+  <ng-template #addProcedureModal role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="myModalLabel">Add Procedure</h5>
+      <button
+        type="button"
+        class="btn-close"
+        center-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="row">
+          
+          <div class="col-lg-12">
+            <div class="mb-3">
+              <label for="designation" class="form-label"
+                >Select Procedure</label
+              >
+              <select class="form-select  mb-3" aria-label="Default select example">
+                <option disabled selected>Select Procedure</option>
+                <option value="1">Procedure 1</option>
+                <option value="2">Procedure 2</option>
+                <option value="3">Procedure 3</option>
+                </select>
+            </div>
+          </div>
+       
+          
+          
+          <div class="col-lg-12">
+            <div class="hstack gap-2 justify-content-end">
+              <button
+                type="button"
+                class="btn btn-light"
+                center-bs-dismiss="modal"
+                (click)="modal.close('Close click')"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-success">
+                Add Procedure
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  

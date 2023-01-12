@@ -3,10 +3,9 @@
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
-<div class="d-flex gap-4">
-  <!-- <button class="btn btn-primary mb-5">Download Research & Expectant care </button> -->
-  <button class="btn btn-primary mb-5">Download OSCE & VIVA </button>
-</div>
+
+<button class="btn btn-primary">Download OSCE & VIVA </button>
+  <div class="border-bottom my-3"></div>
 
 
 
@@ -95,7 +94,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr *ngFor="let item of items">
                       <td>BASIC NURSING</td>
                       <td>20</td>
                       <td>200</td>

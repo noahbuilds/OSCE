@@ -8,6 +8,24 @@ import { Component, OnInit } from '@angular/core';
 export class DownloadExamComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   showDetails: boolean = false
+
+  items: any = [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+  ]
   constructor() { }
 
   ngOnInit(): void {

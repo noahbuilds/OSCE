@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-downloaded-exams',
@@ -8,13 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class DownloadedExamsComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
       { label: 'Manager' },
       { label: 'Downloaded Exams', active: true },
     ];
+  }
+
+  viewExaminer(){
+    this.router.navigate(['manager/downloaded-exams/details'])
   }
 
 }

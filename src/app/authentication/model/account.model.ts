@@ -6,10 +6,5 @@ export class Account {
   firstName: string;
   lastName: string;
   email: string;
-  enabled: true;
-  authorities: [
-    string
-  ]
-
   authority: Role
 }

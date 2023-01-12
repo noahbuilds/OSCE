@@ -16,12 +16,7 @@ import { UserService } from '../shared/user.service';
 export class AuthenticationService {
   constructor(private http: HttpClient, private userService: UserService) {}
 
-  // registerOrganization(signupModel: SignUp): Observable<ResourceCreated> {
-  //   return this.http.post<ResourceCreated>(
-  //     `http://${environment.developmentIP}/itembank/api/register`,
-  //     signupModel
-  //   );
-  // }
+  
 
   // login(signInModel: SignIn): Observable<Account> {
   //   const data =

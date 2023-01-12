@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DownloadExamComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-
+  showDetails: boolean = false
   constructor() { }
 
   ngOnInit(): void {
@@ -17,4 +17,7 @@ export class DownloadExamComponent implements OnInit {
     ];
   }
 
+  showProgramDetails():boolean{
+    return this.showDetails = !this.showDetails
+  }
 }

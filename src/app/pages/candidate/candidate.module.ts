@@ -9,7 +9,6 @@ import { TrueOrFalseComponent } from "./exam-page/true-or-false/true-or-false.co
 import { MultipleResponseComponent } from "./exam-page/multiple-response/multiple-response.component";
 import { NavigatorComponent } from "./exam-page/components/navigator/navigator.component";
 import { FormsModule } from "@angular/forms";
-import { PaginatorModule } from "primeng/paginator";
 import { StandardChoiceComponent } from "./exam-page/standard-choice/standard-choice.component";
 import { EssayWithShortTextComponent } from "./exam-page/essay-with-short-text/essay-with-short-text.component";
 import { EssayWithRichTextComponent } from "./exam-page/essay-with-rich-text/essay-with-rich-text.component";
@@ -49,7 +48,6 @@ import { ListCandidateExamsComponent } from './list-candidate-exams/list-candida
     CommonModule,
     CandidateRoutingModule,
     FormsModule,
-    PaginatorModule,
     EditorModule,
     NgbDropdownModule,
     CKEditorModule,

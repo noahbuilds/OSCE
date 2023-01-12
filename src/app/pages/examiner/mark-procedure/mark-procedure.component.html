@@ -2,32 +2,35 @@
   title="MARK PROCEDURE (ASSESSMENT 2)"
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
+
+<div class="d-flex justify-content-between gap-4">
+  <div class="mb-4">
+    <h6 class="text-muted">Enter exam number of candidate to grade</h6>
+    <div class="input-group">
+      <input type="text" class="form-control" />
+      <button
+        (click)="findCandidate()"
+        class="btn btn-outline-primary"
+        type="button"
+        id="button-addon2"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <button
+      (click)="openMarkingGuide(markingGuide)"
+      class="btn btn-sm btn-soft-primary"
+    >
+      View marking guide
+    </button>
+  </div>
+</div>
 <div class="card">
   <div class="card-body">
-    <div class="d-flex justify-content-between gap-4">
-      <div class="mb-4">
-        <div class="input-group">
-          <input type="text" class="form-control" />
-          <button
-            (click)="findCandidate()"
-            class="btn btn-outline-primary"
-            type="button"
-            id="button-addon2"
-          >
-            Search
-          </button>
-        </div>
-      </div>
-
-      <div>
-        <button
-          (click)="openMarkingGuide(markingGuide)"
-          class="btn btn-sm btn-soft-primary"
-        >
-          View marking guide
-        </button>
-      </div>
-    </div>
+    
 
     <div class="d-flex justify-content-between" *ngIf="isFound">
       <div class="mb-0">
@@ -55,7 +58,7 @@
     
     <div class="d-flex justify-content-between card-header mt-5 p-0">
       <h5>Activities</h5>
-      <p>Completed 0 of 5</p>
+      <h5>Completed (0 of 5)</h5>
     </div>
     
       <div *ngIf="isFound" style="height: 50vh;">

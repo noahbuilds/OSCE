@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-12">
         <div class="row">
-            <div class="col-xxl-4 col-lg-6">
+            <div class="col-xxl-6 col-lg-6">
                 <div class="card card-body card-hover ">
                     <div class="d-flex justify-content-between">
                         <div class="avatar-sm">
@@ -30,7 +30,7 @@
 
            
 
-            <div class="col-xxl-4 col-lg-6">
+            <div class="col-xxl-6 col-lg-6">
                 <div class="card card-body card-hover ">
                     <div class="d-flex justify-content-between">
                         <div class="avatar-sm">
@@ -54,89 +54,44 @@
 
                 </div>
             </div>
-
-            <div class="col-xxl-12">
-                <div class="card card-height-100">
-                    <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">VIVA Progress</h4>
-                        <div class="flex-shrink-0">
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <option selected="">Closed Deals</option>
-                                <option value="1">Active Deals</option>
-                                <option value="2">Paused Deals</option>
-                                <option value="3">Canceled Deals</option>
-                            </select>
-                        </div>
-                    </div><!-- end card header -->
-        
+            <div class="col-xl-4 col-md-6" *ngFor=" let viva of viva">
+                <div class="card card-animate">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-nowrap align-middle mb-0">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="width: 30%;">Program</th>
-                                        <th scope="col" style="width: 30%;">Total Started</th>
-                                        <th scope="col" style="width: 20%;">Total Ended</th>
-                                        <th scope="col" style="width: 20%;">Station</th>
-                                    </tr>
-                                </thead>
+                        <h6 class="text-uppercase">Name of program </h6>
+                        <div class="d-flex align-items-center">
+
+                           
+                            <div class="flex-grow-1">
+                                <p class=" text-muted fw-medium mb-0 fw-medium">VIVA name goes here</p>
+                            </div>
                             
-                                <tbody>
-                                    <tr>
-                                        <td>Name</td>
-                                        <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
-                                            <a href="javascript:void(0);" class="text-body fw-medium">40</a>
-                                        <!-- </td> -->
-                                        <td>40</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Name</td>
-                                        <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
-                                            <a href="javascript:void(0);" class="text-body fw-medium">40</a>
-                                        <!-- </td> -->
-                                        <td>40</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Name</td>
-                                        <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
-                                            <a href="javascript:void(0);" class="text-body fw-medium">40</a>
-                                        <!-- </td> -->
-                                        <td>40</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Name</td>
-                                        <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
-                                            <a href="javascript:void(0);" class="text-body fw-medium">40</a>
-                                        <!-- </td> -->
-                                        <td>40</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Name</td>
-                                        <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
-                                            <a href="javascript:void(0);" class="text-body fw-medium">40</a>
-                                        <!-- </td> -->
-                                        <td>40</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Name</td>
-                                        <!-- <td><img src="{{data.profile}}" alt="" class="avatar-xs rounded-circle me-2"> -->
-                                            <a href="javascript:void(0);" class="text-body fw-medium">40</a>
-                                        <!-- </td> -->
-                                        <td>40</td>
-                                        <td>2</td>
-                                    </tr>
-                                </tbody><!-- end tbody -->
-                            </table><!-- end table -->
-                            
-                        </div><!-- end table responsive -->
+                        </div>
+                        <div class="d-flex align-items-end justify-content-between mt-4">
+                            <div>
+                                <div>
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-1" >20 /<span class="counter-value"></span> 30</h4>
+                                   
+                                    <p class="text-muted">Completed</p> 
+        
+                                   <div class="">
+                                    <h5 class="text-success fs-14 mb-0">
+                                        <i class="align-middle fs-13 ri-arrow-right-up-line"></i> 40%
+                                    </h5>
+                                </div>
+                                </div>
+                                
+                                
+                            </div>
+                            <!-- <a href="javascript:void(0);" class="text-decoration-underline">Completed Status</a> -->
+                            <div class="avatar-sm flex-shrink-0">
+                                <span class="avatar-title bg-soft-primary rounded fs-3">
+                                    <i class=" align-middle fs-18 mdi  me-2 text-info"> 1</i>
+                                </span>
+                            </div>
+                        </div>
                     </div><!-- end card body -->
-                </div><!-- end card -->
-            </div><!-- end col -->
+                </div>
+              </div>
 
         </div><!-- end row -->
     </div><!-- end col -->
@@ -153,8 +108,8 @@
         <i class="ri-search-line search-icon"></i>
       </div>
   
-      <select class="form-select  mb-3 w-25" aria-label="Default select example">
-          <option selected>Filter</option>
+      <select class="form-select  mb-3 w-25">
+          <option disabled selected>Filter by program</option>
           <option value="1">BASIC NURSING</option>
           <option value="2">ORTHOLOGY</option>
           <option value="3">NURSING MATHS</option>
@@ -169,8 +124,7 @@
               <th class="sort" data-sort="email">Program</th>
               <th class="sort" data-sort="email">Examiner</th>
               <th class="sort" data-sort="position">Status</th>
-              <th class="sort" data-sort="company">Start-Time</th>
-              <th class="sort" data-sort="country">End-Time</th>
+            
               <!-- <th class="sort" data-sort="country">Ip-Address</th> -->
               <!-- <th class="sort" data-sort="country">Candidate-Systems</th> -->
               <!-- <th class="sort" data-sort="country">Responses Count</th> -->
@@ -184,8 +138,7 @@
               <td>BASIC NURSING</td>
               <td>Patrick Johnson</td>
               <td><button class="btn btn-sm btn-success">Completed</button></td>
-              <td>09:43</td>
-              <td>10:43</td>
+              
             </tr>
           </tbody>
         </table>

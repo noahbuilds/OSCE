@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "velzon": {
+    "caosce": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -26,7 +26,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/velzon",
+            "outputPath": "dist/caosce",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -84,10 +84,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "velzon:build:production"
+              "browserTarget": "caosce:build:production"
             },
             "development": {
-              "browserTarget": "velzon:build:development"
+              "browserTarget": "caosce:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -95,7 +95,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "velzon:build"
+            "browserTarget": "caosce:build"
           }
         },
         "test": {
@@ -120,5 +120,5 @@
       }
     }
   },
-  "defaultProject": "velzon"
+  "defaultProject": "caosce"
 }

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
+import { ExaminerAuthService } from '../services/examiner-auth.service';
 
 @Component({
   selector: 'app-examiner-login',
@@ -26,7 +27,7 @@ export class ExaminerLoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: AuthenticationService,
+    private examinerAuthService: ExaminerAuthService,
     notifierService: NotifierService,
     private router: Router
   ) {
@@ -63,29 +64,29 @@ export class ExaminerLoginComponent implements OnInit {
     }
     console.log(this.loginForm.value);
     this.router
-    .navigate(['/examiner'])
+    .navigate(['/examiner/login'])
     .catch((reason) => console.log(reason));
 
     // stop here if form is invalid
-    // if (this.loginForm.invalid) {
-    //   this.submitted = false;
-    // } else {
-    //   this.http.login(this.loginForm.value).subscribe(
-    //     (value) => {
-    //       //todo: navigate
-    //       console.log(value);
-    //       this.router
-    //         .navigate(['itembank'])
-    //         .catch((reason) => console.log(reason));
-    //     },
-    //     (err: HttpErrorResponse) => {
-    //       //todo: show error
-    //       this.error = true;
-    //       this.error_msg = err.error;
-    //       this.submitted = false;
-    //     }
-    //   );
-    // }
+    if (this.loginForm.invalid) {
+      this.submitted = false;
+    } else {
+      this.examinerAuthService.login(this.loginForm.value).subscribe(
+        (value) => {
+          //todo: navigate
+          console.log(value);
+          this.router
+            .navigate(['/examiner/dashboard'])
+            .catch((reason) => console.log(reason));
+        },
+        (err: HttpErrorResponse) => {
+          //todo: show error
+          this.error = true;
+          this.error_msg = err.message;
+          this.submitted = false;
+        }
+      );
+    }
   }
 
   /**

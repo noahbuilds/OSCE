@@ -63,19 +63,19 @@ export class SignUpComponent implements OnInit {
 
     console.log(form.value);
 
-    this.httpService.registerOrganization(form.value).subscribe(
-      (value) => {
-        console.log(value);
-        this.notifier.notify('success', 'Congratulations, your account was created successfully!');
-        this.submitted = false;
-        this.processing = false
-      },
-      (err: HttpErrorResponse) => {
-        console.log(err.status);
-        this.notifier.notify('error', `${err}`);
-        this.submitted = false;
-        this.processing = false;
-      }
-    );
+    // this.httpService.registerOrganization(form.value).subscribe(
+    //   (value) => {
+    //     console.log(value);
+    //     this.notifier.notify('success', 'Congratulations, your account was created successfully!');
+    //     this.submitted = false;
+    //     this.processing = false
+    //   },
+    //   (err: HttpErrorResponse) => {
+    //     console.log(err.status);
+    //     this.notifier.notify('error', `${err}`);
+    //     this.submitted = false;
+    //     this.processing = false;
+    //   }
+    // );
   }
 }

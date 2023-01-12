@@ -6,10 +6,10 @@ export interface DownloadedExams {
   totalExaminers: number;
   vivaUploaded: boolean;
   osceUploaded: boolean;
-  program: ProgramDetails;
+  programs: Array<Program>;
 }
 
-export interface ProgramDetails {
+export interface Program {
   totalProcedures: number;
   examId: string;
   programId: string;

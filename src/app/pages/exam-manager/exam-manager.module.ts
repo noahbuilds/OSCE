@@ -19,7 +19,7 @@ import { DownloadedExamsComponent } from './downloaded-exams/downloaded-exams.co
 import { OsceComponent } from './monitor-exam/osce/osce.component';
 import { DownloadedExamDetailsComponent } from './downloaded-exams/downloaded-exam-details/downloaded-exam-details.component';
 import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-// import { defineLordIconElement } from 'lord-icon-element';
+import { SimplebarAngularModule } from "simplebar-angular";
 
 @NgModule({
   declarations: [
@@ -45,6 +45,7 @@ import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     NgbDropdownModule,
     NgbNavModule,
+    SimplebarAngularModule
 
   ]
 })

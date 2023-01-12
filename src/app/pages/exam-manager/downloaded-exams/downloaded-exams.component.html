@@ -10,16 +10,16 @@
   </div> -->
   
   <div class="row">
-    <div class="col-xl-4">
+    <div class="col-xl-4">  
       <div class="sticky-side-div">
           <div class="card">
               <div class="card-header border-bottom-dashed">
-                  <h5 class="card-title mb-0">POST BASIC EXAM </h5>
+                  <h5 class="card-title mb-0">PRE BASIC EXAM </h5>
               </div>
               <div class="mb-3">
                   <div class="card-body">
                       
-                      <div class="table-card">
+                      <div class="table-card" style="height: 40vh;">
                           <table class="table mb-0">
                               <tbody>
                                   <tr>
@@ -66,64 +66,16 @@
           </div>
           </div>
           </div>
-    
-  
-  
-          <!-- <div class="card col-8">
-              <div class="card-body">
-                <h6 class="mb-3">Program Details</h6>
-                <div class="d-flex justify-content-between">
-            
-                
-                <div class="search-box d-inline-block mb-2">
-                  <input type="text" class="form-control search" placeholder="Search..." />
-                  <i class="ri-search-line search-icon"></i>
-                </div>
-            
-                <select class="form-select  mb-3 w-25">
-                    <option disabled selected>Filter by program</option>
-                    <option value="1">BASIC NURSING</option>
-                    <option value="2">ORTHOLOGY</option>
-                    <option value="3">NURSING MATHS</option>
-                    </select>
-                </div>
-                <div class="table-responsive">
-                  <table class="table table-gridjs">
-                    <thead>
-                      <tr>
-                        <th class="sort" data-sort="name">Program name</th>
-                        <th class="sort" data-sort="email">Total Examiner(s)</th>
-                        <th class="sort" data-sort="position">Total Candidate(s)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of items">
-                        <td>BASIC NURSING</td>
-                        <td>20</td>
-                        <td>200</td>
-                        
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div> -->
-  
-            
             <div class="col-xl-8">
               <div class="card">
                   <div class="card-header">
-                      <h4 class="card-title mb-0 mx-0">Program Details</h4>
-                      <!-- <div class="flex-shrink-0">
-                          <button type="button" class="btn btn-soft-info btn-sm">
-                              <i class="ri-file-list-3-line align-middle"></i> Generate Report
-                          </button>
-                      </div> -->
+                      <h4 class="card-title mb-0 mx-0">PRE BASIC EXAM PROGRAM DETAILS</h4>
                   </div><!-- end card header -->
   
                   
-                      <div class="table-responsive card-body">
-                          <table class="table table-gridjs">
+                    <ngx-simplebar>
+                      <div class="table-responsive card-body" style="height: 42vh;">
+                          <table class="table table-gridjs table-hover">
                               <thead>
                                 <tr>
                                   <th class="sort" data-sort="name">Program name</th>
@@ -141,7 +93,184 @@
                               </tbody>
                             </table>
                       </div>
-                  
+                  </ngx-simplebar>
               </div> <!-- .card-->
-          </div> <!-- .col-->
+          </div>
+
+
+
+          <div class="col-xl-4">  
+            <div class="sticky-side-div">
+                <div class="card">
+                    <div class="card-header border-bottom-dashed">
+                        <h5 class="card-title mb-0">PRE NURSING EXAM </h5>
+                    </div>
+                    <div class="mb-3">
+                        <div class="card-body">
+                            
+                            <div class="table-card" style="height: 40vh;">
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-medium">Total Examiner(s)</td>
+                                            <td>56</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium">Total Candidate(s)</td>
+                                            <td>3000</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium">Total Program(s)</td>
+                                            <td>25</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td class="fw-medium">VIVA Date</td>
+                                            <td>05 Jan, 2022</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium">OSCE Date</td>
+                                            <td>05 Jan, 2022</td>
+                                        </tr>
+      
+                                        <tr>
+                                            <td class="fw-medium">OSCE</td>
+                                            <td>
+                                              <button class="badge btn-soft-primary">Taken</button>
+                                              <button class="badge btn-primary mx-2">Uploaded</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium">VIVA</td>
+                                            <td>
+                                              <button class="badge  btn-success">Taken</button>
+                                              <button class="badge  btn-soft-success mx-2">Upload</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table><!--end table-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                  <div class="col-xl-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title mb-0 mx-0">PRE NURSING EXAM PROGRAM DETAILS</h4>
+                        </div><!-- end card header -->
+        
+                        
+                          <ngx-simplebar>
+                            <div class="table-responsive card-body" style="height: 42vh;">
+                                <table class="table table-gridjs table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th class="sort" data-sort="name">Program name</th>
+                                        <th class="sort" data-sort="email">Total Examiner(s)</th>
+                                        <th class="sort" data-sort="position">Total Candidate(s)</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody  class="table-hover" *ngFor="let item of items">
+                                      <tr (click)="viewDetails()" >
+                                        <td>BASIC NURSING</td>
+                                        <td>20</td>
+                                        <td>200</td>
+                                        
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </ngx-simplebar>
+                    </div> <!-- .card-->
+                </div>
+                
+                <div class="col-xl-4">
+                  <div class="sticky-side-div">
+                      <div class="card">
+                          <div class="card-header border-bottom-dashed">
+                              <h5 class="card-title mb-0">POST NURSING EXAM </h5>
+                          </div>
+                          <div class="mb-3">
+                              <div class="card-body">
+                                  
+                                  <div class="table-card" style="height: 40vh;">
+                                      <table class="table mb-0">
+                                          <tbody>
+                                              <tr>
+                                                  <td class="fw-medium">Total Examiner(s)</td>
+                                                  <td>56</td>
+                                              </tr>
+                                              <tr>
+                                                  <td class="fw-medium">Total Candidate(s)</td>
+                                                  <td>3000</td>
+                                              </tr>
+                                              <tr>
+                                                  <td class="fw-medium">Total Program(s)</td>
+                                                  <td>25</td>
+                                              </tr>
+                                              
+                                              <tr>
+                                                  <td class="fw-medium">VIVA Date</td>
+                                                  <td>05 Jan, 2022</td>
+                                              </tr>
+                                              <tr>
+                                                  <td class="fw-medium">OSCE Date</td>
+                                                  <td>05 Jan, 2022</td>
+                                              </tr>
+            
+                                              <tr>
+                                                  <td class="fw-medium">OSCE</td>
+                                                  <td>
+                                                    <button class="badge btn-soft-primary">Taken</button>
+                                                    <button class="badge btn-primary mx-2">Uploaded</button>
+                                                  </td>
+                                              </tr>
+                                              <tr>
+                                                  <td class="fw-medium">VIVA</td>
+                                                  <td>
+                                                    <button class="badge  btn-success">Taken</button>
+                                                    <button class="badge  btn-soft-success mx-2">Upload</button>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table><!--end table-->
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      </div>
+                        <div class="col-xl-8">
+                          <div class="card">
+                              <div class="card-header">
+                                  <h4 class="card-title mb-0 mx-0">POST NURSING EXAM PROGRAM DETAILS</h4>
+                              </div><!-- end card header -->
+              
+                              
+                                <ngx-simplebar>
+                                  <div class="table-responsive card-body" style="height: 42vh;">
+                                      <table class="table table-gridjs table-hover">
+                                          <thead>
+                                            <tr>
+                                              <th class="sort" data-sort="name">Program name</th>
+                                              <th class="sort" data-sort="email">Total Examiner(s)</th>
+                                              <th class="sort" data-sort="position">Total Candidate(s)</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody  class="table-hover" *ngFor="let item of items">
+                                            <tr (click)="viewDetails()" >
+                                              <td>BASIC NURSING</td>
+                                              <td>20</td>
+                                              <td>200</td>
+                                              
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                  </div>
+                              </ngx-simplebar>
+                          </div> <!-- .card-->
+                      </div> 
   </div>
+

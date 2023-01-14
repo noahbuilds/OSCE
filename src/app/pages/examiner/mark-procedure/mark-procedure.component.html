@@ -69,11 +69,14 @@
           *ngFor="let procedure of procedures; let i = index"
         >
           {{ procedure.name }}
+          
 
           <div class="btn-group w-100 mt-4 mb-5">
             <button
-              *ngFor="let grade of grades"
+              *ngFor="let grade of procedure.gradeList"
               class="btn btn-sm btn-soft-primary pt-3 pb-3"
+              (click)="grader(i, grade)"
+              
             >
               {{ grade }}
             </button>

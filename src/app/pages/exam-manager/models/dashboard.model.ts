@@ -1,5 +1,5 @@
-export interface ExamStatus {
-    totalDownloaded: number,
+export interface DashboardModel {
+  totalDownloaded: number,
   totalTakenViva: number,
   totalTakenOsce: number,
   totalUploadedViva: number,

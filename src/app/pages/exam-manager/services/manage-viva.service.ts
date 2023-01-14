@@ -1,39 +1,57 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
+import { CandidateModel, ProgramModel, ProgramProgressModel } from "../models/viva-monitor.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ManageVivaService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  startViva(examId: string): Observable<boolean>{
+  startViva(examId: string): Observable<boolean> {
     return this.http.get<boolean>(
       `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_viva/${examId}/startViva`,
       { withCredentials: true }
-    )
+    );
   }
 
-  getVivaCandidates(examId:string, programId:string){
-    return this.http.get<boolean>(
-      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_viva/${examId}/startViva`,
+  getVivaCandidates(examId: string): Observable<CandidateModel[]> {
+    return this.http.get<CandidateModel[]>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_viva/${examId}/viva_candidates_all`,
       { withCredentials: true }
-    )
+    );
   }
 
-  getVivaCandidatesInAProgram(){
-
+  getVivaCandidatesInAProgram(
+    examId: string,
+    programId: string
+  ): Observable<CandidateModel[]> {
+    return this.http.get<CandidateModel[]>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_viva/${examId}/viva_candidates_all/${programId}`,
+      { withCredentials: true }
+    );
   }
 
-  getVivaProgressPerProgram(){
-
+  getVivaProgressPerProgram(examId: string): Observable<ProgramProgressModel[]> {
+    return this.http.get<ProgramProgressModel[]>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_viva/${examId}/viva_progress_per_program`,
+      { withCredentials: true }
+    );
   }
 
-  getProgramsTakingViva(){
-
+  getProgramsTakingViva(examId: string): Observable<ProgramModel[]> {
+    return this.http.get<ProgramModel[]>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_viva/${examId}/programs`,
+      { withCredentials: true }
+    );
   }
 
+  getVivaAvailableForStart() {
+    return this.http.get(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_viva/viva_to_start`,
+      { withCredentials: true }
+    );
+  }
 }

@@ -1,4 +1,4 @@
-export interface DownloadedExams {
+export interface DownloadedExamsModel {
   examName: string;
   downloadedDate: string;
   totalCandidates: number;

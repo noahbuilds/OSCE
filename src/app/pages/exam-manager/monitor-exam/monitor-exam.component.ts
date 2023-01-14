@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-monitor-exam',
@@ -8,14 +7,9 @@ import { Router } from '@angular/router';
 })
 export class MonitorExamComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-  examsToMonitor: Array<any>= [
-    {name: "Expectant-care"},
-    {name: "Objective-station"},
-    {name: "VIVA"},
-    {name: "Research"},
-    {name: "OSCE"},
-  ]
-  constructor(private router:Router) { }
+  
+
+  constructor() { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -24,9 +18,6 @@ export class MonitorExamComponent implements OnInit {
     ];
   }
 
-  monitor(examName){
-    let examToMonitor = examName.toLowerCase()
-    this.router.navigate(["manager/monitor-exam/"+examToMonitor])
-  }
+ 
 
 }

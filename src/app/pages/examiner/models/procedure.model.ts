@@ -1,4 +1,4 @@
-export interface ProcedureGradeModel {
+export interface ProcedureModel {
   candidateDetails: {
     name: string;
     id: string;

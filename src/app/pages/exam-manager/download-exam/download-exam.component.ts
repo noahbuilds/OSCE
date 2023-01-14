@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ExamModel } from '../models/exam.model';
+
+import { ExamService } from '../services/exam.service';
 
 @Component({
   selector: 'app-download-exam',
@@ -8,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class DownloadExamComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   showDetails: boolean = false
+  downloadedExam: ExamModel
 
   items: any = [
     {},
@@ -26,7 +31,7 @@ export class DownloadExamComponent implements OnInit {
     {},
     {},
   ]
-  constructor() { }
+  constructor(private examService: ExamService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -37,5 +42,13 @@ export class DownloadExamComponent implements OnInit {
 
   showProgramDetails():boolean{
     return this.showDetails = !this.showDetails
+  }
+
+  downloadExam(centerId): Subscription{
+   return  this.examService.downloadExam(centerId).subscribe(
+      {next: (data: ExamModel)=>{
+        this.downloadedExam = data
+      }}
+    )
   }
 }

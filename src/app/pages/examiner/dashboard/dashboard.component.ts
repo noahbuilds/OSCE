@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DashboardModel } from '../models/dashboard.model';
+import { DashboardService } from '../services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,8 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
+  dashboardData: DashboardModel
 
-  constructor() { }
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -16,5 +20,11 @@ export class DashboardComponent implements OnInit {
       { label: 'Dashboard', active: true },
     ];
   }
-
+getDashboardData(programId:string):Subscription{
+  return this.dashboardService.getDashboardData(programId).subscribe({
+    next: (data:DashboardModel)=>{
+      this.dashboardData =data
+    }
+  })
+}
 }

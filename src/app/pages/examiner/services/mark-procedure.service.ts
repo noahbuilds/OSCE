@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { ProcedureGradeModel } from "../models/procedure-grade.model";
+import { ProcedureModel } from "../models/procedure.model";
 
 @Injectable({
   providedIn: "root",
@@ -63,8 +63,8 @@ procedure:any =
     programId: string,
     procedureId: string,
     examNumber: string
-  ): Observable<ProcedureGradeModel> {
-    return this.http.get<ProcedureGradeModel>(
+  ): Observable<ProcedureModel> {
+    return this.http.get<ProcedureModel>(
       `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/exam/${examId}/examiner/${examinerId}/program/${programId}/procedure/${procedureId}/candidate/${examNumber}`,
       { withCredentials: true }
     );

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { CandidateModel, ProgramModel, ProgramProgressModel } from "../models/viva-monitor.model";
+import { VivaModel } from "../models/viva.model";
 
 @Injectable({
   providedIn: "root",
@@ -48,8 +49,8 @@ export class ManageVivaService {
     );
   }
 
-  getVivaAvailableForStart() {
-    return this.http.get(
+  getAvailableViva(): Observable<VivaModel> {
+    return this.http.get<VivaModel>(
       `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_viva/viva_to_start`,
       { withCredentials: true }
     );

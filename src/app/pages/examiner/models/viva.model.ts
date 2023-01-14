@@ -1,4 +1,4 @@
-export interface VivaGradeModel {
+export interface VivaModel {
   candidateId: string;
   score: number;
   examinerId: string;

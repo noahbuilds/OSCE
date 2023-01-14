@@ -2,19 +2,26 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { DownloadedExamsModel } from "../models/downloaded-exams.model";
 import { ExaminerModel, ProcedureModel } from "../models/examiner.model";
+import { ExamModel } from "../models/exam.model";
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class DownloadedExamsService {
+export class ExamService {
 
   constructor(private http: HttpClient) { }
 
-  getDownloadedExams(): Observable<DownloadedExamsModel[]> {
-    return this.http.get<DownloadedExamsModel[]>(
+  downloadExam(centerId:string): Observable<ExamModel>{
+    return this.http.get<ExamModel>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/download/download_exam/${centerId}`,
+      { withCredentials: true }
+    )
+  }
+
+  getDownloadedExams(): Observable<ExamModel[]> {
+    return this.http.get<ExamModel[]>(
       `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams`,
       { withCredentials: true }
     )

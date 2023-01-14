@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CandidateModel } from '../models/candidate.model';
+import { VivaModel } from '../models/viva.model';
+import { MarkVivaService } from '../services/mark-viva.service';
 
 @Component({
   selector: 'app-mark-viva',
@@ -8,7 +11,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class MarkVivaComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-  constructor( private modalService: NgbModal) { }
+  candidateTograde: CandidateModel;
+  gradedCandidatesByProgram: CandidateModel[]
+  constructor( private modalService: NgbModal, private markVivaService: MarkVivaService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -25,5 +30,25 @@ export class MarkVivaComponent implements OnInit {
 
   cancel(){
     this.modalService.dismissAll()
+  }
+
+  getCandidateForGrading(examNumber: string, programId:string){
+    this.markVivaService.getCandidateForGrading(examNumber, programId).subscribe({
+      next: (data:CandidateModel)=>{
+        this.candidateTograde =data
+      }
+    })
+  }
+
+  getGradedCandidatesByProgram(programId: string){
+    this.markVivaService.getGradedCandidatesByProgram(programId).subscribe(
+      {next: (data: CandidateModel[])=>{
+        this.gradedCandidatesByProgram = data
+      }}
+    )
+  }
+
+  gradeCandidate(candidateId: string, grade:VivaModel){
+    this.markVivaService.gradeCandidate( candidateId, grade)
   }
 }

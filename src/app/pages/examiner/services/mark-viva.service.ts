@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CandidateModel} from '../models/candidate.model';
-import { VivaGradeModel } from '../models/viva-grade.model';
+import { VivaModel } from '../models/viva.model';
 
 
 @Injectable({
@@ -13,8 +13,8 @@ export class MarkVivaService {
 
   constructor(private http: HttpClient) { }
 
-  gradeCandidate(candidateId: string, payload:VivaGradeModel){
-    return this.http.post<VivaGradeModel>(
+  gradeCandidate(candidateId: string, payload:VivaModel){
+    return this.http.post<VivaModel>(
       `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markviva/candidate/${candidateId}`,
       payload,
       {withCredentials: true}
@@ -34,5 +34,7 @@ export class MarkVivaService {
       {withCredentials: true}
     )
   }
+
+ 
 
 }

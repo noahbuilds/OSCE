@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ProcedureModel } from "../models/procedure.model";
+import { MarkProcedureService } from "../services/mark-procedure.service";
 
 @Component({
   selector: "app-mark-procedure",
@@ -43,7 +45,8 @@ export class MarkProcedureComponent implements OnInit {
 
   gradedDTO: any = [];
   gradedActivitiesId = [];
-  constructor(private modalService: NgbModal) {}
+  candidateToGrade:ProcedureModel
+  constructor(private modalService: NgbModal, private markProcedureService: MarkProcedureService) {}
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -83,5 +86,25 @@ export class MarkProcedureComponent implements OnInit {
         this.procedures[i].gradeList = ["0", "1/4"];
       }
     }
+  }
+
+  getCandidateToGrade(examId: string,
+    examinerId: string,
+    programId: string,
+    procedureId: string,
+    examNumber: string){
+      this.markProcedureService.getCandidateToGrade(examId, examinerId, programId,procedureId,examNumber).subscribe(
+        {next: (data:ProcedureModel)=>{
+          this.candidateToGrade =data
+        }}
+      )
+  }
+
+  autoSaveCandidateProcedure(payload){
+    this.markProcedureService.autoSaveCandidateProcedure(payload)
+  }
+
+  candidateTimedOut(timedOut: boolean, payload){
+    this.markProcedureService.candidateTimedOut(timedOut, payload)
   }
 }

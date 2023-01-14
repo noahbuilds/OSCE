@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ExamModel } from '../models/exam.model';
+import { ExamService } from '../services/exam.service';
+
 
 @Component({
   selector: 'app-downloaded-exams',
@@ -25,7 +29,8 @@ export class DownloadedExamsComponent implements OnInit {
     {},
     {},
   ]
-  constructor(private router: Router) { }
+  downloadedExams: ExamModel[]
+  constructor(private router: Router, private examService: ExamService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -37,5 +42,11 @@ export class DownloadedExamsComponent implements OnInit {
   viewDetails(){
     this.router.navigate(['manager/downloaded-exams/details'])
   }
-
+   getDownloadedExams():Subscription{
+    return this.examService.getDownloadedExams().subscribe({
+      next: (data: ExamModel[])=>{
+        this.downloadedExams = data
+      }
+    })
+   }
 }

@@ -2,26 +2,25 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewChild,
   HostListener,
+  ViewChild,
 } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Subscription, timer } from "rxjs";
 import Swal from "sweetalert2";
 import { TimeService } from "../services/time.service";
-import { ItemService } from "../services/item.service";
-import { ItemType } from "src/app/shared/enum/itemTypes";
-import { ItemModel } from "src/app/shared/model/itemModel";
-import { TrueOrFalseComponent } from "./true-or-false/true-or-false.component";
+
+import { CandidateExamItemsService } from "../services/candidate-exam-items.service";
+import {
+  CandidateModel,
+  CandidateProcedureItem,
+  CandidateResponseDTO,
+} from "../models/candidate";
+import { CandidateAccountService } from "src/app/authentication/services/candidate-account.service";
+import { CandidateAccount } from "src/app/authentication/model/candidate-account";
+import { CandidateExamService } from "../services/candidate-exam.service";
+import { HttpErrorResponse } from "@angular/common/http";
 import { StandardChoiceComponent } from "./standard-choice/standard-choice.component";
-import { MultipleResponseComponent } from "./multiple-response/multiple-response.component";
-import { ClozeWithDropDownComponent } from "./cloze-with-drop-down/cloze-with-drop-down.component";
-import { ClozeWithTextComponent } from "./cloze-with-text/cloze-with-text.component";
-import { EssayWithRichTextComponent } from "./essay-with-rich-text/essay-with-rich-text.component";
-import { EssayWithShortTextComponent } from "./essay-with-short-text/essay-with-short-text.component";
-import { ClassifyByMatchingComponent } from "./classify-by-matching/classify-by-matching.component";
-import { ClassifyByOrderingComponent } from "./classify-by-ordering/classify-by-ordering.component";
-import { Underline } from "angular-feather/icons";
 
 @Component({
   selector: "app-exam-page",
@@ -31,80 +30,64 @@ import { Underline } from "angular-feather/icons";
 export class ExamPageComponent implements OnInit, OnDestroy {
   timeLeft: number = 10;
   timerSub: Subscription;
-  item: ItemModel;
+  item: CandidateProcedureItem;
   currentQuestionNumber: number = 0;
-  currentQuestion: ItemModel;
-  itemTypes = ItemType;
+  currentQuestion: CandidateProcedureItem;
   itemsLength: number;
-  displaySplit: boolean = false;
   keyPressed: string = "";
-  isFirstQuestionNumber: boolean;
-  isLastQuestionNumber: boolean;
   shortcutKeys: string[] = ["a", "b", "c", "d"];
   attemptedQuestions: any[] = [];
-  // @ViewChildren(NgModel) modelRefList: QueryList<NgModel>;
-  @ViewChild(TrueOrFalseComponent)
-  trueFalseRef!: TrueOrFalseComponent;
+  candidateExamDetails: CandidateModel;
+  currentCandidate: CandidateAccount;
+  isAssessmentOn: boolean = false;
+  autoSaveSub$: Subscription;
+  timerSub$: Subscription;
+
   @ViewChild(StandardChoiceComponent)
-  standardChoiceRef!: StandardChoiceComponent;
-  @ViewChild(MultipleResponseComponent)
-  multipleResponseRef!: MultipleResponseComponent;
-  @ViewChild(ClozeWithDropDownComponent)
-  clozeWithDropDownRef!: ClozeWithDropDownComponent;
-  @ViewChild(ClozeWithTextComponent)
-  clozeWithtextRef!: ClozeWithTextComponent;
-  @ViewChild(EssayWithRichTextComponent)
-  essayWithRichTextRef!: EssayWithRichTextComponent;
-  @ViewChild(EssayWithShortTextComponent)
-  essayWithShortTextRef!: EssayWithShortTextComponent;
-  @ViewChild(ClassifyByMatchingComponent)
-  classifyByMatchingRef!: ClassifyByMatchingComponent;
-  @ViewChild(ClassifyByOrderingComponent)
-  classifyByOrderingRef!: ClassifyByOrderingComponent;
+  standandChoiceRef!: StandardChoiceComponent;
 
   @HostListener("document:keypress", ["$event"])
   handleKeyboardEvent(event: KeyboardEvent) {
     this.keyPressed = event.key;
     //shortCuts
-    //shortcut not to work with short text ,rich text and cloze text
-    if (
-      this.currentQuestion.itemType != ItemType.RICH_ESSAY &&
-      this.currentQuestion.itemType != ItemType.SHORT_ESSAY &&
-      this.currentQuestion.itemType != ItemType.CLOZE_TEXT
-    ) {
-      this.useShortcut();
-    }
+
+    this.useShortcut();
   }
   constructor(
     private router: Router,
     private timeService: TimeService,
-    private itemService: ItemService
+    private candidateExamItemsService: CandidateExamItemsService,
+    private candidateAccountService: CandidateAccountService,
+    private candidateExamService: CandidateExamService
   ) {}
 
   ngOnInit(): void {
-    // this.timerSub = this.timeService.startTimer().subscribe({
-    //   next: (val) => {
-    //     // console.log(val + '' + 'Countdown')
-    //     // console.log(--this.timeLeft);
-    //     --this.timeLeft
-    //   },
-    //   complete: () => {
-    //     this.endExam();
-    //     Swal.fire({
-    //       title: "Exam submitted!",
-    //       text: "You ran out of time.",
-    //       confirmButtonColor: "rgb(3, 142, 220)",
-    //       icon: "info",
-    //     });
-    //   },
-    // });
-    // this.itemTypes = itemType;
-    this.itemsLength = this.itemService.getItems().length;
-    this.setCurrentQuestionNumber();
-    this.getCurrentQuestion();
+    this.candidateExamItemsService.getCurrentQuestion();
 
-    // this.currentQuestion =this.itemService.getCurrentQuestion()
+    // this.getCurrentQuestion();
+    this.currentQuestionNumber =
+      this.candidateExamItemsService.currentItemIndex;
+    this.candidateExamDetails =
+      this.candidateExamItemsService.candidateExamDetails;
+    this.currentCandidate = this.candidateAccountService.getUser();
+    this.isAssessmentOn = true;
+    this.startTimer();
+    this.startAutoSave();
   }
+  nextQuestion(): void {
+    this.candidateExamItemsService.nextQuestion();
+    this.currentQuestionNumber =
+      this.candidateExamItemsService.currentItemIndex;
+    // this.standandChoiceRef.getSelectedOptions()
+  }
+
+  previousQuestion(): void {
+    this.candidateExamItemsService.previousQuestion();
+    this.currentQuestionNumber =
+      this.candidateExamItemsService.currentItemIndex;
+    // this.standandChoiceRef.getSelectedOptions()
+  }
+
 
   confirm(): void {
     Swal.fire({
@@ -117,143 +100,92 @@ export class ExamPageComponent implements OnInit, OnDestroy {
       confirmButtonText: "Yes, end exam!",
     }).then((result) => {
       if (result.value) {
+
+        this.endExam();
         Swal.fire({
           title: "Exam submitted!",
           text: "You have submitted successfully.",
           confirmButtonColor: "rgb(3, 142, 220)",
           icon: "success",
         });
-        this.endExam();
+        
       }
     });
   }
 
   endExam(): void {
-    this.ngOnDestroy();
-    this.router.navigate(["candidate/end-exam"]);
+
+    this.candidateExamService
+    .endExam(this.candidateExamDetails.procedureId, true, this.generatePayload())
+    .subscribe(
+      {
+        next: (value) =>{
+          
+        },
+        error: (err: HttpErrorResponse)=> {
+          console.log(err.error.messge)
+        },
+        complete:()=> {
+          this.ngOnDestroy();
+          this.router.navigate(["candidate/end-exam"]);
+        },
+      }
+    )
+    
   }
 
   ngOnDestroy(): void {
-    // this.timerSub.unsubscribe();
+    this.timerSub.unsubscribe();
+    this.autoSaveSub$.unsubscribe()
     // console.log("i have been destroyed");
   }
 
-  nextQuestion(): void {
-    let currentQuestion = this.itemService.getCurrentQuestion();
-    //console.log(currentQuestion);
-    this.getCurrentQuestionResponse(currentQuestion);
+  
 
-    // check to current question and next question type to know if they are the same type so as to reinitialize component
-    if (
-      this.getCurrentQuestion().answers.length != 0 &&
-      !this.getCurrentQuestion().answers.includes(undefined) &&
-      !this.attemptedQuestions.includes(
-        this.setCurrentQuestionNumber().toString()
-      )
-    ) {
-      this.attemptedQuestions.push(this.setCurrentQuestionNumber().toString());
-      console.log("i have been attempted" + this.getCurrentQuestion().stimulus);
-      console.log(this.getCurrentQuestion().answers);
-    }
-    // console.log(this.attemptedQuestions)
-    this.checkItemType("nextQuestion");
-    // if (
-    //  this.checkItemType("nextQuestion")
-    // ) {
-    //   console.log("we are the same type");
-    //   this.callNgOnInit(); //reinitialize component
-    // } else {
-    //   this.setCurrentQuestionNumber();
-    //   this.getCurrentQuestion();
-    //   console.log("we are not the same type");
-    // }
+  // getCurrentQuestionResponse(item: CandidateProcedureItem) {
+  //   console.log(item);
+  // }
 
-    //console.log(this.currentQuestion);
-    //this.nextQuestion()
+  startTimer() {
+    this.timerSub$ = timer(1000, 1000).subscribe((value) => {
+      if (this.candidateExamDetails.seconds == 0) {
+        --this.candidateExamDetails.minute;
+        this.candidateExamDetails.seconds = 59;
 
-    //  this.modelRefList.forEach((element)=>{
-    //   console.log( element)
-    //  })
+        /* if(this.candidateToGrade.candidateDetails.minute  != 0){
+                
+                -- this.candidateToGrade.candidateDetails.minute;
+            }*/
+      } else {
+        --this.candidateExamDetails.seconds;
+      }
+
+      if (
+        this.candidateExamDetails.minute == 0 &&
+        this.candidateExamDetails.seconds == 0
+      ) {
+        // end exam and cancel subscription
+        this.endExam()
+        Swal.fire({
+          title: "Exam submitted!",
+          text: "You ran out of time.",
+          confirmButtonColor: "rgb(3, 142, 220)",
+          icon: "success",
+        });
+        
+        return;
+      }
+    });
   }
 
-  previousQuestion(): void {
-    let currentQuestion = this.itemService.getCurrentQuestion();
-    this.getCurrentQuestionResponse(currentQuestion);
+  displayTimerText(): string {
+    let minute = this.candidateExamDetails.minute;
+    let seconds = this.candidateExamDetails.seconds;
 
-    // check to current question and previous question type to know if they are the same type so as to reinitialize component
+    let minuteText = minute < 10 ? "0" + minute : "" + minute;
+    let secondsText = seconds < 10 ? "0" + seconds : "" + seconds;
 
-    this.checkItemType("previousQuestion");
-
-    // console.log("we are the same type");
-    // this.callNgOnInit(); //reinitialize component
-    // } else {
-    // this.setCurrentQuestionNumber();
-    // this.getCurrentQuestion();
-
-    console.log("we are not the same type");
-  }
-
-  getCurrentQuestionResponse(item: ItemModel) {
-    console.log(item);
-  }
-
-  getCurrentQuestion(): ItemModel {
-    return (this.currentQuestion = this.itemService.getCurrentQuestion());
-  }
-
-  callNgOnInit(): void {
-    // check for the type of component to know which ngOnInit to caal
-
-    if (this.itemService.getCurrentQuestion().itemType == ItemType.TRUE_FALSE) {
-      this.trueFalseRef.ngOnInit();
-      //set the current question number
-      this.setCurrentQuestionNumber();
-    } else if (this.itemService.getCurrentQuestion().itemType == ItemType.MCQ) {
-      this.standardChoiceRef.ngOnInit();
-      this.setCurrentQuestionNumber();
-    } else if (this.itemService.getCurrentQuestion().itemType == ItemType.MRQ) {
-      this.multipleResponseRef.ngOnInit();
-      this.setCurrentQuestionNumber();
-    } else if (
-      this.itemService.getCurrentQuestion().itemType == ItemType.RICH_ESSAY
-    ) {
-      this.essayWithRichTextRef.ngOnInit();
-      this.setCurrentQuestionNumber();
-    } else if (
-      this.itemService.getCurrentQuestion().itemType == ItemType.SHORT_ESSAY
-    ) {
-      this.essayWithShortTextRef.ngOnInit();
-      this.setCurrentQuestionNumber();
-    } else if (
-      this.itemService.getCurrentQuestion().itemType == ItemType.ORDERING
-    ) {
-      this.classifyByOrderingRef.ngOnInit();
-      this.setCurrentQuestionNumber();
-    } else if (
-      this.itemService.getCurrentQuestion().itemType == ItemType.MATCHING
-    ) {
-      this.classifyByMatchingRef.ngOnInit();
-      this.setCurrentQuestionNumber();
-    } else if (
-      this.itemService.getCurrentQuestion().itemType == ItemType.CLOZE_TEXT
-    ) {
-      this.clozeWithtextRef.ngOnInit();
-      this.setCurrentQuestionNumber();
-    } else if (
-      this.itemService.getCurrentQuestion().itemType == ItemType.CLOZE_DROPDOWN
-    ) {
-      this.clozeWithDropDownRef.ngOnInit();
-      this.setCurrentQuestionNumber();
-    }
-  }
-
-  setCurrentQuestionNumber(): number {
-    return (this.currentQuestionNumber =
-      this.itemService.currentQuestionNumber);
-  }
-
-  changeDisplay(): boolean {
-    return (this.displaySplit = !this.displaySplit);
+    return minuteText + " : " + secondsText;
   }
 
   useShortcut(): void {
@@ -271,80 +203,52 @@ export class ExamPageComponent implements OnInit, OnDestroy {
           break;
       }
     }
-
-    if (this.getCurrentQuestion().itemType === this.itemTypes.MRQ) {
-      for (let i = 0; i < this.shortcutKeys.length; i++) {
-        switch (this.keyPressed.toLowerCase()) {
-          case `${this.shortcutKeys[i]}`:
-            this.multipleResponseRef.optionClicked(`${i + 1}`.toString());
-            break;
-        }
-        // case "b":
-        //   this.multipleResponseRef.optionClicked("2");
-        //   break;
-        // case "c":
-        //   this.multipleResponseRef.optionClicked("3");
-        //   break;
-        // case "d":
-        //   this.multipleResponseRef.optionClicked("4");
-        //   break;
-      }
-    } else if (this.getCurrentQuestion().itemType === this.itemTypes.MCQ) {
-      for (let i = 0; i < this.shortcutKeys.length; i++) {
-        switch (this.keyPressed.toLowerCase()) {
-          case `${this.shortcutKeys[i]}`:
-            this.getCurrentQuestion().answers[0] = `${i + 1}`.toString();
-            break;
-          // case "b":
-          //   this.getCurrentQuestion().answers[0] = "2";
-          //   break;
-          // case "c":
-          //   this.getCurrentQuestion().answers[0] = "3";
-          //   break;
-          // case "d":
-          //   this.getCurrentQuestion().answers[0] = "4";
-          //   break;
-        }
-      }
-    } else {
-      //Exclude the last two shortcut keys for true-false itemType
-      for (let i = 0; i < this.shortcutKeys.length - 2; i++) {
-        switch (this.keyPressed.toLowerCase()) {
-          case `${this.shortcutKeys[i]}`:
-            this.getCurrentQuestion().answers[0] = `${i + 1}`.toString();
-            break;
-          // this.getCurrentQuestion().answers[0] = "2";
-          // break;
-        }
-      }
-    }
   }
 
-  checkItemType(reference: string): void {
-    switch (reference) {
-      case "nextQuestion":
-        if (
-          this.itemService.getCurrentQuestion().itemType ==
-          this.itemService.getNextQuestionItemType()
-        ) {
-          this.callNgOnInit();
-        } else {
-          this.setCurrentQuestionNumber();
-          this.getCurrentQuestion();
-        }
-        break;
-      case "previousQuestion":
-        if (
-          this.itemService.getCurrentQuestion().itemType ==
-          this.itemService.getPreviousQuestionItemType()
-        ) {
-          this.callNgOnInit();
-        } else {
-          this.setCurrentQuestionNumber();
-          this.getCurrentQuestion();
-        }
-
-        break;
-    }
+  autoSave() {
+    this.candidateExamService
+      .autoSaveCandidateExam(
+        this.candidateExamDetails.procedureId,
+        this.generatePayload()
+      )
+      .subscribe({
+        next: (value) => {},
+        error: (err: HttpErrorResponse) => {
+          console.log(err.error.message);
+        },
+      });
   }
+
+  startAutoSave() {
+    if (!this.isAssessmentOn) {
+      return;
+    }
+
+    this.autoSaveSub$ = timer(60 * 1000, 60 * 1000).subscribe((value) => {
+      this.autoSave();
+    });
+  }
+
+  generatePayload(): CandidateResponseDTO {
+    let payload = {
+      minute: this.candidateExamDetails.minute,
+      seconds: this.candidateExamDetails.seconds,
+      detailsId: this.candidateExamDetails.examDetailsId,
+      responsesId: this.candidateExamDetails.responsesId,
+      responseSet: this.standandChoiceRef.getSelectedOptions(),
+    };
+
+    return payload;
+  }
+
+  // displayEndExamButton(): boolean{
+   
+  //   let candidateTotalResponses = this.candidateExamItemsService.candidateExamDetails.candidateProcedureItems.length;
+  //   let itemsLength = this.candidateExamDetails.candidateProcedureItems.length
+
+  //   if( (candidateTotalResponses / itemsLength) * 100 >= 50){
+  //     return true
+  //   }
+  //   return false
+  // }
 }

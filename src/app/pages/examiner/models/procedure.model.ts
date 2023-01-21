@@ -11,6 +11,7 @@ export interface ProcedureModel {
     institution: string;
     programName: string;
     examinerName: string;
+    
   };
   activities: Array<Activity>;
   candidateProcedureDetailsId: string;
@@ -23,9 +24,30 @@ export interface Activity {
   placement: number;
   id: string;
   score: number;
+  gradeList?: string[];
 }
 
 export interface ActivityScore {
   activityId: string;
   score: number;
 }
+
+export interface CandidateGradedProcedureDTO{
+  candidateId: string,
+  minute: number,
+  seconds: number,
+  candidateProcedureActivitiesId: string,
+  candidateProcedureDetailsId: string,
+  programId: string,
+  procedureId: string,
+  activityScores: Array<ActivityScore>
+}
+
+
+export interface Procedure{
+  
+    name: string,
+    id: string
+  
+}
+

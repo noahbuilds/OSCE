@@ -31,6 +31,7 @@ export class DownloadExamComponent implements OnInit {
     {},
     {},
   ]
+  
   constructor(private examService: ExamService) { }
 
   ngOnInit(): void {

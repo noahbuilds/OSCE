@@ -5,7 +5,7 @@
 
 <div class="card">
     <div class="card-body">
-      <h6 class="mb-3 text-uppercase">Examiners in Basic nursing program </h6>
+      <h6 class="mb-3 text-uppercase">Examiners in {{programName}} </h6>
       <div class="d-flex justify-content-between">
   
       
@@ -32,26 +32,103 @@
               <th class="sort" data-sort="position">Program</th>
               <th class="sort" data-sort="position">Procedure</th>
               <th class="sort" data-sort="position">Role</th>
+              <th class="sort" data-sort="position">Status</th>
               <th class="sort" data-sort="position">Actions</th>
-              <!-- <th class="sort" data-sort="company">Time</th> -->
-              <!-- <th class="sort" data-sort="country">End-Time</th> -->
-              <!-- <th class="sort" data-sort="country">Ip-Address</th> -->
-              <!-- <th class="sort" data-sort="country">Candidate-Systems</th> -->
-              <!-- <th class="sort" data-sort="country">Responses Count</th> -->
-              <!-- <th class="sort" data-sort="country">Connected</th> -->
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Noah Edet</td>
-              <td>ed_knowah
+            <tr *ngFor="let examiner of examiners">
+              <td>{{examiner.name}}</td>
+              <td>{{examiner.username}}
               </td>
-              <td>BASIC NURSING</td>
-              <td>0903483492</td>        
-              <td>MNSSO</td>
-              <td></td>
-              <td><span class="badge badge-soft-primary"> LEAD EXAMINER</span></td>
+              <td>{{examiner.email}}</td>
+              <td>{{examiner.phone}}</td>        
+              <td>{{programName}}</td>
+              <td>{{examiner.procedureName}}</td>
+              <td>
+                <span class="badge badge-soft-primary" *ngIf="examiner.leader"> Leader</span> <span class="badge badge-soft-warning" *ngIf="!examiner.leader">Non Leader</span>
+                
+              </td>
+
+              <td>
+
+                <div class="d-flex gap-3" *ngIf="examiner.active == true">
+                  <span class="badge badge-soft-primary" >Active 
+                   
+                  </span>
+                  <button class="btn btn-sm btn-danger">Deactivate</button>
+                </div>
+             
+              
+
+              <div class="d-flex gap-3 justify-content-center align-content-center align-items-center" *ngIf="examiner.active == false">
+                <span class="badge badge-soft-danger">Not Active
+                </span>
+                <button class="btn btn-sm btn-success">Activate</button>
+  
+                
+              </div>
+              </td>
               <td><button class="btn btn-sm btn-primary" (click)="openAddProcedureModal(addProcedureModal)"> Add procedure</button></td>
+            
+            
+              <ng-template #addProcedureModal role="document" let-modal>
+                <div class="modal-header">
+                  <h5 class="modal-title" id="myModalLabel">Add Procedure</h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    center-bs-dismiss="modal"
+                    aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  
+                    <div class="row">
+                      
+                      <div class="col-lg-12">
+                        <div class="mb-3">
+                          <label for="designation" class="form-label"
+                            >Select Procedure</label
+                          >
+                          <select class="form-select  mb-3" aria-label="Default select example"
+                          #dropBoxRef
+                          (change)="captureProcedureToAddToExaminer(examiner.id,  dropBoxRef.value)">
+                            <option disabled selected>Select Procedure</option>
+                            <option *ngFor="let procedure of procedures; let i=index" value={{procedure.id}}>
+                              {{procedure.name}}
+                            </option>
+                            
+                            </select>
+                        </div>
+                      </div>
+                   
+                      
+                      
+                      <div class="col-lg-12">
+                        <div class="hstack gap-2 justify-content-end">
+                          <button
+                            type="button"
+                            class="btn btn-light"
+                            center-bs-dismiss="modal"
+                            
+                          >
+                            Close
+                          </button>
+                          
+                          <button  class="btn btn-success"
+
+                          (click)="addProcedureToExaminer()">
+                            Add Procedure
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                
+                </div>
+              </ng-template>
+            
             </tr>
           </tbody>
         </table>
@@ -59,54 +136,5 @@
     </div>
   </div>
 
-  <ng-template #addProcedureModal role="document" let-modal>
-    <div class="modal-header">
-      <h5 class="modal-title" id="myModalLabel">Add Procedure</h5>
-      <button
-        type="button"
-        class="btn-close"
-        center-bs-dismiss="modal"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      ></button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="row">
-          
-          <div class="col-lg-12">
-            <div class="mb-3">
-              <label for="designation" class="form-label"
-                >Select Procedure</label
-              >
-              <select class="form-select  mb-3" aria-label="Default select example">
-                <option disabled selected>Select Procedure</option>
-                <option value="1">Procedure 1</option>
-                <option value="2">Procedure 2</option>
-                <option value="3">Procedure 3</option>
-                </select>
-            </div>
-          </div>
-       
-          
-          
-          <div class="col-lg-12">
-            <div class="hstack gap-2 justify-content-end">
-              <button
-                type="button"
-                class="btn btn-light"
-                center-bs-dismiss="modal"
-                (click)="modal.close('Close click')"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-success">
-                Add Procedure
-              </button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </ng-template>
+  
   

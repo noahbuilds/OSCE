@@ -3,18 +3,20 @@
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
-<h6>Select institution to view instruction</h6>
-<select class="form-select  mb-3" aria-label="Default select example">
+<h6>Select procedure to view instruction</h6>
+<select #dropBoxRef (change)="captureProcedure(dropBoxRef.value)" class="form-select  mb-3" aria-label="Default select example">
   <!-- <option selected>Filter</option> -->
-  <option value="1">BASIC NURSING</option>
-  <option value="2">ORTHOLOGY</option>
-  <option value="3">NURSING MATHS</option>
+  <option *ngFor="let procedure of procedures" value="{{procedure.id}}">BASIC NURSING</option>
+  
   </select>
     <div class="card">
       
-        <div class="card-body">
-            <h5 class="card-header"> Candidate Instruction For XYZ Exam</h5>
-               <ol class="mt-2">
+        <div class="card-body" style="height: 60vh;">
+            <h5 class="card-header">Candidate Instruction For {{candidateInstruction.procedureName}}</h5>
+            <span   *ngIf="candidateInstruction!=null && candidateInstruction.instruction != null" class="mt-5" [innerHTML]="candidateInstruction.instruction">
+              
+            </span>
+               <!-- <ol class="mt-2">
               <li class="mb-2">
                 Make sure that the picture and the exam number on the computer
                 screen are yours. if they are not yours report to the supervisor.
@@ -52,7 +54,7 @@
                 Click the <strong>Start Exam Button</strong> to begin your
                 examination.
               </li>
-            </ol>
+            </ol> -->
         </div>
     </div>
 

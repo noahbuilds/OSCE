@@ -28,13 +28,56 @@
                             <div class="p-2 mt-4">
                                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   
-                                    <div class="mb-3">
-                                        <label for="exam number" class="form-label">Exam number</label>
-                                        <input type="text" class="form-control" id="exam-number" placeholder="Exam number" formControlName="examNumber" [ngClass]="{ 'is-invalid': submitted && f['examNumber'].errors }">
-                                        <div *ngIf="submitted && f['examNumber'].errors" class="invalid-feedback" align="left">
-                                          <div *ngIf="f['examNumber'].errors['required']">Exam number is required</div>
-                                        </div>
-                                    </div>
+                                    <div class="mt-4">
+                                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                          <div class="mb-3">
+                                            <label for="username" class="form-label"
+                                              >Exam number</label
+                                            >
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                              id="username"
+                                              placeholder="Enter exam number"
+                                              formControlName="username"
+                                              [ngClass]="{
+                                                'is-invalid': checkSubmit && f['username'].errors
+                                              }"
+                                            />
+                                            <div
+                                              *ngIf="checkSubmit && f['username'].errors"
+                                              class="invalid-feedback"
+                                              align="left"
+                                            >
+                                              <div *ngIf="f['username'].errors['required']">
+                                                Exam number is required
+                                              </div>
+                                            </div>
+                                          </div>
+                    
+                                          
+                    
+                                          <div class="mt-4">
+                                            <button
+                                              class="btn btn-success w-100"
+                                              type="submit"
+                                              [disabled]="submitted === true"
+                                            >
+                                              {{
+                                                submitted === false ? 'Sign In' : 'Signing in...'
+                                              }}
+                                            </button>
+                                          </div>
+                    
+                                          <div *ngIf="error" class="mt-4">
+                                            <p
+                                              class="alert alert-danger alert-dismissible fade show"
+                                            >
+                                              {{ error_msg }}
+                                            </p>
+                                          </div>
+                                        </form>
+                                      </div>
   
                                     <div class="mb-3">
                                        
@@ -45,9 +88,7 @@
                                         <label class="form-check-label" for="auth-remember-check">Remember me</label>
                                     </div> -->
   
-                                    <div class="mt-4">
-                                        <button class="btn btn-success w-100" [disabled]="this.loginForm.invalid"  type="submit">Sign In</button>
-                                    </div>
+                                    
   
                                     
                                 </form>

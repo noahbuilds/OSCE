@@ -5,6 +5,7 @@ import { ExamModel } from '../models/exam.model';
 import { ExamService } from '../services/exam.service';
 
 
+
 @Component({
   selector: 'app-downloaded-exams',
   templateUrl: './downloaded-exams.component.html',
@@ -37,16 +38,21 @@ export class DownloadedExamsComponent implements OnInit {
       { label: 'Manager' },
       { label: 'Downloaded Exams', active: true },
     ];
+    this.getDownloadedExams();
   }
 
-  viewDetails(){
-    this.router.navigate(['manager/downloaded-exams/details'])
+  viewExaminers(examId:string, programId:string, programName:string){
+    this.router.navigate(['manager/downloaded-exams/details',programName, examId,programId])
   }
+
    getDownloadedExams():Subscription{
     return this.examService.getDownloadedExams().subscribe({
       next: (data: ExamModel[])=>{
         this.downloadedExams = data
+        console.log(this.downloadedExams)
       }
     })
+
+   
    }
 }

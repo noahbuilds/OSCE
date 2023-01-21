@@ -20,9 +20,9 @@
 
 </div>
 
-<div class="row">
+<div class="row" *ngIf="dashboardData != null">
     <div class="col-12">
-        <div class="row">
+        <div class="row">   
             <div class="col-xxl-4 col-lg-4">
                 <div class="card card-body card-animate">
                     <div class="avatar-sm mb-3">
@@ -33,7 +33,7 @@
                     
                         <h4 class="card-title">Downloaded Exams</h4>
                         <div class="d-flex justify-content-end">
-                            <!-- <h5> {{dashboardData.totalDownloaded}}</h5> -->
+                            <h5> {{dashboardData.totalDownloaded}}</h5>
                         </div>
                    
 
@@ -50,8 +50,8 @@
                     </div>
                     <h4 class="card-title">Exams Taken</h4>
                     <div class="d-flex gap-2 justify-content-start">
-                        <!-- <p class="text-muted">OSCE:</p> <span class="text-muted">{{dashboardData.totalTakenOsce}}</span>
-                        <p class="text-muted">VIVA:</p> <span class="text-muted">{{dashboardData.totalTakenViva}}</span> -->
+                        <p class="text-muted">OSCE:</p> <span class="text-muted">{{dashboardData.totalTakenOsce}}</span>
+                        <p class="text-muted">VIVA:</p> <span class="text-muted">{{dashboardData.totalTakenViva}}</span>
                         
                     </div>
                     
@@ -67,14 +67,14 @@
                     </div>
                     <h4 class="card-title">Uploaded Exams</h4>
                     <div class="d-flex gap-2  justify-content-start">
-                        <!-- <p class="text-muted">OSCE:</p> <span class="text-muted">{{dashboardData.totalUploadedOsce}}</span>
-                        <p class="text-muted">VIVA:</p> <span class="text-muted">{{dashboardData.totalUploadedViva}}</span> -->
+                        <p class="text-muted">OSCE:</p> <span class="text-muted">{{dashboardData.totalUploadedOsce}}</span>
+                        <p class="text-muted">VIVA:</p> <span class="text-muted">{{dashboardData.totalUploadedViva}}</span>
                     </div>
                    
 
                 </div>
-            </div><!-- end col -->
+            </div>
           
-        </div><!-- end row -->
-    </div><!-- end col -->
-  </div><!-- end row -->
+        </div>
+    </div>
+  </div>

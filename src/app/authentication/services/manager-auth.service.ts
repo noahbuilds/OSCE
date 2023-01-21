@@ -5,13 +5,14 @@ import { SignIn } from "../model/sign-in";
 import { ManagerAccount } from "../model/manager-account";
 import { map, mergeMap } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { ManagerAccountService } from "./manager-account.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManagerAuthService {
 
-  constructor( private http: HttpClient) { }
+  constructor( private http: HttpClient, private managerAcctService: ManagerAccountService) { }
 
   login(signInModel: SignIn): Observable<ManagerAccount>{
 
@@ -26,7 +27,7 @@ export class ManagerAuthService {
   );
 
   return this.http.post (
-    `http://${environment.developmentIP}/caosce/examdelivery/api/manager/authentication`,
+    `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/authentication`,
     loginData,
     { headers, responseType: "text", withCredentials: true }
   )
@@ -35,11 +36,12 @@ export class ManagerAuthService {
 
   getLoggedInAccount(): Observable<ManagerAccount> {
     return this.http.get<ManagerAccount>(
-      `http://${environment.developmentIP}/caosce/examdelivery/api/manager/account`,
+      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/account`,
       { withCredentials: true }
     ).pipe(
       map((value)=>{
-        // this.userService.setCurrentUser(value);
+         this.managerAcctService.setCurrentUser(value);
+        console.log(value)
           return value
       })
     )

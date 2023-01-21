@@ -10,6 +10,7 @@ import { CandidateLoginComponent } from "./candidate-login/candidate-login.compo
 import { ExaminerLoginComponent } from "./examiner-login/examiner-login.component";
 import { ManagerLoginComponent } from "./manager-login/manager-login.component";
 
+
 @NgModule({
   declarations: [
     SignUpComponent,
@@ -17,6 +18,7 @@ import { ManagerLoginComponent } from "./manager-login/manager-login.component";
     CandidateLoginComponent,
     ExaminerLoginComponent,
     ManagerLoginComponent,
+   
   ],
   imports: [
     CommonModule,

@@ -2,7 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { ProcedureModel } from "../models/procedure.model";
+import { ResourceCreated } from "../models/resource-created";
+import { CandidateGradedProcedureDTO, ProcedureModel } from "../models/procedure.model";
 
 @Injectable({
   providedIn: "root",
@@ -65,22 +66,22 @@ procedure:any =
     examNumber: string
   ): Observable<ProcedureModel> {
     return this.http.get<ProcedureModel>(
-      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/exam/${examId}/examiner/${examinerId}/program/${programId}/procedure/${procedureId}/candidate/${examNumber}`,
+      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/exam/${examId}/examiner/${examinerId}/program/${programId}/procedure/${procedureId}/candidate/${examNumber}`,
       { withCredentials: true }
     );
   }
 
-  autoSaveCandidateProcedure(payload) {
-    return this.http.post(
-      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/autosave/procedure`,
+  autoSaveCandidateProcedure(payload: CandidateGradedProcedureDTO): Observable< ResourceCreated> {
+    return this.http.post<ResourceCreated>(
+      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/autosave/procedure`,
       payload,
       { withCredentials: true }
     );
   }
 
-  candidateTimedOut(timedOut: boolean, payload) {
+  candidateTimedOut(timedOut: boolean, payload: CandidateGradedProcedureDTO) {
     return this.http.post(
-      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/end/procedure/${timedOut}`,
+      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/end/procedure/${timedOut}`,
       payload,
       { withCredentials: true }
     );

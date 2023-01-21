@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CandidateAuthService } from '../services/candidate-auth.service';
 
 @Component({
   selector: 'app-candidate-login',
@@ -11,19 +13,23 @@ export class CandidateLoginComponent implements OnInit {
  // Login Form
  loginForm!: FormGroup;
  submitted = false;
- error = '';
+ fieldTextType!: boolean;
+ error_msg = '';
  returnUrl!: string;
+ notification_error = '';
  // set the current year
  year: number = new Date().getFullYear();
+ checkSubmit: boolean = false;
+ error: boolean = false;
 
- constructor(private formBuilder: FormBuilder, private router:Router) { }
+ constructor(private formBuilder: FormBuilder, private router:Router,private candidateAuthService: CandidateAuthService) { }
 
  ngOnInit(): void {
    /**
     * Form Validatyion
     */
     this.loginForm = this.formBuilder.group({
-     examNumber: ['', [Validators.required]],
+     username: ['', [Validators.required]],
    });
  }
 
@@ -33,20 +39,50 @@ export class CandidateLoginComponent implements OnInit {
  /**
   * Form submit
   */
-  onSubmit() {
-   this.submitted = true;
-  
-   console.log(this.loginForm.valid)
-   // stop here if form is invalid
-   if (this.loginForm.invalid) {
-     return;
-   }
-   if(this.loginForm.valid){
-    this.router.navigate(['candidate/instruction'])
-   }
+ onSubmit(): void {
+  this.error = false;
+  this.error_msg = '';
+  this.submitted = true;
+  this.checkSubmit = true;
+  let whitespace =
+    this.loginForm.controls['username'].value.indexOf(' ') >= 0;
+  if (whitespace) {
+    this.submitted = false;
+    this.error = true;
+    this.error_msg = 'username is invalid';
+    return;
+  }
+  console.log(this.loginForm.value);
+  this.router
+  .navigate(['/candidate/login'])
+  .catch((reason) => console.log(reason));
 
- }
+  // stop here if form is invalid
+  if (this.loginForm.invalid) {
+    this.submitted = false;
+  } else {
 
+    let signIn = {username: this.loginForm.value.username,password:this.loginForm.value.username}
+    this.candidateAuthService.login(signIn).subscribe(
+      (value) => {
+        //todo: navigate
+        console.log(value);
+        this.router
+          .navigate(['/candidate/instruction'])
+          .catch((reason) => console.log(reason));
+      },
+      (err: HttpErrorResponse) => {
+        //todo: show error
+        this.error = true;
+        this.error_msg = err.message;
+        this.submitted = false;
+      }
+    );
+  }
+}
 
+ toggleFieldTextType() {
+  this.fieldTextType = !this.fieldTextType;
+}
 
 }

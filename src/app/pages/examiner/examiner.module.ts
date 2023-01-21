@@ -18,7 +18,6 @@ import { ActivitiesLogComponent } from './activities-log/activities-log.componen
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SimplebarAngularModule } from "simplebar-angular";
 import { MonitorProcedureTableComponent } from './monitor/monitor-procedure-table/monitor-procedure-table.component';
-
 @NgModule({
   declarations: [
     DashboardComponent,

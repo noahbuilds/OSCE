@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  developmentIP: '35.178.141.73:8081',
+  developmentIP: 'd20c-102-89-22-204.eu.ngrok.io',
   defaultauth: 'fackbackend',
   firebaseConfig: {
     apiKey: '',

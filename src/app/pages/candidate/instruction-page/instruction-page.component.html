@@ -16,13 +16,13 @@
       <!--end col-->
       <div class="col d-flex">
         <div class="p-2">
-          <h3 class="text-white mb-1">Anna Adame</h3>
-          <p class="text-white-75">9876543</p>
+          <h3 class="text-white mb-1">{{currentCandidate.name}}</h3>
+          <p class="text-white-75">{{currentCandidate.examNumber}}</p>
         </div>
         <div class="col-lg-10 col-10 d-flex justify-content-end">
           <div class="p-2">
-            <h4 class="text-white mb-1">BASIC ACCOUNTING</h4>
-            <p class="fs-14 mb-0 text-white-75">60mins</p>
+            <h4 class="text-white mb-1">{{currentCandidate.programName}}</h4>
+            <!-- <p class="fs-14 mb-0 text-white-75">60mins</p> -->
           </div>
         </div>
       </div>
@@ -48,15 +48,11 @@
                       <tbody>
                         <tr>
                           <th class="ps-0" scope="row">Full Name :</th>
-                          <td class="text-muted">Anna Adame</td>
+                          <td class="text-muted">{{currentCandidate.name}}</td>
                         </tr>
                         <tr>
                           <th class="ps-0" scope="row">Exam No. :</th>
-                          <td class="text-muted">9876543</td>
-                        </tr>
-                        <tr>
-                          <th class="ps-0" scope="row">E-mail :</th>
-                          <td class="text-muted">daveadame@multilent.com</td>
+                          <td class="text-muted">{{currentCandidate.examNumber}}</td>
                         </tr>
                         <tr>
                           <th class="ps-0" scope="row">Seat Number :</th>
@@ -71,58 +67,81 @@
               <!-- end card -->
 
               <div class="card">
-                <div class="card-body">
-                  <div class="d-flex align-items-center mb-4">
-                    <div class="flex-grow-1">
-                      <h5 class="card-title mb-0">Subjects</h5>
+                <div class="card-body m-2">
+                  <h5 class="card-title mb-4">Keyboard Shortcuts</h5>
+                  <div class="align-items-start row card p-1">
+                    
+                    <div class="col-12 mb-2">
+                      <div class="d-flex gap-1">
+
+                        <button
+                        type="button"
+                        class="btn btn-sm btn-primary btn-label waves-effect waves-light"
+                      >
+                        <i class="label-icon fs-16">A</i> Selects option A
+                        </button>
+
+                        <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-label waves-effect waves-light"
+                    >
+                      <i class="label-icon fs-16">B</i> Selects option B
+                      </button>
+
+                      </div>
+                    
+
                     </div>
-                  </div>
-                  <div>
-                    <div class="d-flex align-items-center py-3">
-                      <div class="avatar-sm me-2">
-                        <div
-                          class="avatar-title rounded bg-soft-success text-success"
-                        >
-                          BA
-                        </div>
+                    <div class="col-12 mb-2">
+                      <div class="d-flex gap-1">
+
+                        <button
+                        type="button"
+                        class="btn btn-sm btn-primary btn-label waves-effect waves-light"
+                      >
+                        <i class="label-icon fs-16">C</i> Selects option C
+                        </button>
+
+                        <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-label waves-effect waves-light"
+                    >
+                      <i class="label-icon fs-16">D</i> Selects option D
+                      </button>
+
                       </div>
-                      <div class="flex-grow-1">
-                        <div>
-                          <h5 class="fs-14 mb-1">Basic Accounting</h5>
-                          <p class="fs-13 text-muted mb-0">90mins</p>
-                        </div>
-                      </div>
+                    
+
                     </div>
-                    <div class="d-flex align-items-center py-3">
-                      <div class="avatar-sm me-2">
-                        <div
-                          class="avatar-title rounded bg-soft-success text-success"
-                        >
-                          EL
-                        </div>
+                    <div class="col-12 mb-2">
+                      <div class="d-flex gap-1">
+
+                        <button
+                        type="button"
+                        class="btn btn-sm btn-primary btn-label waves-effect waves-light"
+                      >
+                        <i class="label-icon fs-16">N</i> Next Question
+                        </button>
+
+                        <button
+                      type="button"
+                      class="btn btn-sm btn-primary btn-label waves-effect waves-light"
+                    >
+                      <i class="label-icon fs-16">P</i> Previous Question
+                      </button>
+
                       </div>
-                      <div class="flex-grow-1">
-                        <div>
-                          <h5 class="fs-14 mb-1">English Language</h5>
-                          <p class="fs-13 text-muted mb-0">30mins</p>
-                        </div>
-                      </div>
+                    
+
                     </div>
-                    <div class="d-flex align-items-center py-3">
-                      <div class="avatar-sm me-2">
-                        <div
-                          class="avatar-title rounded bg-soft-success text-success"
-                        >
-                          MC
-                        </div>
-                      </div>
-                      <div class="flex-grow-1">
-                        <div>
-                          <h5 class="fs-14 mb-1">Mass Communication</h5>
-                          <p class="fs-13 text-muted mb-0">60mins</p>
-                        </div>
-                      </div>
-                    </div>
+                    
+                   
+                   
+                    
+                    
+                    
+                   
+                    
                   </div>
                 </div>
                 <!-- end card body -->
@@ -131,6 +150,48 @@
             </div>
             <!--end col-->
             <div class="col-xxl-9">
+
+
+              <div class="row">
+
+                <div class="col-xxl-4 col-lg-4" *ngFor="let procedure of candidateProcedures" >
+                  <div class="card card-body card-animate" >
+                    <div class="d-flex">
+                      <div class="avatar-sm mb-3">
+                        <div
+                          class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+                        >
+                          {{procedure.procedureName.charAt(0)}}{{procedure.procedureName.charAt(1)}}
+                        </div>
+                      </div>
+                      <div class="align-bottom col-10 mx-2">
+                        <h6>{{procedure.procedureName}}</h6>
+                        <p class="text-muted"><span class="badge badge-soft-danger" *ngIf="procedure.startTime != null && procedure.endTime != null"> Ended</span></p>
+                        <p><span class="badge badge-soft-success" *ngIf="procedure.startTime != null && procedure.endTime === null"> In progress</span></p>
+                        <p><span class="badge badge-soft-primary" *ngIf="procedure.startTime === null && procedure.endTime === null"> Not started</span></p>
+                      </div>
+                    </div>
+                    <!-- <div class="d-flex justify-content-end" >
+                      <p><span>place</span></p>
+                    </div> -->
+                    <!-- <span>OSCE exam Started successfully</span> -->
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-sm btn-primary" (click)="startExam(procedure.procedureId)" [disabled]="procedure.startTime != null && procedure.endTime != null">
+                        <span *ngIf="procedure.startTime != null && procedure.endTime === null">Continue Exam</span>
+                        <span *ngIf="procedure.startTime === null && procedure.endTime === null">Start Exam</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+               
+                
+
+
+
+              </div>
+              
+
+
               <div class="card">
                 <div class="card-body">
                   <h5 class="mb-3 card-title">Candidate Instruction</h5>
@@ -178,107 +239,21 @@
                       If your time is up, the examination will submit itself and
                       you will be logged out.
                     </li>
-                    <li class="mb-2 text-muted">
+                    <!-- <li class="mb-2 text-muted">
                       Click the <strong>Start Exam Button</strong> to begin your
                       examination.
-                    </li>
+                    </li> -->
                   </ol>
                 </div>
-                <div class="flex-shrink-0 text-end m-3">
+                <!-- <div class="flex-shrink-0 text-end m-3">
                   <button class="btn btn-success" (click)="startExam()">
                     <i class="ri-edit-box-line align-bottom"></i> Start Exam
                   </button>
-                </div>
+                </div> -->
               </div>
               <!-- end card -->
 
-              <div class="card">
-                <div class="card-body m-2">
-                  <h5 class="card-title mb-4">Keyboard Shortcuts</h5>
-                  <div class="row align-items-start card p-5">
-                    <div class="d-flex mb-2">
-                      <div></div>
-                      <div class="col-4">
-                        <div class="d-flex gap-2">
-                          <button
-                            type="button"
-                            class="btn btn-primary btn-label waves-effect waves-light"
-                          >
-                            <i class="label-icon fs-16">A</i> Selects option A
-                          </button>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="d-flex gap-2">
-                          <div class="d-flex gap-2">
-                            <button
-                              type="button"
-                              class="btn btn-primary btn-label waves-effect waves-light"
-                            >
-                              <i class="label-icon fs-16"> B</i>Selects option B
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="d-flex gap-2">
-                          <div class="d-flex gap-2">
-                            <button
-                              type="button"
-                              class="btn btn-primary btn-label waves-effect waves-light"
-                            >
-                              <i class="label-icon fs-16"> C</i>Selects option C
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div></div>
-                    </div>
-
-                    <div class="d-flex">
-                      <div class="col-4">
-                        <div class="d-flex gap-2">
-                          <div class="d-flex gap-2">
-                            <button
-                              type="button"
-                              class="btn btn-primary btn-label waves-effect waves-light"
-                            >
-                              <i class="label-icon fs-16"> D</i>Selects option D
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="d-flex gap-2">
-                          <div class="d-flex gap-2">
-                            <button
-                              type="button"
-                              class="btn btn-primary btn-label waves-effect waves-light"
-                            >
-                              <i class="label-icon fs-16"> N</i>Next Question
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="d-flex gap-2">
-                          <div class="d-flex gap-2">
-                            <button
-                              type="button"
-                              class="btn btn-primary btn-label waves-effect waves-light"
-                            >
-                              <i class="label-icon fs-16"> P</i>Previous
-                              Question
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- end card body -->
-              </div>
-              <!-- end card -->
+            
             </div>
             <!--end col-->
           </div>

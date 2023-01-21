@@ -9,11 +9,24 @@
           alt="candidate-img"
         />
         <div class="m-lg-2 m-sm-0">
-          <p class="m-0 fw-medium user-name-text">Noah Edet</p>
-          <p class="m-0 text-muted user-name-sub-text fs-12">17CD00GH</p>
+          <p class="m-0 fw-medium user-name-text">{{currentCandidate.name}}</p>
+          <p class="m-0 text-muted user-name-sub-text fs-12">{{currentCandidate.examNumber}}</p>
         </div>
       </div>
-      <app-navigator></app-navigator>
+
+      <div class="d-flex gap-2 mt-3">
+<button type="button" class="btn btn-light">1</button>
+      <button type="button" class="btn btn-light">2</button>
+      <button type="button" class="btn btn-light">3</button>
+      <button type="button" class="btn btn-light">4</button>
+      <button type="button" class="btn btn-light">5</button>
+      <button type="button" class="btn btn-light">6</button>
+      <button type="button" class="btn btn-light">7</button>
+      <button type="button" class="btn btn-light">8</button>
+      <button type="button" class="btn btn-light">9</button>
+      <button type="button" class="btn btn-light">10</button>
+      </div>
+      
       <p class="fw-bold mb-2 mt-2">
         Question {{ this.currentQuestionNumber + 1 }}.
       </p>
@@ -23,7 +36,7 @@
     <div class="col">
       <div class="exam-name d-flex justify-content-center">
         <div class="d-flex border rounded-1 bg-primary text-white p-1 btn-sm">
-          <p class="mb-0 fw-medium user-name-text">BIOLOGY 121</p>
+          <p class="mb-0 fw-medium user-name-text">{{currentCandidate.programName}} / {{candidateExamDetails.procedureName}}</p>
         </div>
       </div>
     </div>
@@ -32,7 +45,7 @@
         <div
           class="mx-2"
         >
-          <button (click)="confirm()" class="btn btn-outline-danger p-1">
+          <button  (click)="confirm()" class="btn btn-outline-danger p-1">
             End exam
           </button>
         </div>
@@ -42,8 +55,8 @@
         >
           <i class="ri-timer-line align-bottom text-white"></i>
           <span class="text-white">
-            00: <span *ngIf="timeLeft >= 10">{{ timeLeft }}</span>
-            <span *ngIf="timeLeft < 10"> 0{{ timeLeft }} </span></span
+            {{displayTimerText()}}
+            </span
           >
         </div>
       </div>
@@ -59,41 +72,12 @@
     </div>
     
    
-    <app-true-or-false
-      *ngIf="currentQuestion.itemType === itemTypes.TRUE_FALSE"
-    ></app-true-or-false>
+    
 
     <app-standard-choice
-      *ngIf="currentQuestion.itemType === itemTypes.MCQ"
+     
     ></app-standard-choice>
 
-    <app-multiple-response
-      *ngIf="currentQuestion.itemType === itemTypes.MRQ"
-    ></app-multiple-response>
-
-    <app-essay-with-short-text
-      *ngIf="currentQuestion.itemType === itemTypes.SHORT_ESSAY"
-    ></app-essay-with-short-text>
-
-    <app-essay-with-rich-text
-      *ngIf="currentQuestion.itemType === itemTypes.RICH_ESSAY"
-    ></app-essay-with-rich-text>
-
-    <app-classify-by-ordering
-      *ngIf="currentQuestion.itemType === itemTypes.ORDERING"
-    ></app-classify-by-ordering>
-
-    <app-classify-by-matching
-      *ngIf="currentQuestion.itemType === itemTypes.MATCHING"
-    ></app-classify-by-matching>
-
-    <app-cloze-with-text
-      *ngIf="currentQuestion.itemType === itemTypes.CLOZE_TEXT"
-    ></app-cloze-with-text>
-
-    <app-cloze-with-drop-down
-      *ngIf="currentQuestion.itemType === itemTypes.CLOZE_DROPDOWN"
-    ></app-cloze-with-drop-down>
   </div>
 
   <footer

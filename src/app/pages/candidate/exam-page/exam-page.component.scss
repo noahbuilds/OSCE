@@ -1,6 +1,6 @@
 .full-height {
     // max-height: fit-content;
-    min-height: 100vh;
+    // min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -10,21 +10,4 @@
     width: 100%;
    
  }
-
-.animation {
-   
-    animation-name: timer;
-    animation-duration: 0.8s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
-    //  background-color: white; 
-    //  color: aqua;
-    // padding: 20px; 
-    // border-radius: 50px;
-    font-size: 10px;
-    
-    
-}
-@keyframes timer{
-    to {   font-size: 20px; }
-} 
+ 

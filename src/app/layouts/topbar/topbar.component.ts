@@ -1,6 +1,8 @@
 import { Component, OnInit, EventEmitter, Output, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { EventService } from '../../core/services/event.service';
+import { ExaminerAccountService } from 'src/app/authentication/services/examiner-account.service';
+import { ManagerAccountService } from 'src/app/authentication/services/manager-account.service';
 
 //Logout
 import { environment } from '../../../environments/environment';
@@ -27,6 +29,7 @@ export class TopbarComponent implements OnInit {
   valueset: any;
   countryName: any;
   cookieValue: any;
+  username: string
 
   constructor(
     @Inject(DOCUMENT) private document: any,
@@ -36,7 +39,9 @@ export class TopbarComponent implements OnInit {
     public translate: TranslateService,
     private authService: AuthenticationService,
     private authFackservice: AuthfakeauthenticationService,
-    private router: Router
+    private router: Router,
+    private examinerAccountService: ExaminerAccountService,
+    private managerAccountService: ManagerAccountService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +58,14 @@ export class TopbarComponent implements OnInit {
     } else {
       this.flagvalue = val.map((element) => element.flag);
     }
+     
+    // if(this.examinerAccountService.getUser() != null){
+    //   this.username = this.examinerAccountService.getUser().username;
+    // }else if( this.managerAccountService.getUser() != null){
+    //   this.username =this.managerAccountService.getUser().username;
+
+    // }
+
   }
 
   /**

@@ -5,12 +5,13 @@ import { SignIn } from "../model/sign-in";
 import { ExaminerAccount } from "../model/examiner-account";
 import { map, mergeMap } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { ExaminerAccountService } from "./examiner-account.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class ExaminerAuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private examinerAccountService: ExaminerAccountService) {}
 
   login(signInModel: SignIn): Observable<ExaminerAccount> {
     const loginData =
@@ -25,7 +26,7 @@ export class ExaminerAuthService {
 
     return this.http
       .post(
-        `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/authentication`,
+        `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/authentication`,
         loginData,
         { headers, responseType: "text", withCredentials: true }
       )
@@ -34,8 +35,14 @@ export class ExaminerAuthService {
 
   getLoggedInAccount(): Observable<ExaminerAccount> {
     return this.http.get<ExaminerAccount>(
-      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/account`,
+      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/account`,
       { withCredentials: true }
+    ).pipe(
+      map((value)=>{
+         this.examinerAccountService.setCurrentUser(value);
+        console.log(value)
+          return value
+      })
     );
   }
 }

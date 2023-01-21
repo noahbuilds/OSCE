@@ -31,7 +31,7 @@ const routes: Routes = [
   {path: "downloaded-exams", 
 children: [{
 
-  path: 'details', component: DownloadedExamDetailsComponent
+  path: 'details/:programName/:examId/:programId', component: DownloadedExamDetailsComponent
 }]},
   {
     path: "monitor-exam",

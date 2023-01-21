@@ -13,7 +13,7 @@ export class ManageOsceService {
   startOsce(examId: string): Observable<boolean> {
     return this.http.get<boolean>(
       `
-    http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/${examId}/startOsce
+    https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/${examId}/startOsce
     `,
       { withCredentials: true }
     );
@@ -21,7 +21,7 @@ export class ManageOsceService {
 
   getAvailableOsce(): Observable<OsceModel> {
     return this.http.get<OsceModel>(
-      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/osce_to_start`,
+      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/osce_to_start`,
       { withCredentials: true }
     );
   }

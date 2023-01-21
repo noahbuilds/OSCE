@@ -4,7 +4,9 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { MANAGER_MENU } from './menu';
 import { EXAMINER_MENU } from './menu';
+import { LEAD_EXAMINER_MENU } from './menu';
 import { MenuItem } from './menu.model';
+import { ExaminerAccountService } from 'src/app/authentication/services/examiner-account.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +21,7 @@ export class SidebarComponent implements OnInit {
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
-  constructor(private router: Router, public translate: TranslateService) {
+  constructor(private router: Router, public translate: TranslateService, private examinerAccountService: ExaminerAccountService) {
     translate.setDefaultLang('en');
   }
 
@@ -29,9 +31,17 @@ export class SidebarComponent implements OnInit {
     let currentUrl = this.router.url;
     currentUrl.includes("manager")
       ? (this.menuItems = MANAGER_MENU)
-      : currentUrl.includes("examiner")
-      ? (this.menuItems = EXAMINER_MENU)
-      : (this.menuItems = []);
+      : currentUrl.includes("examiner") && this.examinerAccountService.currentUser.leader == true
+      ? (this.menuItems = LEAD_EXAMINER_MENU)
+      : (this.menuItems = EXAMINER_MENU);
+
+
+      // if(this.examinerAccountService.currentUser.leader == true){
+      //   (this.menuItems = LEAD_EXAMINER_MENU)
+      // }
+      // else{
+      //   this.menuItems = EXAMINER_MENU
+      // }
   }
 
   /***

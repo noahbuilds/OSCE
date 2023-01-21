@@ -3,13 +3,21 @@
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
+
+
+
 <div class="d-flex justify-content-between gap-4">
   <div class="mb-4">
     <h6 class="text-muted">Enter exam number of candidate to grade</h6>
     <div class="input-group">
-      <input type="text" class="form-control" />
+      <input #examNumberRef type="text" class="form-control" />
       <button
-        (click)="findCandidate()"
+        (click)="getCandidateToGrade(
+          currentExaminer.examId,
+        currentExaminer.id,
+        currentExaminer.programId,
+        currentExaminer.procedureId,
+        examNumberRef.value)"
         class="btn btn-outline-primary"
         type="button"
         id="button-addon2"
@@ -28,23 +36,24 @@
     </button>
   </div>
 </div>
-<div class="card">
+<div class="card" *ngIf="isFound">
   <div class="card-body">
     
 
-    <div class="d-flex justify-content-between" *ngIf="isFound">
+    <div class="d-flex justify-content-between" >
       <div class="mb-0">
-        <p><strong> Candidate Name:</strong> Noah Edet</p>
-          <p><strong> Exam Number:</strong> 17CD005322</p>
-          <p><strong> Program:</strong> Basic Nursing</p>
-          <p><strong> Institution:</strong> MSSP</p>
-        <button class="btn btn-sm btn-outline-danger">Start Assesment</button>
+        <p><strong> Candidate Name:</strong> {{candidateToGrade.candidateDetails.name}}</p>
+          <p><strong> Exam Number:</strong> {{candidateToGrade.candidateDetails.examNumber}}</p>
+          <p><strong> Program:</strong> {{candidateToGrade.candidateDetails.programName}}</p>
+          <p><strong> Institution:</strong> {{candidateToGrade.candidateDetails.institution}}</p>
+        <button *ngIf="!isAssessmentOn" class="btn btn-sm btn-outline-success" (click)="startAssessment()" > Start Assesment</button>
+        <button *ngIf="isAssessmentOn" class="btn btn-sm btn-outline-danger" (click)="endExam(true)" > End Assesment</button>
       </div>
 
       <div>
         <div class="d-flex justify-content-center rounded-3 gap-2 bg-danger text-white text-center p-2">
           <i class="ri-timer-line align-middle text-white"></i>
-          <span class="text-white align-middle"> 20:23 </span>
+          <span class="text-white align-middle"> {{displayTimerText()}} </span>
         </div>
         <img
           class="img-thumbnail mb-3 w-100 text-center"
@@ -56,38 +65,56 @@
     </div>
 
     
-    <div class="d-flex justify-content-between card-header mt-5 p-0">
-      <h5>Activities</h5>
-      <h5>Completed (0 of 5)</h5>
-    </div>
-    
-      <div *ngIf="isFound" style="height: 50vh;">
-        <ngx-simplebar style="max-height:90%;" >
-      <ol class="mt-3">
-        <li
-          style="font-size: 16px"
-          *ngFor="let procedure of procedures; let i = index"
-        >
-          {{ procedure.name }}
-          
+    <ng-container *ngIf="isAssessmentOn">
+      <div class="d-flex justify-content-between card-header mt-5 p-0">
+        <h5>Activities</h5>
+        <h5>Completed (0 of {{candidateActivitiesLength}})</h5>
+      </div>
+      
+        <div style="height: 50vh;">
+          <ngx-simplebar style="max-height:90%;" >
+        <ol class="mt-3">
+          <li
+            style="font-size: 16px"
+            *ngFor="let activity of candidateToGrade.activities; let i = index"
+          >
+            {{ activity.activity }}
+            
+  
+            <!-- <div class="btn-group w-100 mt-4 mb-5" *ngFor="let grade of candidateToGrade.activities[i].gradeList"> -->
+              <!-- <input type="radio" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off" [checked]="yes" >
+<label class="btn btn-outline-success" for="success-outlined">{{grade}}</label> -->
+              <!-- <button
+                *ngFor="let grade of candidateToGrade.activities[i].gradeList"
+                class="btn btn-sm btn-soft-primary pt-3 pb-3"
+                (click)="grader(i, grade)"
+              >
+                {{ grade }}
+              </button> -->
+              <div class="" >
+                <div class=" d-flex btn-group w-100 mt-4 mb-5" >
+                  <ng-container *ngFor="let grade of candidateToGrade.activities[i].gradeList; let j = index" >
+                    <input (click)="grader(i, grade)" type="radio" class="btn-check" name="options-outlined{{i}}" 
+                    id="primary-outlined{{j}}{{candidateToGrade.activities[i].id}}"  autocomplete="off"
+                     [checked] = checkIfActivityAttempted(candidateToGrade.activities[i].id,convertFractionToScore(grade)) >
 
-          <div class="btn-group w-100 mt-4 mb-5">
-            <button
-              *ngFor="let grade of procedure.gradeList"
-              class="btn btn-sm btn-soft-primary pt-3 pb-3"
-              (click)="grader(i, grade)"
-              
-            >
-              {{ grade }}
-            </button>
-          </div>
-        </li>
-      </ol>
-      <div class="d-flex justify-content-end">
-        <button class="btn btn-primary">Save</button>
-    </div>
-  </ngx-simplebar>
-    </div>
+                    <label class="btn btn-outline-primary" for="primary-outlined{{j}}{{candidateToGrade.activities[i].id}}">{{grade}}</label>
+                  </ng-container>
+                   
+                  
+                <!-- </div> -->
+              </div>
+            </div>
+          </li>
+        </ol>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary">Save</button>
+      </div>
+    </ngx-simplebar>
+      </div>
+    </ng-container>
+    
+    
     
  
   </div>

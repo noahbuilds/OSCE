@@ -12,7 +12,7 @@ import { DashboardService } from "../services/dashboard.service";
 export class DashboardComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   greetMsg: string = "";
-  dashboardData: DashboardModel;
+  dashboardData: DashboardModel ;
   dashboardSub: Subscription;
   constructor(private dashboardService: DashboardService) {}
 
@@ -49,9 +49,9 @@ export class DashboardComponent implements OnInit {
         next: (data: DashboardModel) => {
           this.dashboardData = data;
         },
-        // error: (err:HttpErrorResponse)=>{
-        //   console.log(err.message)
-        // }
+        error: (err:HttpErrorResponse)=>{
+          console.log(err.message)
+        }
         
       }));
   }

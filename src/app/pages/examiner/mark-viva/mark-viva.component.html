@@ -1,5 +1,5 @@
 <app-breadcrumbs
-  title="MARK VIVA > BASIC NURSING"
+  title="MARK VIVA > {{currentExaminerData.programName}}"
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
@@ -8,8 +8,8 @@
     <div class="mb-4">
         <h6 class="text-muted">Enter exam number of candidate to grade</h6>
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Enter exam number">
-            <button (click)="openGrader(grader)"class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
+            <input #examNumberRef type="text" class="form-control" placeholder="Enter exam number">
+            <button (click)="openGrader(grader, examNumberRef.value)"class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
             </div>
     </div>
     
@@ -26,8 +26,8 @@
        
         
         <div class="d-flex justify-content-between">
-            <h6 class="mb-3">All graded candidate(s)</h6>
-            <h6 class="mb-3">Completed (0 of 20)</h6>
+            <h6 class="mb-3">All candidate(s)</h6>
+            <h6 class="mb-3">Completed (0 of {{gradedCandidatesByProgram.length}})</h6>
              
         </div>
     
@@ -57,23 +57,29 @@
         
         <th class="sort" >EXAMINER</th>
         <th class="sort" >DATE</th>
-        <th class="sort" >TIME</th>
+       
         <th class="sort" >SCORE</th>
-        <th class="sort">ACTION</th>
+        <th class="sort">STATUS</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody *ngFor="let candidate of gradedCandidatesByProgram">
         <tr>
-          <td>Noah Edet</td>
-          <td>17CD00GH</td>
-          <td>NMCM PROGRAM</td>
-          <td>BSNC</td>
-          <td>JOSEPH ESSIEN</td>
-          <td>29th may, 2023</td>
+          <td>{{candidate.name}}</td>
+          <td>{{candidate.examNumber}}</td>
+          <td>{{candidate.programName}}</td>
+          <td>{{candidate.institution}}</td>
+          <td>{{candidate.examinerName}}</td>
+          <td>{{candidate.stamp | date: 'dd/MM/yyyy hh:mm a' }}</td>
 
-          <td>6:00</td>
-          <td>37</td>
-          <td> <button class="btn btn-sm btn-success"> Completed</button></td>
+          
+          <!--  -->
+          <td>{{candidate.score}}</td>
+          <!-- pending if stamp is null , completed  if not null -->
+          <td> 
+            <span class="badge  badge-soft-success" *ngIf="candidate.stamp != null"> Completed</span>
+            <span class="badge  badge-soft-danger" *ngIf="candidate.stamp == null"> Pending</span>
+        
+        </td>
          </tr> 
         </tbody>
       </table>
@@ -151,17 +157,18 @@
                         </div> <br>
 
                        <div class="text-start">
-                        <p> <strong> Candidate Name:</strong> Noah Edet</p>
-                        <p> <strong> Exam Number:</strong>  17CD005322</p>  
-                        <p> <strong> Program:</strong>  NMCM PROGRAM</p>  
-                        <p> <strong> Institution:</strong>  MSSP</p> 
+                        <p> <strong> Candidate Name:</strong> {{candidateToGrade.name}}</p>
+                        <p> <strong> Exam Number:</strong>  {{candidateToGrade.examNumber}}</p>  
+                        <p> <strong> Program:</strong>  {{candidateToGrade.programName}}</p>  
+                        <p> <strong> Institution:</strong>  {{candidateToGrade.institution}}</p> 
                        </div>
 
                                        
-                            <label for="exampleFormControlInput1" ><strong> Candidate Grade:</strong>  {{grade.value}} </label>
+                            <label for="exampleFormControlInput1" ><strong> Candidate Grade:</strong>  {{candidateToGrade.score}} </label>
                             <div class="input-group mb-3 mt-3">
-                                <input type="text" class="form-control" #grade placeholder="Input Candidate Grade" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-primary" type="button" id="button-addon2">Grade</button>
+                                <!-- disabled if stamp is not null anf button too -->
+                                <input type="number" step="0.1" class="form-control" [disabled]="candidateToGrade.score != null" #grade placeholder="Input Candidate Grade" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-primary" type="button" id="button-addon2" [disabled]="candidateToGrade.score != null" (click)="gradeCandidate(candidateToGrade.id, grade.value)" >Grade</button>
                             </div>
                            
                     </div>

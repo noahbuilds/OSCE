@@ -1,6 +1,6 @@
 import { MenuItem } from './menu.model';
 
-export const EXAMINER_MENU: MenuItem[] = [
+export const LEAD_EXAMINER_MENU: MenuItem[] = [
   {
     id: 1,
     label: 'EXAMINER_ITEMS.DASHBOARD.TEXT',
@@ -52,6 +52,48 @@ export const EXAMINER_MENU: MenuItem[] = [
         link: '/examiner/procedure-instruction',
       }
     ],
+  },
+  {
+    id: 7,
+    label: 'EXAMINER_ITEMS.LOGS.TEXT',
+    link: '/examiner/activity-logs',
+    icon: 'user-check',
+  }
+];
+export const EXAMINER_MENU: MenuItem[] = [
+  {
+    id: 1,
+    label: 'EXAMINER_ITEMS.DASHBOARD.TEXT',
+    link: '/examiner/dashboard',
+    icon: 'grid',
+  },
+ 
+  {
+    id: 2,
+    label: 'EXAMINER_ITEMS.MARK.TEXT',
+    icon: 'check',
+    subItems: [
+      {
+        id: 1,
+        label: 'EXAMINER_ITEMS.MARK.LIST.MARK_VIVA',
+        link: '/examiner/mark-viva',
+      },
+      // {
+      //   id: 2,
+      //   label: 'EXAMINER_ITEMS.MARK.LIST.MARK_RESEARCH',
+      //   link: '/examiner/mark-research',
+      // },
+      {
+        id: 3,
+        label: 'EXAMINER_ITEMS.MARK.LIST.MARK_PROCEDURE',
+        link: '/examiner/mark-procedure',
+      },
+      // {
+      //   id: 4,
+      //   label: 'EXAMINER_ITEMS.MARK.LIST.MARK_EXPECTANT_CARE',
+      //   link: '/examiner/mark-expectant-care',
+      // }
+    ]
   },
   {
     id: 7,

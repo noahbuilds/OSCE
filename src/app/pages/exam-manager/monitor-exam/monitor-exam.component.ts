@@ -1,4 +1,6 @@
+
 import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-monitor-exam',
@@ -8,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class MonitorExamComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   
+  
 
   constructor() { }
 
@@ -16,8 +19,9 @@ export class MonitorExamComponent implements OnInit {
       { label: 'Manager' },
       { label: 'Monitor exam', active: true },
     ];
+    
   }
 
- 
+
 
 }

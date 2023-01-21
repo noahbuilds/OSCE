@@ -1,7 +1,8 @@
 export interface ExaminerModel {
+  id:string;
   name: string;
   active: boolean;
-  userName: string;
+  username: string;
   email: string;
   leader: boolean;
   phone: string;
@@ -9,11 +10,18 @@ export interface ExaminerModel {
   procedureName: string;
 }
 
-export interface ProcedureModel {
+export interface ExaminerProcedureModel {
 
     examId: string,
     examinerId: string,
     procedureId: string,
     programId: string
 
+}
+
+export interface ProcedureModel{
+  
+    name: string,
+    id: string
+  
 }

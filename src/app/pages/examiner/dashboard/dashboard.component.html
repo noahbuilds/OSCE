@@ -8,21 +8,203 @@
         <app-monitor-expectant-care></app-monitor-expectant-care>
 
     </div> -->
-    <div class="col-md-12">
-        <app-monitor-viva></app-monitor-viva>
+    <div class="col-md-12" *ngIf="dashboardData != null && dashboardData.vivaProgress != null">
+        <div class="card card-animate">
+            <div class="card-body">
+                <h6 class="text-uppercase text-muted">VIVA Progress</h6>
+                <h6 class=" text-muted">{{dashboardData.vivaProgress.programName}}</h6>
+                <div class="d-flex align-items-center">
+      
+                   
+                    <!-- <div class="flex-grow-1">
+                        <p class=" text-muted fw-medium mb-0 fw-medium">VIVA name goes here</p>
+                    </div> -->
+                    
+                </div>
+                <div class="d-flex align-items-end justify-content-between mt-4">
+                    <div>
+                        <div>
+                            <h4 class="fs-22 fw-semibold ff-secondary mb-1" > {{dashboardData.vivaProgress.candidateCompletedCount}}/<span class="counter-value"> {{dashboardData.vivaProgress.candidateCount}}</span> </h4>
+                           
+                            <p class="text-muted">Completed</p> 
+      
+                           <div class="">
+                            <h5 class="text-success fs-14 mb-0">
+                                <i class="align-middle fs-13 ri-arrow-right-up-line"></i> {{(dashboardData.vivaProgress.candidateCompletedCount/dashboardData.vivaProgress.candidateCount) * 100}}%
+                            </h5>
+                        </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <!-- <a href="javascript:void(0);" class="text-decoration-underline">Completed Status</a> -->
+                    <div class="avatar-sm flex-shrink-0">
+                        <span class="avatar-title bg-soft-primary rounded fs-3">
+                            <i class=" align-middle fs-18 mdi  me-2 text-info"> 1</i>
+                        </span>
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div>
     </div>
-    <div class="col-md-12">
-        <app-monitor-procedure></app-monitor-procedure>
+    <div class="col-md-12" *ngIf="dashboardData != null  && dashboardData.procedureProgressList !=null">
+        <div class="card card-height-100">
+            <div class="card-header border-bottom-dashed align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1 text-uppercase">Procedure progress</h4>
+                
+            </div><!-- end cardheader -->
+            <div class="card-body" >
+               <!-- <apx-chart [series]="simpleDonutChart.series" [labels]="simpleDonutChart.labels"
+                          [chart]="simpleDonutChart.chart" [plotOptions]="simpleDonutChart.plotOptions"
+                          [dataLabels]="simpleDonutChart.dataLabels" [legend]="simpleDonutChart.legend"
+                          [stroke]="simpleDonutChart.stroke" [yaxis]="simpleDonutChart.yaxis"
+                          [colors]="simpleDonutChart.colors"></apx-chart> -->
+    
+                <ul class="list-group list-group-flush border-dashed mb-0">
+                    <li class="list-group-item px-0" *ngFor="let procedure of dashboardData.procedureProgressList">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 avatar-xs">
+                                <span class="avatar-title bg-primary p-1 rounded-circle">
+                                    {{procedure.procedureName.charAt(0)}}
+                                </span>
+                            </div>
+                            <div class="flex-grow-1 ms-2">
+                                <h6 class="mb-1">{{procedure.procedureName}}</h6>
+                                <!-- <p class="fs-12 mb-0 text-muted"><i class="mdi mdi-circle fs-10 align-middle text-primary me-1"></i>
+                                    BTC
+                                </p> -->
+                            </div>
+                            <div class="flex-shrink-0 text-end">
+                                <h6 class="mb-1">COMPLETED / EXPECTED</h6>
+                                <p class="text-success fs-12 mb-0">{{procedure.completedCandidates}} / {{procedure.totalCandidates}}</p>
+                            </div>
+                        </div>
+                    </li><!-- end -->
+                    
+                </ul><!-- end -->
+            </div><!-- end card body -->
+        </div>
     </div>
+
+
+    <div class="col-md-12" *ngIf="dashboardData != null  && dashboardData.objectiveProgressList !=null">
+        <div class="card card-height-100">
+            <div class="card-header border-bottom-dashed align-items-center d-flex">
+                <h4 class="card-title mb-0 flex-grow-1 text-uppercase">Objective progress</h4>
+                
+            </div><!-- end cardheader -->
+            <div class="card-body" >
+               <!-- <apx-chart [series]="simpleDonutChart.series" [labels]="simpleDonutChart.labels"
+                          [chart]="simpleDonutChart.chart" [plotOptions]="simpleDonutChart.plotOptions"
+                          [dataLabels]="simpleDonutChart.dataLabels" [legend]="simpleDonutChart.legend"
+                          [stroke]="simpleDonutChart.stroke" [yaxis]="simpleDonutChart.yaxis"
+                          [colors]="simpleDonutChart.colors"></apx-chart> -->
+    
+                <ul class="list-group list-group-flush border-dashed mb-0">
+                    <li class="list-group-item px-0" *ngFor="let objective of dashboardData.objectiveProgressList">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 avatar-xs">
+                                <span class="avatar-title bg-primary p-1 rounded-circle">
+                                    {{objective.procedureName.charAt(0)}}
+                                </span>
+                            </div>
+                            <div class="flex-grow-1 ms-2">
+                                <h6 class="mb-1">{{objective.procedureName}}</h6>
+                                <!-- <p class="fs-12 mb-0 text-muted"><i class="mdi mdi-circle fs-10 align-middle text-primary me-1"></i>
+                                    BTC
+                                </p> -->
+                            </div>
+                            <div class="flex-shrink-0 text-end">
+                                <h6 class="mb-1">COMPLETED / EXPECTED</h6>
+                                <p class="text-success fs-12 mb-0">{{objective.completedCandidates}} / {{objective.totalCandidates}}</p>
+                            </div>
+                        </div>
+                    </li><!-- end -->
+                    
+                </ul><!-- end -->
+            </div><!-- end card body -->
+        </div>
+    </div>
+
     <!-- <div class="col-md-6">
         <app-monitor-research></app-monitor-research>
     </div> -->
-    <div class="col-md-12">
-        <app-monitor-objective-station></app-monitor-objective-station>
+    <div class="col-md-12" *ngIf="dashboardData != null && dashboardData.procedureObjectiveCandidateProgressList != null">
+        <div class=" card card-body table-responsive">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+              <h6 class="mb-0">PROCEDURE OBJECTIVE STATION CANDIDATE PROGRESS TABLE</h6>
+            </div>
+            <!-- Captions -->
+    <table class="table caption-top table-nowrap">
+        <thead class="table-light">
+        <tr>
+        <th scope="col">S/N</th>
+        <th scope="col">Name</th>
+        <th scope="col">Exam no.</th>
+        <th scope="col">Institution</th>
+    
+        <th scope="col">Station</th>
+        <th scope="col">Start-Time</th>
+        <th scope="col">End-Time</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let candidate of dashboardData.procedureObjectiveCandidateProgressList; let i = index">
+        <tr>
+        <th scope="row">{{i + 1}}</th>
+        <td>{{candidate.name}}</td>
+        <td>{{candidate.examNumber}}</td>
+        <td>{{candidate.institution}}</td>
+        <!-- <td>{{candidate.examinerName}}</td> -->
+        <td>5</td>
+        <td>{{candidate.startTime | date: 'dd/MM/yyyy hh:mm a'}}</td>
+        <td>{{candidate.endTime | date: 'dd/MM/yyyy hh:mm a'}}</td>
+        </tr>
+        </tbody>
+        </table>
+          </div>
     </div>
 
-    <div class="col-md-12">
-        <app-monitor-procedure-table></app-monitor-procedure-table>
+    <div class="col-md-12" *ngIf="dashboardData !=null && dashboardData.procedureCandidateProgressList != null">
+      <!-- <div class="card"  style="width: fit-content;"> -->
+    <div class=" card card-body table-responsive">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <h6 class="mb-0">PROCEDURE CANDIDATE PROGRESS TABLE</h6>
+          <!-- <button class="btn btn-outline-secondary btn-sm">All Transaction</button> -->
+        </div>
+        <!-- Captions -->
+<table class="table caption-top table-nowrap">
+    <thead class="table-light">
+    <tr>
+        <th scope="col">S/N</th>
+        <th scope="col">Name</th>
+        <th scope="col">Exam no.</th>
+        <th scope="col">Institution</th>
+        <th scope="col">Examiner</th>
+    
+        <th scope="col">Station</th>
+        <th scope="col">Start-Time</th>
+        <th scope="col">End-Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let candidate of dashboardData.procedureCandidateProgressList; let i =index">
+    <th scope="row">{{i + 1}}</th>
+    <td>{{candidate.name}}</td>
+    <td>{{candidate.examNumber}}</td>
+    <td>{{candidate.institution}}</td>
+    <td>{{candidate.examinerName}}</td>
+    <td>5</td>
+    <td>{{candidate.startTime | date: 'dd/MM/yyyy hh:mm a'}}</td>
+    <td>{{candidate.endTime | date: 'dd/MM/yyyy hh:mm a'}}</td>
+    
+    </tr>
+    </tbody>
+    
+    </table>
+      </div>
+    <!-- </div> -->
+    
+    
     </div>
 </div>
 

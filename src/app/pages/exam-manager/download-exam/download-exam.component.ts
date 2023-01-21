@@ -11,7 +11,6 @@ import { ExamService } from '../services/exam.service';
 })
 export class DownloadExamComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-  showDetails: boolean = false
   downloadedExam: ExamModel
 
   items: any = [
@@ -41,11 +40,9 @@ export class DownloadExamComponent implements OnInit {
     ];
   }
 
-  showProgramDetails():boolean{
-    return this.showDetails = !this.showDetails
-  }
 
-  downloadExam(centerId): Subscription{
+
+  downloadExam(centerId: string): Subscription{
    return  this.examService.downloadExam(centerId).subscribe(
       {next: (data: ExamModel)=>{
         this.downloadedExam = data

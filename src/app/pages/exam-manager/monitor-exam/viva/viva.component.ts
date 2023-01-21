@@ -8,7 +8,7 @@ import {
 } from "../../models/viva-monitor.model";
 import { MonitorVivaService } from "../../services/monitor-viva.service";
 import { ManageVivaService } from "../../services/manage-viva.service";
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: "app-viva",
@@ -17,13 +17,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class VivaComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-  viva: Array<any> = [{}, {}, {}, {}, {}, {}];
   vivaMonitor: VivaMonitorModel;
   vivaMonitorByProgram: CandidateModel[];
-  currentManager : ManagerAccount
-  availableVivaToMonitor: any
-  
-  constructor(private manageVivaService: ManageVivaService, private monitorVivaService: MonitorVivaService, private managerAccountService: ManagerAccountService) {}
+  currentManager: ManagerAccount;
+  availableVivaToMonitor: any;
+
+  constructor(
+    private manageVivaService: ManageVivaService,
+    private monitorVivaService: MonitorVivaService,
+    private managerAccountService: ManagerAccountService
+  ) {}
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -31,9 +34,8 @@ export class VivaComponent implements OnInit {
       { label: "Monitor VIVA", active: true },
     ];
 
-    this.getAvailableVivaToMonitor()
+    this.getAvailableVivaToMonitor();
     // this.monitorViva(this.currentManager)
-
   }
 
   monitorViva(examId: string): Subscription {
@@ -54,22 +56,20 @@ export class VivaComponent implements OnInit {
       });
   }
 
-  getAvailableVivaToMonitor(){
-    this.manageVivaService.getAvailableViva().subscribe(
-     {
-       next : (data)=>{
-         this.availableVivaToMonitor =data
-       },
-       error:(err: HttpErrorResponse)=>{
-         console.log(err.error.message)
-       },
-       complete() {
-         console.log(this.availableVivaToMonitor)
-       },
-     }
-    )
+  getAvailableVivaToMonitor() {
+    this.manageVivaService.getAvailableViva().subscribe({
+      next: (data) => {
+        this.availableVivaToMonitor = data;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err.error.message);
+      },
+      complete() {
+        console.log(this.availableVivaToMonitor);
+      },
+    });
   }
-  getCurrentManager(){
-    this.currentManager = this.managerAccountService.getUser()
+  getCurrentManager() {
+    this.currentManager = this.managerAccountService.getUser();
   }
 }

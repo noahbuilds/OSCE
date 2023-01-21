@@ -15,9 +15,9 @@ export class EndExamPageComponent implements OnInit {
   constructor(private router: Router, private candidateAccountService: CandidateAccountService) {}
 
   ngOnInit(): void {
-    this.timeOut = setTimeout(() => {
-      this.router.navigate(["candidate/login"]);
-    }, 8000);
+    // this.timeOut = setTimeout(() => {
+    //   this.router.navigate(["candidate/login"]);
+    // }, 8000);
     this.currentCandidate = this.candidateAccountService.getUser()
   }
 

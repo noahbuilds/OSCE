@@ -15,7 +15,7 @@ export class StandardChoiceComponent implements OnInit {
   currentQuestion: CandidateProcedureItem;
   currentQuestionNumber: number;
   alphabetList: typeof AlphabetList = AlphabetList;
-  candidateResponses: CandidateResponse[];
+  candidateResponses: CandidateResponse[] = [];
 
   constructor(private candidateExamItemsService: CandidateExamItemsService) {}
 
@@ -24,12 +24,25 @@ export class StandardChoiceComponent implements OnInit {
 
     this.candidateExamItemsService.currentQuestion$.subscribe((item) => {
       this.currentQuestion = item;
+      this.currentQuestionNumber = item.currentQuestionNumber
     });
+    this.getSavedResponses()
+    
   }
 
-  optionSelected(optionId: string, itemId: string) {
-    this.currentQuestion.selectedOption = optionId;
+  // displayQuestion(){
+    
+  // }
 
+  getSavedResponses(){
+    this.candidateExamItemsService.getSavedResponses().forEach(response => {
+      this.candidateResponses.push(response)
+    });
+  }
+  
+  captureResponse(optionId: string, itemId: string) {
+    this.currentQuestion.selectedOption = optionId;
+   
     let selectedOptions = {
       optionId: optionId,
       itemId: itemId,
@@ -43,30 +56,34 @@ export class StandardChoiceComponent implements OnInit {
     //check if attempted before push
     if (
       !this.attemptedBefore(
-        selectedOptions.optionId,
-        selectedOptions.itemId
+        selectedOptions.itemId,
       )
     ) {
       this.candidateResponses.push(selectedOptions);
+      
     } else {
       this.candidateResponses.forEach((response) => {
         if (response.itemId === selectedOptions.itemId) {
           response.optionId = selectedOptions.optionId;
+       
         }
+       
         return;
       });
     }
+    this.getSelectedOptions()
   }
 
-  attemptedBefore(optionId: string, itemId: string): boolean {
+  attemptedBefore(itemId: string): boolean {
     var found = this.candidateResponses.find(
-      (id) => id.optionId === optionId && id.itemId === itemId
+      (id) => id.itemId === itemId
     );
 
     return found == null ? false : true;
   }
 
   getSelectedOptions(): CandidateResponse[] {
+    console.log(this.candidateResponses)
     return this.candidateResponses;
   }
 

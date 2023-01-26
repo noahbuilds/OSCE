@@ -1,4 +1,4 @@
-<div class="m-2">
+<div class="m-2" *ngIf="currentCandidate != null">
   <div class="profile-foreground position-relative mx-n4 mt-n4">
     <div class="profile-wid-bg"></div>
   </div>
@@ -39,7 +39,7 @@
         <div class="d-flex">
           <div class="row">
             <div class="col-xxl-3 mb-3">
-              <div class="card">
+              <div class="card" style="height: 25vh;">
                 <div class="card-body">
                   <h5 class="card-title mb-3">Candidate Information</h5>
 
@@ -54,10 +54,10 @@
                           <th class="ps-0" scope="row">Exam No. :</th>
                           <td class="text-muted">{{currentCandidate.examNumber}}</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                           <th class="ps-0" scope="row">Seat Number :</th>
                           <td class="text-muted">365</td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>
                   </div>
@@ -176,9 +176,10 @@
                     </div> -->
                     <!-- <span>OSCE exam Started successfully</span> -->
                     <div class="d-flex justify-content-end">
-                      <button class="btn btn-sm btn-primary" (click)="startExam(procedure.procedureId)" [disabled]="procedure.startTime != null && procedure.endTime != null">
+                      <button class="btn btn-sm btn-primary" (click)="startExam(procedure.procedureId, procedure.candidateDetailsId)" [disabled]="procedure.startTime != null && procedure.endTime != null">
                         <span *ngIf="procedure.startTime != null && procedure.endTime === null">Continue Exam</span>
                         <span *ngIf="procedure.startTime === null && procedure.endTime === null">Start Exam</span>
+                        <span *ngIf="procedure.startTime != null && procedure.endTime != null">Exam ended</span>
                       </button>
                     </div>
                   </div>

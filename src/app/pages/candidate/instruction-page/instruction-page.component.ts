@@ -21,7 +21,6 @@ export class InstructionPageComponent implements OnInit {
   currentCandidate: CandidateAccount;
   candidateProcedures: CandidateProcedure[];
   candidateData: CandidateModel
-  candidateProcedureItems: CandidateProcedureItem[]
   
   constructor(private router: Router, private candidateExamItemsService:CandidateExamItemsService, private timeSerivice: TimeService, private candidateAccountService: CandidateAccountService, private candidateExamService: CandidateExamService) { }
 
@@ -31,16 +30,15 @@ export class InstructionPageComponent implements OnInit {
     this.getCandidateProcedures()
   }
 
-   startExam(procedureId:string) {
+   startExam(procedureId:string, objectiveDetailsId: string) {
 
-    this.candidateExamService.startExam(procedureId).subscribe(
+    this.candidateExamService.startExam(procedureId, objectiveDetailsId).subscribe(
       {next: (data: CandidateModel)=> {
         
         this.candidateExamItemsService.candidateExamDetails = data
       },
       complete :()=> {
         this.router.navigate(["candidate/exam"]);
-        console.log(this.candidateData)
       },
       error :(err: HttpErrorResponse)=> {
         console.log(err.error.messge)

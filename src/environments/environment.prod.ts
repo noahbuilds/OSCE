@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  developmentIP: 'd20c-102-89-22-204.eu.ngrok.io',
+  developmentIP: '192.168.0.131:8088',
   defaultauth: 'fackbackend',
   firebaseConfig: {
     apiKey: '',

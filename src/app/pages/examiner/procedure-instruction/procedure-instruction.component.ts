@@ -17,8 +17,10 @@ breadCrumbItems!: Array<{}>;
 procedureReq: InstructionModel;
 procedures: Procedure[]
 currentExaminer: ExaminerAccount
+procedureName: string = ''
 
-  constructor(private instructionService: InstructionService, private examinerAccountService: ExaminerAccountService) { }
+  constructor(private instructionService: InstructionService,
+     private examinerAccountService: ExaminerAccountService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -27,7 +29,7 @@ currentExaminer: ExaminerAccount
     ];
     this.getCurrentExaminer();
     this.getAllProcedures(this.currentExaminer.programId)
-    this.getProcedureReq(this.currentExaminer.procedureId)
+ 
   }
 
   getProcedureReq(procedureId: string):Subscription{
@@ -56,8 +58,11 @@ currentExaminer: ExaminerAccount
     }
     )
   }
+
   captureProcedure(procedureId: string){
+
     this.getProcedureReq(procedureId)
+   
   }
   
   getCurrentExaminer(){

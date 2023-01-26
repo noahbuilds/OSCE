@@ -2,11 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'angular-notifier';
 import {  Subscription } from 'rxjs';
 import { ExaminerModel, ProcedureModel, ExaminerProcedureModel } from '../../models/examiner.model';
 import { ResourceCreated } from '../../models/resource.created';
 import { ExamService } from '../../services/exam.service';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-downloaded-exam-details',
@@ -26,8 +27,12 @@ export class DownloadedExamDetailsComponent implements OnInit {
   procedureAdded: ResourceCreated
 
 
-  constructor(private ngbModalService: NgbModal, private examService: ExamService, private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+  constructor(private ngbModalService: NgbModal, 
+    private examService: ExamService, 
+    private activatedRoute: ActivatedRoute,
+    private readonly notifier: NotifierService,
+    private router: Router,
+    private locationService: Location) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -51,8 +56,12 @@ export class DownloadedExamDetailsComponent implements OnInit {
     
   }
 
-  getExaminersForAnExam(examId:string, programId: string): Subscription{
-    return  this.examinerSub= this.examService.getExaminersForAnExam(examId, programId).subscribe({
+  closeModal(){
+    this.ngbModalService.dismissAll()
+  }
+
+  getExaminersForAnExam(examId:string, programId: string){
+      this.examinerSub= this.examService.getExaminersForAnExam(examId, programId).subscribe({
       next: (data: ExaminerModel[])=>{
         this.examiners =data
       },
@@ -67,8 +76,8 @@ export class DownloadedExamDetailsComponent implements OnInit {
   
   }
 
-  getProcedures(examId:string, programId: string): Subscription{
-    return this.examService.getProcedures(examId, programId).subscribe({
+  getProcedures(examId:string, programId: string){
+     this.examService.getProcedures(examId, programId).subscribe({
       next: (data: ProcedureModel[])=>{
         this.procedures = data
       },
@@ -87,33 +96,65 @@ export class DownloadedExamDetailsComponent implements OnInit {
       programId: this.programId
     }
     
-    // console.log({
-    //   examinerId: examinerId,
-     
-    //   value: value
-    // })
 
   }
 
-  addProcedureToExaminer():Subscription{
-    return this.examService.addProcedureToExaminer(this.payload).subscribe({
+  addProcedureToExaminer(){
+     this.examService.addProcedureToExaminer(this.payload).subscribe({
       next : (data: ResourceCreated)=>{
         this.procedureAdded = data
       },
       error: (err: HttpErrorResponse)=>{
         console.log(err.error.message)
-        console.log(this.router.url)
-        
+        if(this.payload.procedureId == null){
+          this.notifier.notify('error', `Please select a procedure`)
 
+          return
+        }
+        this.notifier.notify('error', err.error.message)
+        this.closeModal()
 
       },
       complete: ()=> {
        
         console.log(this.procedureAdded)
-        console.log(this.router.url)
+        this.notifier.notify('success', 'Procedure added')
+        this.closeModal()
+        this.payload.procedureId = null
         this.getExaminersForAnExam(this.examId, this.programId)
+        
+        
       }
     })
+  }
+
+  updateExaminerStatus(examinerId: string, active:boolean){
+    this.examService.updateExaminerStatus(examinerId, active).subscribe(
+      {
+        next : (data)=>{
+
+        },
+        error: (err: HttpErrorResponse)=> {
+          console.log(err.error.message)
+        },
+        complete :()=> {
+          this.notifier.notify('success', 'Examiner status updated successfuly');
+        this.getExaminersForAnExam(this.examId, this.programId)
+
+        },
+      }
+    )
+  }
+
+  getValue(event: any, examinerId: string){
+  //  console.log(inputRef)
+    console.log(event.target.checked)
+
+    this.updateExaminerStatus(examinerId, event.target.checked)
+  }
+
+  goBack(){
+    this.locationService.back()
   }
 
   ngOnDestroy(): void {

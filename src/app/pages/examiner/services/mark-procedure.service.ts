@@ -66,14 +66,14 @@ procedure:any =
     examNumber: string
   ): Observable<ProcedureModel> {
     return this.http.get<ProcedureModel>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/exam/${examId}/examiner/${examinerId}/program/${programId}/procedure/${procedureId}/candidate/${examNumber}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/exam/${examId}/examiner/${examinerId}/program/${programId}/procedure/${procedureId}/candidate/${examNumber}`,
       { withCredentials: true }
     );
   }
 
   autoSaveCandidateProcedure(payload: CandidateGradedProcedureDTO): Observable< ResourceCreated> {
     return this.http.post<ResourceCreated>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/autosave/procedure`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/autosave/procedure`,
       payload,
       { withCredentials: true }
     );
@@ -81,7 +81,7 @@ procedure:any =
 
   candidateTimedOut(timedOut: boolean, payload: CandidateGradedProcedureDTO) {
     return this.http.post(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/end/procedure/${timedOut}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/end/procedure/${timedOut}`,
       payload,
       { withCredentials: true }
     );

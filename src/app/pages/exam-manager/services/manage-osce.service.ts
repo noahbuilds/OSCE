@@ -2,7 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { StartExam } from "../models/exam.model";
 import { OsceModel } from "../models/osce.model";
+import { ResourceCreated } from "../models/resource.created";
 
 @Injectable({
   providedIn: "root",
@@ -10,10 +12,10 @@ import { OsceModel } from "../models/osce.model";
 export class ManageOsceService {
   constructor(private http: HttpClient) {}
 
-  startOsce(examId: string): Observable<boolean> {
-    return this.http.get<boolean>(
+  startOsce(examId: string): Observable<StartExam> {
+    return this.http.get<StartExam>(
       `
-    https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/${examId}/startOsce
+    http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/${examId}/startOsce
     `,
       { withCredentials: true }
     );
@@ -21,8 +23,14 @@ export class ManageOsceService {
 
   getAvailableOsce(): Observable<OsceModel> {
     return this.http.get<OsceModel>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/osce_to_start`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/osce_to_start`,
       { withCredentials: true }
     );
+  }
+
+  endOsce(examId: string): Observable< ResourceCreated>{
+    return this.http.get< ResourceCreated>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/exam/${examId}/end_Osce`
+    , {withCredentials: true} )
   }
 }

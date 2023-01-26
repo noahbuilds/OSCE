@@ -38,7 +38,8 @@ export class DashboardComponent implements OnInit {
     }
   ]
 
-  constructor(private dashboardService: DashboardService, private examinerAccountService: ExaminerAccountService) { }
+  constructor(private dashboardService: DashboardService,
+     private examinerAccountService: ExaminerAccountService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [

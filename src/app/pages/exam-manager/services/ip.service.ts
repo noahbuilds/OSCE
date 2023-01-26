@@ -15,14 +15,14 @@ export class IpService {
 
   getIPs(): Observable<string[]>{
     return this.http.get<string[]>(
-        `https:${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_ips`
+        `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_ips`
     ,
     {withCredentials: true})
   }
 
   addIP(payload:IpModel):Observable<ResourceCreated>{
    return this.http.post<ResourceCreated>(
-      `https:${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_ips`
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_ips`
       ,payload, {withCredentials: true})
   }
 }

@@ -13,6 +13,10 @@
         <input type="text" class="form-control search" placeholder="Search for examiner" />
         <i class="ri-search-line search-icon"></i>
       </div>
+
+      <div>
+        <button class="btn btn-sm btn-primary" (click)="goBack()">Back</button>
+      </div>
   
       <!-- <select class="form-select  mb-3 w-25" aria-label="Default select example">
           <option  disabled selected>Filter by program</option>
@@ -52,24 +56,13 @@
 
               <td>
 
-                <div class="d-flex gap-3" *ngIf="examiner.active == true">
-                  <span class="badge badge-soft-primary" >Active 
-                   
-                  </span>
-                  <button class="btn btn-sm btn-danger">Deactivate</button>
-                </div>
-             
-              
+            
 
-              <div class="d-flex gap-3 justify-content-center align-content-center align-items-center" *ngIf="examiner.active == false">
-                <span class="badge badge-soft-danger">Not Active
-                </span>
-                <button class="btn btn-sm btn-success">Activate</button>
-  
-                
-              </div>
+                <div  (change)="getValue( $event, examiner.id)"class="form-check form-switch form-switch-md mx-2" dir="ltr">
+                  <input   #inputRef value="{{examiner.active}}" type="checkbox" class="form-check-input" id="customSwitchsizelg" [checked]='examiner.active'>
+                  </div>
               </td>
-              <td><button class="btn btn-sm btn-primary" (click)="openAddProcedureModal(addProcedureModal)"> Add procedure</button></td>
+              <td><button class="btn btn-sm btn-primary" (click)="openAddProcedureModal(addProcedureModal)"> <span *ngIf="examiner.procedureId == null"> Add procedure</span>  <span *ngIf="examiner.procedureId != null"> Edit Procedure</span></button></td>
             
             
               <ng-template #addProcedureModal role="document" let-modal>

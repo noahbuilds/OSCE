@@ -12,7 +12,8 @@ import { ExaminerAccount } from "src/app/authentication/model/examiner-account";
 import { ResourceCreated } from "../../exam-manager/models/resource.created";
 import { HttpErrorResponse } from "@angular/common/http";
 import { NotifierService } from "angular-notifier";
-
+import Swal from "sweetalert2";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-mark-procedure",
@@ -22,49 +23,22 @@ import { NotifierService } from "angular-notifier";
 export class MarkProcedureComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   isFound: boolean = false;
-  procedures: Array<any> = [
-    {
-      name: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias abbeatae sapiente fugiat nemo pariatur exercitationem ut dignissimos Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias abbeatae sapiente fugiat nemo pariatur exercitationem ut dignissimos ",
-      grade: "",
-      id: 1,
-      maxScore: 1,
-    },
-    {
-      name: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias abbeatae sapiente fugiat nemo pariatur exercitationem ut dignissimos",
-      grade: "",
-      id: 2,
-      maxScore: 0.5,
-    },
-    {
-      name: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias abbeatae sapiente fugiat nemo pariatur exercitationem ut dignissimos",
-      grade: "",
-      id: 3,
-      maxScore: 0.25,
-    },
-    {
-      name: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias abbeatae sapiente fugiat nemo pariatur exercitationem ut dignissimos",
-      grade: "",
-      id: 4,
-      maxScore: 1,
-    },
-  ];
   currentExaminer: ExaminerAccount;
-  grades: any = ["0", "1/4", "1/2", 1];
-
-  gradedDTO: any = [];
-  gradedActivitiesId = [];
-  candidateToGrade: ProcedureModel;
+  candidateToGrade: ProcedureModel = null;
   candidateActivitiesLength: number;
   isAssessmentOn: boolean = false;
   timerSub$: Subscription;
   autoSaveSub$: Subscription;
   completedActivities = [];
+  endExamTimerSub$: Subscription
+  processingEndExam: boolean = false
 
   constructor(
     private modalService: NgbModal,
     private markProcedureService: MarkProcedureService,
     private examinerAccountService: ExaminerAccountService,
-    private readonly notifierService: NotifierService
+    private router: Router,
+    private readonly notifierService: NotifierService,
   ) {}
 
   ngOnInit(): void {
@@ -88,18 +62,52 @@ export class MarkProcedureComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  grader(index: number, grade: string) {
-    if (grade === "1/4") {
-      this.candidateToGrade.activities[index].score = 0.25;
-    } else if (grade === "1/2") {
-      this.candidateToGrade.activities[index].score = 0.5;
-    } else if (grade === "3/4") {
-      this.candidateToGrade.activities[index].score = 0.75;
-    } else {
-      this.candidateToGrade.activities[index].score = parseInt(grade);
-    }
+  grader(index: number, grade: string, activityId: string) {
 
-    console.log(this.candidateToGrade.activities[index]);
+  
+      // this.candidateToGrade.activities[index].score = this.convertFractionToScore(grade);
+
+      let response = {
+        activityId: activityId,
+        score: this.convertFractionToScore(grade)
+      }
+
+      var activityAttempted = this.candidateToGrade.candidateDetails.activitiesScores
+                              .find((activity) => activity.activityId == response.activityId);
+
+      if(activityAttempted == null){
+          
+        this.candidateToGrade.candidateDetails.activitiesScores.push(response);
+      } 
+      else {
+
+        activityAttempted.score = response.score;
+      }                       
+
+
+   /* if(this.checkIfActivityAttempted(response.activityId, response.score) === false){
+      this.candidateToGrade.candidateDetails.activitiesScores.push(response)
+    }else{
+      this.candidateToGrade.candidateDetails.activitiesScores.forEach(element => {
+        if(element.activityId === response.activityId){
+          element.score =response.score
+        }
+      });
+    }*/
+      
+    
+
+    // console.log(this.candidateToGrade.activities[index]);
+    console.log(response)
+  }
+
+  checkIfActivityAttempted(id: string, score: number) : boolean {
+       
+    var activity = this.candidateToGrade.candidateDetails.activitiesScores
+                   .find((activity) => activity.activityId === id && activity.score == score);
+
+                   
+   return  activity == null ? false : true;
   }
 
   convertFractionToScore(fraction : string): number{
@@ -112,14 +120,11 @@ export class MarkProcedureComponent implements OnInit {
     else if (fraction == "1/2") {
       return 0.5
     }
-    else if(fraction == "1/4"){
-      return 0.25
-    }
-    else if( fraction == "3/4"){
-      return 0.75
+    else if(fraction == "1"){
+      return 1
     }
     else {
-      return 1
+      return 2
     }
     
   }
@@ -130,22 +135,25 @@ export class MarkProcedureComponent implements OnInit {
       if (this.candidateToGrade.activities[i].maxScore === 1) {
         this.candidateToGrade.activities[i].gradeList = [
           "0",
-          "1/4",
+         
           "1/2",
-          "3/4",
+          
           "1",
         ];
-      } else if (this.candidateToGrade.activities[i].maxScore === 0.75) {
+      } else if (this.candidateToGrade.activities[i].maxScore === 2) {
         this.candidateToGrade.activities[i].gradeList = [
           "0",
-          "1/4",
           "1/2",
-          "3/4",
+          
+          "1",
+          "2"
         ];
-      } else if (this.candidateToGrade.activities[i].maxScore === 0.5) {
-        this.candidateToGrade.activities[i].gradeList = ["0", "1/4", "1/2"];
-      } else {
-        this.candidateToGrade.activities[i].gradeList = ["0", "1/4"];
+      } else if(this.candidateToGrade.activities[i].maxScore === 0.5){
+        this.candidateToGrade.activities[i].gradeList = [
+          "0",
+          "1/2",
+          
+        ];
       }
     }
   }
@@ -156,10 +164,17 @@ export class MarkProcedureComponent implements OnInit {
     programId: string,
     procedureId: string,
     examNumber: string
-  ): Subscription {
+  ){
+    
+    if (examNumber == "") {
+      this.notifierService.notify(
+        "error",
+        "Please enter candidate exam number"
+      );
+      
+    }
     this.isFound = false;
-
-    return this.markProcedureService
+     this.markProcedureService
       .getCandidateToGrade(
         examId,
         examinerId,
@@ -179,6 +194,7 @@ export class MarkProcedureComponent implements OnInit {
         complete: () => {
           this.candidateActivitiesLength =
             this.candidateToGrade.activities.length;
+         
           console.log(this.candidateToGrade);
         },
         error: (err: HttpErrorResponse) =>{
@@ -187,13 +203,7 @@ export class MarkProcedureComponent implements OnInit {
       });
   }
 
-  checkIfActivityAttempted(id: string, score: number) : boolean {
-       
-    var activity = this.candidateToGrade.candidateDetails.activitiesScores
-                   .find((activity) => activity.activityId === id && activity.score == score);
-
-   return  activity == null ? false : true;
-  }
+  
 
   startAutoSave() {
     if (!this.isAssessmentOn) {
@@ -234,6 +244,8 @@ export class MarkProcedureComponent implements OnInit {
         this.candidateToGrade.candidateDetails.seconds == 0
       ) {
         // end exam and cancel subscription
+        this.endExamTimer(true);
+        //this.endExam(true)
         return;
       }
     });
@@ -242,11 +254,10 @@ export class MarkProcedureComponent implements OnInit {
   startAssessment() {
     this.isAssessmentOn = true;
     this.startTimer();
-    
     this.startAutoSave();
   }
 
-  autoSaveCandidateProcedure(payload) {
+  autoSaveCandidateProcedure(payload:CandidateGradedProcedureDTO) {
     this.markProcedureService.autoSaveCandidateProcedure(payload).subscribe({
       next: (data: ResourceCreated) => {},
       error: (err: HttpErrorResponse) => {
@@ -256,16 +267,7 @@ export class MarkProcedureComponent implements OnInit {
   }
 
   generatePayload(): CandidateGradedProcedureDTO {
-    let candidateResponses: ActivityScore[] = [];
-
-    this.candidateToGrade.activities.forEach((activity) => {
-      let response: ActivityScore = {
-        score: activity.score,
-        activityId: activity.id,
-      };
-
-      candidateResponses.push(response);
-    });
+   
 
     let payload: CandidateGradedProcedureDTO = {
       candidateId: this.candidateToGrade.candidateDetails.id,
@@ -277,13 +279,15 @@ export class MarkProcedureComponent implements OnInit {
         this.candidateToGrade.candidateProcedureDetailsId,
       programId: this.currentExaminer.programId,
       procedureId: this.currentExaminer.procedureId,
-      activityScores: candidateResponses,
+      activityScores: this.candidateToGrade.candidateDetails.activitiesScores,
     };
-
+    console.log(payload)
     return payload;
   }
   
   endExam(timedOut: boolean) {
+   
+    this.processingEndExam = true;
     this.timerSub$.unsubscribe();
     this.autoSaveSub$.unsubscribe();
     this.isAssessmentOn = false
@@ -291,17 +295,66 @@ export class MarkProcedureComponent implements OnInit {
     subscribe({
       next : (data)=>{
         console.log(data)
+        Swal.close();
+      this.endExamTimerSub$.unsubscribe();
+      this.candidateActivitiesLength = 0;
+      this.completedActivities = []
+      this.candidateToGrade = null;
+      
+       
       },
       error: (err: HttpErrorResponse)=>{
         console.log(err.error.message)
-      }
+        this.processingEndExam = false;
+      },
+      complete: ()=> {
+        
+      },
     });
   }
 
-  getCurrentExaminer(): ExaminerAccount {
-    (this.currentExaminer = this.examinerAccountService.getUser());
-    return this.currentExaminer
+  getCurrentExaminer() {
+    this.currentExaminer = this.examinerAccountService.getUser();
+   // return this.currentExaminer
   }
 
+  showExamEndingLoader(){
+    Swal.fire({
+      title: "Processing Please wait",
+      allowEnterKey: false,
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  }
+
+  /* confirm(): void {
+    Swal.fire({
+      title: "Are you sure you want to end this assessment?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "rgb(3, 142, 220)",
+      cancelButtonColor: "rgb(243, 78, 78)",
+      confirmButtonText: "Yes, end exam!",
+    }).then((result) => {
+      if (result.value) { */
+    openEndExamConfirmationDialog(modal:any){
+         
+      this.modalService.open(modal);
+    }
+        
+    endExamTimer(timedOut: boolean) {
+      this.showExamEndingLoader();
+      this.endExamTimerSub$ = timer(0, 5000).subscribe((value) => {
+        if (this.processingEndExam == true) {
+          return;
+        }
   
+        this.endExam(timedOut);
+      });
+    }
 }

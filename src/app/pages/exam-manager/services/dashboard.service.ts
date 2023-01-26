@@ -12,7 +12,7 @@ export class DashboardService {
 
   getDashboardData(): Observable<DashboardModel> {
     return this.http.get<DashboardModel>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/dashboard`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/dashboard`,
       { withCredentials: true }
     );
   }

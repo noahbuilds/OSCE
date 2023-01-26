@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NotifierService } from 'angular-notifier';
 import { Observable, Subscription } from 'rxjs';
 import { IpModel } from '../models/ip.model';
 import { ResourceCreated } from '../models/resource.created';
@@ -15,7 +16,7 @@ export class WhiteListComponent implements OnInit {
   IPs: string[];
   payload: IpModel
   resourceCreated: ResourceCreated
-constructor(private ipService: IpService) { }
+constructor(private ipService: IpService, private readonly notifierService: NotifierService) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -42,7 +43,7 @@ captureIP(ip:string){
   this.payload = {
     ip: ip
   }
-  console.log(ip)
+ 
 
   this.addIP(this.payload)
 }
@@ -50,13 +51,26 @@ captureIP(ip:string){
   addIP(payload: IpModel):Subscription{
     
     return this.ipService.addIP(payload).subscribe(
-      {next: (data: ResourceCreated)=>{
+      {
+        next: (data: ResourceCreated)=>{
         this.resourceCreated = data
-        this.getIPs()
+       
       },
       error : (err: HttpErrorResponse)=>{
         console.log(err.message)
-      }
+        this.notifierService.notify('error',err.error.message)
+
+      },
+      complete: ()=> {
+        if(payload.ip == ''){
+          this.notifierService.notify('error', `Please provide an IP address`)
+         }
+         else{
+          this.notifierService.notify('success',`${payload.ip} added successfully`)
+          this.getIPs()
+         }
+        
+      },
     }
     )
   }

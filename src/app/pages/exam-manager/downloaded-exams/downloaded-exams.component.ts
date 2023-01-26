@@ -1,9 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ExamModel } from '../models/exam.model';
 import { ExamService } from '../services/exam.service';
-
+import { ManageExamService } from '../services/manage-exam.service';
+import { NotifierService } from 'angular-notifier';
+import { ManagerAccountService } from 'src/app/authentication/services/manager-account.service';
 
 
 @Component({
@@ -13,25 +16,13 @@ import { ExamService } from '../services/exam.service';
 })
 export class DownloadedExamsComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
-  items: any = [
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-  ]
   downloadedExams: ExamModel[]
-  constructor(private router: Router, private examService: ExamService) { }
+  constructor(private router: Router, 
+    private examService: ExamService,
+     private manageExamService: ManageExamService,
+     private readonly notifierService: NotifierService,
+     private managerAccountService: ManagerAccountService
+     ) { }
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -54,5 +45,39 @@ export class DownloadedExamsComponent implements OnInit {
     })
 
    
+   }
+
+   uploadOsce(): Subscription{
+    return this.manageExamService.uploadOsce(this.managerAccountService.getUser().examId).subscribe(
+      {
+        next: (value)=> {
+          
+        },
+        error: (err: HttpErrorResponse)=> {
+          this.notifierService.notify('error', err.error.message)
+          
+        },
+        complete:() =>{
+            this.notifierService.notify('success', 'OSCE uploaded successfully')
+        },
+      }
+    )
+   }
+
+   uploadViva(): Subscription{
+    return this.manageExamService.uploadViva(this.managerAccountService.getUser().examId).subscribe(
+      { next:(value)=> {
+        
+      },
+      error: (err: HttpErrorResponse)=> {
+        console.log(err.error.message)
+        this.notifierService.notify('error', err.error.message)
+
+      },
+      complete: ()=> {
+        this.notifierService.notify('success', 'VIVA uploaded successfully')
+      },
+    }
+    )
    }
 }

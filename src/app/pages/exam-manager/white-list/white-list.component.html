@@ -4,30 +4,38 @@
 ></app-breadcrumbs>
 
 <div class="card card-body">
-    <div class="mb-4 d-flex mx-auto my-auto gap-1">
- 
-            <input #inputRef type="text" class="form-control" placeholder="add IP">
-            <button class="btn btn-primary" (click)="captureIP(inputRef.value)">Add</button>
-            
-    </div>
+  <div class="mb-4 d-flex mx-auto my-auto gap-1">
+    <input
+      #inputRef
+      type="text"
+      class="form-control"
+      required
+      placeholder="add IP"
+    />
+    <button
+      class="btn btn-primary"
+      (click)="captureIP(inputRef.value)"
+    >
+      Add
+    </button>
+  </div>
 
-    <div class="table-responsive">
-        <table class="table table-gridjs">
-          <thead>
-          <tr>
+  <div class="table-responsive">
+    <table class="table table-gridjs">
+      <thead>
+        <tr>
           <th class="sort" data-sort="name">S/N</th>
           <th class="sort" data-sort="email">IP ADDRESS</th>
           <th class="sort" data-sort="country">ACTION</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let IP of IPs; let i = index">
-            <td>{{i + 1}}</td>
-            <td>{{IP}}</td>
-            <td> <button class="btn btn-sm btn-danger"> Delete</button></td>
-           </tr> 
-          </tbody>
-        </table>
-      </div>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let IP of IPs; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ IP }}</td>
+          <td><button class="btn btn-sm btn-danger">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-

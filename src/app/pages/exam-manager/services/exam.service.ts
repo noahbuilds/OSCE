@@ -16,28 +16,28 @@ export class ExamService {
 
   downloadExam(centerId:string): Observable<ExamModel>{
     return this.http.get<ExamModel>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/download/download_exam/${centerId}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/download/download_exam/${centerId}`,
       { withCredentials: true }
     )
   }
 
   getDownloadedExams(): Observable<ExamModel[]> {
     return this.http.get<ExamModel[]>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams`,
       { withCredentials: true }
     )
   }
 
   getExaminersForAnExam(examId: string, programId: string):Observable<ExaminerModel[]>{
     return this.http.get<ExaminerModel[]>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams/exam/${examId}/program/${programId}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams/exam/${examId}/program/${programId}`,
       { withCredentials: true }
     )
   }
 
   addProcedureToExaminer(procedure:ExaminerProcedureModel){
     return this.http.post<ResourceCreated>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams/examiner/add_procedure`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams/examiner/add_procedure`,
       procedure,
       { withCredentials: true }
     )
@@ -45,15 +45,15 @@ export class ExamService {
 
   getProcedures(examId: string, programId: string):Observable< ProcedureModel[]>{
     return this.http.get<ProcedureModel[]>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams/exam/${examId}/program/${programId}/procedures`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams/exam/${examId}/program/${programId}/procedures`,
       
       {withCredentials: true}
     )
   }
 
   updateExaminerStatus(examinerId: string, active:boolean){
-    return this.http.patch(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams/examiner/${examinerId}/active/${active}`,
+    return this.http.get(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/downloaded_exams/examiner/${examinerId}/active/${active}`,
       { withCredentials: true }
 
     )

@@ -9,6 +9,7 @@ import {
 import { MonitorVivaService } from "../../services/monitor-viva.service";
 import { ManageVivaService } from "../../services/manage-viva.service";
 import { HttpErrorResponse } from "@angular/common/http";
+import { VivaModel } from "../../models/viva.model";
 
 @Component({
   selector: "app-viva",
@@ -20,7 +21,7 @@ export class VivaComponent implements OnInit {
   vivaMonitor: VivaMonitorModel;
   vivaMonitorByProgram: CandidateModel[];
   currentManager: ManagerAccount;
-  availableVivaToMonitor: any;
+  availableVivaToMonitor: VivaModel;
 
   constructor(
     private manageVivaService: ManageVivaService,
@@ -34,8 +35,8 @@ export class VivaComponent implements OnInit {
       { label: "Monitor VIVA", active: true },
     ];
 
-    this.getAvailableVivaToMonitor();
-    // this.monitorViva(this.currentManager)
+   
+    this.monitorViva(this.managerAccountService.getUser().examId)
   }
 
   monitorViva(examId: string): Subscription {
@@ -69,7 +70,6 @@ export class VivaComponent implements OnInit {
       },
     });
   }
-  getCurrentManager() {
-    this.currentManager = this.managerAccountService.getUser();
-  }
+
+ 
 }

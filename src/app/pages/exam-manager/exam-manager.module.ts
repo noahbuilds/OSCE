@@ -20,7 +20,6 @@ import { OsceComponent } from './monitor-exam/osce/osce.component';
 import { DownloadedExamDetailsComponent } from './downloaded-exams/downloaded-exam-details/downloaded-exam-details.component';
 import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { SimplebarAngularModule } from "simplebar-angular";
-import { NotifierModule, NotifierOptions } from 'angular-notifier';
 
 
 
@@ -49,7 +48,6 @@ import { NotifierModule, NotifierOptions } from 'angular-notifier';
     NgbDropdownModule,
     NgbNavModule,
     SimplebarAngularModule,
-    NotifierModule
 
   ]
 })

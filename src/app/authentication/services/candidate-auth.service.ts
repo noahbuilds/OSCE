@@ -28,7 +28,7 @@ export class CandidateAuthService {
   );
 
   return this.http.post (
-    `https://${environment.developmentIP}/caosce/examdelivery/api/candidate/authentication`,
+    `http://${environment.developmentIP}/caosce/examdelivery/api/candidate/authentication`,
     loginData,
     { headers, responseType: "text", withCredentials: true }
   )
@@ -37,7 +37,7 @@ export class CandidateAuthService {
 
   getLoggedInAccount(): Observable<CandidateAccount> {
     return this.http.get<CandidateAccount>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/candidate/account`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/candidate/account`,
       { withCredentials: true }
     ).pipe(
       map((value)=>{

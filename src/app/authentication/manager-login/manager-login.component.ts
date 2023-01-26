@@ -84,7 +84,8 @@ export class ManagerLoginComponent implements OnInit {
           this.error = true;
           this.error_msg = err.message;
           this.submitted = false;
-        }
+        },
+        
       );
     }
   }

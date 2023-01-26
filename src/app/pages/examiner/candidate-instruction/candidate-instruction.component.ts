@@ -17,6 +17,7 @@ export class CandidateInstructionComponent implements OnInit {
   candidateInstruction: InstructionModel;
   currentExaminer: ExaminerAccount;
   procedures: Procedure[];
+  capturedName: string = ''
   constructor(
     private instructionService: InstructionService,
     private examinerAccountService: ExaminerAccountService
@@ -29,10 +30,11 @@ export class CandidateInstructionComponent implements OnInit {
     ];
     this.getCurrentExaminer();
     this.getAllProcedures(this.currentExaminer.programId);
+    // console.log(this.)
   }
 
-  getCandidateInstruction(procedureId: string): Subscription {
-    return this.instructionService
+  getCandidateInstruction(procedureId: string) {
+     this.instructionService
       .getCandidateInstruction(procedureId)
       .subscribe({
         next: (data: InstructionModel) => {
@@ -51,8 +53,8 @@ export class CandidateInstructionComponent implements OnInit {
     this.getCandidateInstruction(procedureId);
   }
 
-  getAllProcedures(programId: string): Subscription {
-    return this.instructionService.getProcedures(programId).subscribe({
+  getAllProcedures(programId: string) {
+     this.instructionService.getProcedures(programId).subscribe({
       next: (data: Procedure[]) => {
         this.procedures = data;
       },
@@ -65,8 +67,8 @@ export class CandidateInstructionComponent implements OnInit {
     });
   }
 
-  getCurrentExaminer(): ExaminerAccount {
-   (this.currentExaminer = this.examinerAccountService.getUser());
-   return  this.currentExaminer
+  getCurrentExaminer() {
+   this.currentExaminer = this.examinerAccountService.getUser();
+
   }
 }

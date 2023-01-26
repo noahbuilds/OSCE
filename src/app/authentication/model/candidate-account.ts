@@ -15,5 +15,6 @@ export interface CandidateProcedure{
       endTime: string,
       procedureName: string,
       procedureId: string
+      candidateDetailsId: string,
     
 }

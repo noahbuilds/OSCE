@@ -26,7 +26,7 @@ export class ExaminerAuthService {
 
     return this.http
       .post(
-        `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/authentication`,
+        `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/authentication`,
         loginData,
         { headers, responseType: "text", withCredentials: true }
       )
@@ -35,7 +35,7 @@ export class ExaminerAuthService {
 
   getLoggedInAccount(): Observable<ExaminerAccount> {
     return this.http.get<ExaminerAccount>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/account`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/account`,
       { withCredentials: true }
     ).pipe(
       map((value)=>{

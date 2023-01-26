@@ -30,13 +30,14 @@
                   [checked]="this.currentQuestion.selectedOption == option.id"
                   value="{{ option.option }}"
                   name="q"
-                  (click)="optionSelected(option.id, currentQuestion.itemId)"
+                  (click)="captureResponse(option.id, currentQuestion.itemId)"
                 />
                 <span
                   class="form-check-label align-center"
                   for="option"
                   style="cursor: pointer"
                   [innerHTML]="option.option"
+                  (click)="captureResponse(option.id, currentQuestion.itemId)"
                 ></span>
               </div>
             </div>

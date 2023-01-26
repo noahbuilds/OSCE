@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { interval } from "rxjs";
-import { take } from "rxjs/operators";
+import {  Subscription, timer } from 'rxjs';
+
 
 
 @Injectable({
@@ -8,16 +8,17 @@ import { take } from "rxjs/operators";
 })
 export class TimeService {
 
+  timerSub$ : Subscription
   constructor() { }
 
 
   startTimer(){
-    const timerInterval$ = interval(1000); //1s
-    let examTime = 10;
-    // const timer$ = timer(30000); //30s
-    return timerInterval$.pipe(take(examTime));
-   
+    this.timerSub$ = timer(0, 30000).subscribe(
+  (value)=>{
+
   }
+    )
 
 }
 
+}

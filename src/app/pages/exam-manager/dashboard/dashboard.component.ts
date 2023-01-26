@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
+import { ManagerAccountService } from "src/app/authentication/services/manager-account.service";
 import { DashboardModel } from "../models/dashboard.model";
 import { DashboardService } from "../services/dashboard.service";
 
@@ -14,7 +15,8 @@ export class DashboardComponent implements OnInit {
   greetMsg: string = "";
   dashboardData: DashboardModel ;
   dashboardSub: Subscription;
-  constructor(private dashboardService: DashboardService) {}
+  currentManager: string = ''
+  constructor(private dashboardService: DashboardService, private managerAccountService: ManagerAccountService) {}
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -22,6 +24,7 @@ export class DashboardComponent implements OnInit {
       { label: "Dashboard", active: true },
     ];
     this.setGreetMsg();
+   this.currentManager=  this.managerAccountService.getUser().username
     this.getDashboardData();
   }
 
@@ -57,6 +60,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.dashboardSub.unsubscribe();
+    // this.dashboardSub.unsubscribe();
   }
 }

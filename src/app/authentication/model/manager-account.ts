@@ -7,6 +7,7 @@ export interface ManagerAccount {
     lastName: string,
     email: string,
     username: string,
+    examId?: string,
     role: Role.MANAGER
   
 }

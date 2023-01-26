@@ -16,7 +16,7 @@ export class MarkVivaService {
 
   gradeCandidate(candidateId: string, payload:VivaModel):Observable <ResourceCreated>{
     return this.http.post<ResourceCreated>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/markviva/candidate/${candidateId}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markviva/candidate/${candidateId}`,
       payload,
       {withCredentials: true}
     )
@@ -24,14 +24,14 @@ export class MarkVivaService {
 
   getCandidateForGrading(examNumber: string, programId:string):Observable<any>{
     return this.http.get<CandidateModel>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/markviva/program/${programId}/candidate_for_grading/${examNumber}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markviva/program/${programId}/candidate_for_grading/${examNumber}`,
       {withCredentials: true}
     )
   }
 
-  getGradedCandidatesByProgram(programId: string): Observable<any>{
+  getGradedCandidatesByProgram(programId: string): Observable<CandidateModel[]>{
     return this.http.get<CandidateModel[]>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/markviva/program/${programId}/candidates`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markviva/program/${programId}/candidates`,
       {withCredentials: true}
     )
   }

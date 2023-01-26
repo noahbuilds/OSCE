@@ -1,4 +1,9 @@
-<div class="mt-2 m-2 full-height">
+<div
+  class="mt-2 m-2 full-height"
+  *ngIf="candidateExamDetails != null && currentCandidate != null"
+>
+
+
   <div class="row">
     <div class="col">
       <div class="d-flex">
@@ -9,75 +14,93 @@
           alt="candidate-img"
         />
         <div class="m-lg-2 m-sm-0">
-          <p class="m-0 fw-medium user-name-text">{{currentCandidate.name}}</p>
-          <p class="m-0 text-muted user-name-sub-text fs-12">{{currentCandidate.examNumber}}</p>
+          <p class="m-0 fw-medium user-name-text">
+            {{ currentCandidate.name }}
+          </p>
+          <p class="m-0 text-muted user-name-sub-text fs-12">
+            {{ currentCandidate.examNumber }}
+          </p>
         </div>
       </div>
 
       <div class="d-flex gap-2 mt-3">
-<button type="button" class="btn btn-light">1</button>
-      <button type="button" class="btn btn-light">2</button>
-      <button type="button" class="btn btn-light">3</button>
-      <button type="button" class="btn btn-light">4</button>
-      <button type="button" class="btn btn-light">5</button>
-      <button type="button" class="btn btn-light">6</button>
-      <button type="button" class="btn btn-light">7</button>
-      <button type="button" class="btn btn-light">8</button>
-      <button type="button" class="btn btn-light">9</button>
-      <button type="button" class="btn btn-light">10</button>
+        <ng-container *ngFor="let questionId of questionIDs; let i = index">
+          <button
+            [style.background-color]="checkIfAttempted(questionId)"
+            class="btn btn-light"
+            (click)="navigator(i)"
+            type="button"
+          >
+            {{ i + 1 }}
+          </button>
+        </ng-container>
       </div>
-      
+
       <p class="fw-bold mb-2 mt-2">
         Question {{ this.currentQuestionNumber + 1 }}.
       </p>
-      
     </div>
-   
+
     <div class="col">
       <div class="exam-name d-flex justify-content-center">
-        <div class="d-flex border rounded-1 bg-primary text-white p-1 btn-sm">
-          <p class="mb-0 fw-medium user-name-text">{{currentCandidate.programName}} / {{candidateExamDetails.procedureName}}</p>
+        <div class="d-flex border rounded-1 bg-primary text-white p-2 btn-md">
+          <p class="mb-0 fw-medium user-name-text">
+            {{ currentCandidate.programName }} /
+            {{ candidateExamDetails.procedureName }}
+          </p>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="timer d-flex justify-content-end">
-        <div
-          class="mx-2"
-        >
-          <button  (click)="confirm()" class="btn btn-outline-danger p-1">
+        <!-- <div class="mx-2">
+          <button
+            *ngIf="displayEndExamButton()"
+            (click)="openEndExamConfirmationDialog(confirmationModal)"
+            class="btn btn-outline-danger p-1"
+          >
             End exam
           </button>
-        </div>
+        </div> -->
 
         <div
           class="col-xl-3 col-lg-4 p-1 col-sm-6 d-flex justify-content-center gap-1 align-items-center rounded-3 text-center bg-success"
         >
           <i class="ri-timer-line align-bottom text-white"></i>
           <span class="text-white">
-            {{displayTimerText()}}
-            </span
-          >
+            {{ displayTimerText() }}
+          </span>
         </div>
       </div>
       <div
         class="d-flex justify-content-end px-0 btn-sm align-items-center text-center"
       >
-        <p class="card p-2">Attemted {{attemptedQuestions.length}} of {{ itemsLength }}</p>
+        <p class="card fs-14 p-2 ">
+          Attemted {{ attemptedQuestions.length }} of {{ itemsLength }}
+        </p>
+
+        
+          
+        
+
+        
+       
       </div>
-      <!-- <div class="d-flex justify-content-end mt-2 mb-2">
-        <button class="btn btn-sm btn-primary" (click)="changeDisplay()"><span *ngIf="displaySplit">Default </span> <span
-            *ngIf="!displaySplit">Split </span> mode</button>
-      </div> -->
+      <div class="d-flex justify-content-end">
+        <button
+        *ngIf="displayEndExamButton()"
+        (click)="openEndExamConfirmationDialog(confirmationModal)"
+        class="btn btn-outline-danger p-1"
+      >
+        End exam
+      </button>
+      </div>
+      
     </div>
     
-   
     
 
-    <app-standard-choice
-     
-    ></app-standard-choice>
-
+    <app-standard-choice></app-standard-choice>
   </div>
 
   <footer
@@ -118,3 +141,31 @@
     </div>
   </footer>
 </div>
+
+<ng-template #confirmationModal let-modal>
+  <div class="modal-body p-5">
+    <h4 class="mb-4 text-center">Are you sure you want to end this assessment?</h4>
+    <div class="row">
+      <p class="text-center text-muted">
+        You won't be able to revert this!
+      </p>
+    </div>
+    <div class="d-flex justify-content-center gap-2 mt-2">
+      <button
+        type="button"
+        (click)="modal.close('Close click')"
+        class="btn btn-primary"
+      >
+        No, Cancel
+      </button>
+      <button
+        type="button"
+        (click)="endExamTimer(false);modal.close('Close click') "
+        class="btn btn-danger"
+      >
+        Yes, End Exam
+      </button>
+    </div>
+  </div>
+</ng-template>
+

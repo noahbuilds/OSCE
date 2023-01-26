@@ -15,4 +15,8 @@ currentUser: ManagerAccount
   getUser(): ManagerAccount{
     return this.currentUser
   }
+
+  setExamId(examId: string){
+    this.currentUser.examId = examId
+  }
 }

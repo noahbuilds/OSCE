@@ -14,7 +14,7 @@ export class DashboardService {
 
   getDashboardData(programId: string):Observable<DashboardModel>{
     return this.http.get<DashboardModel>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/examiner/dashboard/program/${programId}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/dashboard/program/${programId}`,
       { withCredentials: true });
   }
 }

@@ -12,7 +12,7 @@ export class MonitorVivaService {
 
   monitorViva(examId: string): Observable<VivaMonitorModel> {
     return this.http.get<VivaMonitorModel>(
-      `${environment.developmentIP}/caosce/examdelivery/api/exammanager/monitor/viva/${examId}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/monitor/viva/${examId}`,
       { withCredentials: true }
     );
   }
@@ -22,7 +22,7 @@ export class MonitorVivaService {
     programId: string
   ): Observable<CandidateModel[]> {
     return this.http.get<CandidateModel[]>(
-      `${environment.developmentIP}/caosce/examdelivery/api/exammanager/monitor/viva/${examId}/program/${programId}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/monitor/viva/${examId}/program/${programId}`,
       { withCredentials: true }
     );
   }

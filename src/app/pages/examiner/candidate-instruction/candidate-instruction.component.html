@@ -5,15 +5,19 @@
 
 <h6>Select procedure to view instruction</h6>
 <select #dropBoxRef (change)="captureProcedure(dropBoxRef.value)" class="form-select  mb-3" aria-label="Default select example">
-  <!-- <option selected>Filter</option> -->
-  <option *ngFor="let procedure of procedures" value="{{procedure.id}}">BASIC NURSING</option>
-  
+  <option selected disabled>Select procedure</option>
+  <option  *ngFor="let procedure of procedures; let i = index"  value="{{procedure.id}}">
+    {{procedure.name}}
+
+  </option>
   </select>
-    <div class="card">
+ 
+
+    <div class="card" *ngIf="candidateInstruction!=null && candidateInstruction.instruction != null">
       
         <div class="card-body" style="height: 60vh;">
             <h5 class="card-header">Candidate Instruction For {{candidateInstruction.procedureName}}</h5>
-            <span   *ngIf="candidateInstruction!=null && candidateInstruction.instruction != null" class="mt-5" [innerHTML]="candidateInstruction.instruction">
+            <span   class="mt-5" [innerHTML]="candidateInstruction.instruction">
               
             </span>
                <!-- <ol class="mt-2">

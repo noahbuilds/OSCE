@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ExaminerRoutingModule } from './examiner-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -40,7 +41,8 @@ import { MonitorProcedureTableComponent } from './monitor/monitor-procedure-tabl
     CommonModule,
     ExaminerRoutingModule,
     SharedModule,
-    SimplebarAngularModule
+    SimplebarAngularModule,
+    NgbModalModule
   ]
 })
 export class ExaminerModule { }

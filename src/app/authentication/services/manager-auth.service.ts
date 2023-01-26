@@ -27,7 +27,7 @@ export class ManagerAuthService {
   );
 
   return this.http.post (
-    `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/authentication`,
+    `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/authentication`,
     loginData,
     { headers, responseType: "text", withCredentials: true }
   )
@@ -36,7 +36,7 @@ export class ManagerAuthService {
 
   getLoggedInAccount(): Observable<ManagerAccount> {
     return this.http.get<ManagerAccount>(
-      `https://${environment.developmentIP}/caosce/examdelivery/api/exammanager/account`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/account`,
       { withCredentials: true }
     ).pipe(
       map((value)=>{

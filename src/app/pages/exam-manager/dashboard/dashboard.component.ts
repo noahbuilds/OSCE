@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Subscription, timer } from "rxjs";
 import { ManagerAccountService } from "src/app/authentication/services/manager-account.service";
 import { DashboardModel } from "../models/dashboard.model";
 import { DashboardService } from "../services/dashboard.service";
@@ -14,9 +14,11 @@ export class DashboardComponent implements OnInit {
   breadCrumbItems!: Array<{}>;
   greetMsg: string = "";
   dashboardData: DashboardModel ;
-  dashboardSub: Subscription;
-  currentManager: string = ''
-  constructor(private dashboardService: DashboardService, private managerAccountService: ManagerAccountService) {}
+  currentManager: string = '';
+  refreshTimerSub$: Subscription;
+  constructor(
+    private dashboardService: DashboardService, 
+    private managerAccountService: ManagerAccountService) {}
 
   ngOnInit(): void {
     this.breadCrumbItems = [
@@ -26,6 +28,7 @@ export class DashboardComponent implements OnInit {
     this.setGreetMsg();
    this.currentManager=  this.managerAccountService.getUser().username
     this.getDashboardData();
+    this.refreshDashboard();
   }
 
   setGreetMsg(): string {
@@ -45,8 +48,8 @@ export class DashboardComponent implements OnInit {
     return "";
   }
 
-  getDashboardData(): Subscription {
-    return (this.dashboardSub = this.dashboardService
+  getDashboardData() {
+     this.dashboardService
       .getDashboardData()
       .subscribe({
         next: (data: DashboardModel) => {
@@ -56,10 +59,21 @@ export class DashboardComponent implements OnInit {
           console.log(err.message)
         }
         
-      }));
+      });
   }
 
+refreshDashboard(){
+  this.refreshTimerSub$ = timer(60000, 60000).subscribe((value)=>{
+    this.getDashboardData()
+  })
+}
+
+
   ngOnDestroy(): void {
-    // this.dashboardSub.unsubscribe();
+    if(this.refreshTimerSub$ != null){
+      this.refreshTimerSub$.unsubscribe()
+    }
+
   }
+ 
 }

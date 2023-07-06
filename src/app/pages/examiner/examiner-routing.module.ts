@@ -14,16 +14,17 @@ import { MonitorResearchComponent } from "./monitor/monitor-research/monitor-res
 import { MonitorObjectiveStationComponent } from "./monitor/monitor-objective-station/monitor-objective-station.component";
 import { MonitorVivaComponent } from "./monitor/monitor-viva/monitor-viva.component";
 import { MonitorProcedureComponent } from "./monitor/monitor-procedure/monitor-procedure.component";
+import { InstructionGuard } from "src/app/core/guards/instruction.guard";
 const routes: Routes = [
   { path: "", redirectTo: "dashboard" },
   { path: "dashboard", component: DashboardComponent },
-  { path: "candidate-instruction", component: CandidateInstructionComponent },
+  { path: "candidate-instruction", component: CandidateInstructionComponent, canActivate: [InstructionGuard] },
   { path: "mark-research", component: MarkResearchComponent },
   { path: "mark-expectant-care", component: MarkExpectantCareComponent },
   { path: "mark-viva", component: MarkVivaComponent },
   { path: "mark-procedure", component: MarkProcedureComponent },
-  { path: "procedure-instruction", component: ProcedureInstructionComponent },
-  { path: "activity-logs", component: ActivitiesLogComponent },
+  { path: "procedure-instruction", component: ProcedureInstructionComponent, canActivate: [InstructionGuard] },
+  // { path: "activity-logs", component: ActivitiesLogComponent },
 
   {
     path: "monitor",

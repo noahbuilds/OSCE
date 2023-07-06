@@ -2,14 +2,12 @@
   class="mt-2 m-2 full-height"
   *ngIf="candidateExamDetails != null && currentCandidate != null"
 >
-
-
   <div class="row">
-    <div class="col">
+    <div class="col-4">
       <div class="d-flex">
         <img
           style="max-width: 80px; max-height: 80px"
-          src="assets/images/users/avatar-7.jpg"
+          [src]="image"
           class="img-fluid rounded-circle d-none d-md-block"
           alt="candidate-img"
         />
@@ -22,26 +20,9 @@
           </p>
         </div>
       </div>
-
-      <div class="d-flex gap-2 mt-3">
-        <ng-container *ngFor="let questionId of questionIDs; let i = index">
-          <button
-            [style.background-color]="checkIfAttempted(questionId)"
-            class="btn btn-light"
-            (click)="navigator(i)"
-            type="button"
-          >
-            {{ i + 1 }}
-          </button>
-        </ng-container>
-      </div>
-
-      <p class="fw-bold mb-2 mt-2">
-        Question {{ this.currentQuestionNumber + 1 }}.
-      </p>
     </div>
 
-    <div class="col">
+    <div class="col-4">
       <div class="exam-name d-flex justify-content-center">
         <div class="d-flex border rounded-1 bg-primary text-white p-2 btn-md">
           <p class="mb-0 fw-medium user-name-text">
@@ -51,55 +32,75 @@
         </div>
       </div>
     </div>
-    <div class="col">
-      <div class="timer d-flex justify-content-end">
-        <!-- <div class="mx-2">
+
+    <div class="col-4">
+      <div class="d-flex gap-2 float-end">
+        <div class="timer d-flex gap-2">
+          <div classs="rounded-3 text-center">
+            <span
+              [ngClass]="
+                startWarningTimerAnimation()
+                  ? [
+                      'timer-animation',
+                      'text-white',
+                      'align-middle',
+                      'btn-sm',
+                      'bg-danger',
+                      'text-white',
+                      'text-center',
+                      'p-2'
+                    ]
+                  : [
+                      'text-white',
+                      'align-middle',
+                      'btn-sm',
+                      'bg-success',
+                      'text-white',
+                      'text-center',
+                      'p-2'
+                    ]
+              "
+            >
+              <i class="ri-timer-line align-middle text-white"></i>
+
+              {{ displayTimerText() }}
+            </span>
+          </div>
+        </div>
+
+        <div class="d-flex float-end">
           <button
             *ngIf="displayEndExamButton()"
             (click)="openEndExamConfirmationDialog(confirmationModal)"
-            class="btn btn-outline-danger p-1"
+            class="btn btn-outline-danger"
           >
             End exam
           </button>
-        </div> -->
-
-        <div
-          class="col-xl-3 col-lg-4 p-1 col-sm-6 d-flex justify-content-center gap-1 align-items-center rounded-3 text-center bg-success"
-        >
-          <i class="ri-timer-line align-bottom text-white"></i>
-          <span class="text-white">
-            {{ displayTimerText() }}
-          </span>
         </div>
       </div>
-      <div
-        class="d-flex justify-content-end px-0 btn-sm align-items-center text-center"
-      >
-        <p class="card fs-14 p-2 ">
-          Attemted {{ attemptedQuestions.length }} of {{ itemsLength }}
-        </p>
-
-        
-          
-        
-
-        
-       
-      </div>
-      <div class="d-flex justify-content-end">
-        <button
-        *ngIf="displayEndExamButton()"
-        (click)="openEndExamConfirmationDialog(confirmationModal)"
-        class="btn btn-outline-danger p-1"
-      >
-        End exam
-      </button>
-      </div>
-      
     </div>
-    
-    
+  </div>
 
+  <div class="row">
+    <div class="d-flex gap-2 mt-3 flex-wrap">
+      <ng-container *ngFor="let questionId of questionIDs; let i = index">
+        <button
+          [style.background-color]="checkIfAttempted(questionId)"
+          class="btn btn-light"
+          (click)="navigator(i)"
+          type="button"
+        >
+          {{ i + 1 }}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="row">
+    <p class="fw-bold mb-2 mt-2">
+      Question {{ this.currentQuestionNumber + 1 }}. &nbsp;&nbsp; Attempted
+      {{ attemptedQuestions.length }} of {{ itemsLength }}
+    </p>
     <app-standard-choice></app-standard-choice>
   </div>
 
@@ -110,11 +111,12 @@
       src="/assets/images/multilent-logo.png"
       alt="multilent-logo"
       style="height: 30px"
+      class="d-none d-md-block"
     />
 
     <div class="col d-flex justify-content-end gap-3">
       <button
-        class="btn btn-outline-primary"
+        class="btn btn-outline-primary btn-sm"
         (click)="previousQuestion()"
         [disabled]="currentQuestionNumber == 0"
       >
@@ -127,7 +129,7 @@
       </button>
 
       <button
-        class="btn btn-primary"
+        class="btn btn-primary btn-sm"
         (click)="nextQuestion()"
         [disabled]="currentQuestionNumber + 1 == itemsLength"
       >
@@ -144,11 +146,11 @@
 
 <ng-template #confirmationModal let-modal>
   <div class="modal-body p-5">
-    <h4 class="mb-4 text-center">Are you sure you want to end this assessment?</h4>
+    <h4 class="mb-4 text-center">
+      Are you sure you want to end this assessment?
+    </h4>
     <div class="row">
-      <p class="text-center text-muted">
-        You won't be able to revert this!
-      </p>
+      <p class="text-center text-muted">You won't be able to revert this!</p>
     </div>
     <div class="d-flex justify-content-center gap-2 mt-2">
       <button
@@ -160,7 +162,7 @@
       </button>
       <button
         type="button"
-        (click)="endExamTimer(false);modal.close('Close click') "
+        (click)="endExamTimer(false); modal.close('Close click')"
         class="btn btn-danger"
       >
         Yes, End Exam
@@ -168,4 +170,3 @@
     </div>
   </div>
 </ng-template>
-

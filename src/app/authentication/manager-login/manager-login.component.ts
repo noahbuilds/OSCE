@@ -62,7 +62,7 @@ export class ManagerLoginComponent implements OnInit {
       this.error_msg = 'username is invalid';
       return;
     }
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     this.router
     .navigate(['/manager/login'])
     .catch((reason) => console.log(reason));
@@ -74,7 +74,7 @@ export class ManagerLoginComponent implements OnInit {
       this.managerAuthService.login(this.loginForm.value).subscribe(
         (value) => {
           //todo: navigate
-          console.log(value);
+          // console.log(value);
           this.router
             .navigate(['/manager/dashboard'])
             .catch((reason) => console.log(reason));
@@ -82,8 +82,9 @@ export class ManagerLoginComponent implements OnInit {
         (err: HttpErrorResponse) => {
           //todo: show error
           this.error = true;
-          this.error_msg = err.message;
+          this.error_msg = err.error.message;
           this.submitted = false;
+          this.notifier.notify("error", err.error.message)
         },
         
       );

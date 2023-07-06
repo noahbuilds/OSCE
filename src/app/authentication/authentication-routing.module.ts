@@ -7,9 +7,9 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
-  // {path: 'candidate', redirectTo: '/candidate/login', pathMatch: 'full'},
-  // {path: 'examiner', redirectTo: '/examiner/login', pathMatch: 'full'},
-  // {path: 'manager', redirectTo: '/manager/login', pathMatch: 'full'},
+  {path: 'candidate', redirectTo: '/candidate/login', pathMatch: 'full'},
+  {path: 'examiner', redirectTo: '/examiner/login', pathMatch: 'full'},
+  {path: 'manager', redirectTo: '/manager/login', pathMatch: 'full'},
   {path:'candidate/login', component: CandidateLoginComponent},
   {path: 'manager/login', component: ManagerLoginComponent},
   {path: 'examiner/login', component: ExaminerLoginComponent}

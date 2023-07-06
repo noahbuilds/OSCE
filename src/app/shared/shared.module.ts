@@ -27,7 +27,9 @@ import { ContactComponent } from './landing/contact/contact.component';
 import { FooterComponent } from './landing/footer/footer.component';
 import { ScrollspyDirective } from './scrollspy.directive';
 import {AppHttpService} from "./app-http.service";
-import { PassageService } from './passage-service/passage.service';
+
+
+import {TableModule} from 'primeng/table'
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -58,10 +60,11 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     NgbAccordionModule,
     SwiperModule,
     CountToModule, 
-    HttpClientModule
+    HttpClientModule,
+    TableModule
   ],
   providers: [
-    AppHttpService, PassageService
+  
   ],
   exports: [BreadcrumbsComponent, ClientLogoComponent, ServicesComponent, CollectionComponent, CtaComponent, DesignedComponent, PlanComponent, FaqsComponent, ReviewComponent, CounterComponent, WorkProcessComponent, TeamComponent, ContactComponent, FooterComponent, ScrollspyDirective]
 })

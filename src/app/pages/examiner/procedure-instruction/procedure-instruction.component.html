@@ -1,61 +1,36 @@
 <app-breadcrumbs
-  title="PROCEDURE INSTRUCTION"
+  title="PROCEDURE REQUIREMENT"
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
+<h6 class="no-print">Select procedure to view requirement</h6>
 
-<h6>Select procedure to view instruction</h6>
-<select #dropBoxRef (change)="captureProcedure(dropBoxRef.value)" class="form-select  mb-3" aria-label="Default select example">
-  <option selected disabled>Select procedure</option>
-  <option  *ngFor="let procedure of procedures; let i = index" value="{{procedure.id}}">{{procedure.name}}</option>
-  </select>
-  
-    <div class="card">
-      
-        <div class="card-body" style="height: 60vh;">
-            <h5 class="card-header"> Instruction </h5>
-            <span  *ngIf="procedureReq!=null && procedureReq.instruction != null" class="mt-5" [innerHTML]="procedureReq.instruction">
-              
-            </span>
-               <!-- <ol class="mt-2">
-              <li class="mb-2">
-                Make sure that the picture and the exam number on the computer
-                screen are yours. if they are not yours report to the supervisor.
-              </li>
-              <li class="mb-2">
-                The examination consists of <strong>100 OBJECTIVE</strong> questions
-                and you are expected to answer all questions.
-              </li>
-              <li class="mb-2">
-                The duration of the examination is <strong>1 hour</strong> (60
-                minutes) and you can attempt the questions in any order you wish.
-              </li>
-              <li class="mb-2">
-                If you are not familiar with the use of a computer mouse, use the
-                <strong><q>A</q>,<q>B</q>,<q>C</q>,<q>D</q></strong> buttons on the
-                keyboard to <strong>select an answer</strong> and use the
-                <strong><q>N</q> & <q>P</q></strong> buttons on the keyboard to
-                navigate to <strong> Next and Previous question</strong>
-              </li >
-              <li class="mb-2">
-                If you are familiar with the mouse you can select, answers to the
-                next questions by clicking on the option, and you can move to any
-                question by clicking the question number at the bottom of the page.
-              </li>
-              <li class="mb-2">You are free to skip a question and come back to it later.</li>
-              <li class="mb-2">
-                Once a candidate submits his/her exam, it is not possible to go back
-                or undo the submission.
-              </li >
-              <li class="mb-2">
-                If your time is up, the examination will submit itself and you will
-                be logged out.
-              </li>
-              <li class="mb-2">
-                Click the <strong>Start Exam Button</strong> to begin your
-                examination.
-              </li>
-            </ol> -->
-        </div>
-    </div>
+<ng-select
+  class="no-print"
+  [items]="procedures"
+  bindLabel="name"
+  placeholder="Select procedure"
+  (change)="captureProcedure($event)"
+>
+</ng-select>
 
+<div
+  class="card"
+  *ngIf="procedureReq != null && procedureReq.instruction != null"
+>
+  <div class="card-body" style="height: 60vh">
+    <h5 class="card-header">Requirement For {{ procedureName }}</h5>
+    <span
+      *ngIf="procedureReq != null && procedureReq.instruction != null"
+      class="mt-5 fs-23"
+      [innerHTML]="procedureReq.instruction"
+    >
+    </span>
+  </div>
+  <button
+    class="btn btn-sm btn-primary no-print"
+    (click)="printProcedureInstruction()"
+  >
+    Print Procedure Requirement
+  </button>
+</div>

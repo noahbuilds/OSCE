@@ -9,7 +9,7 @@ import { AllowReloginComponent } from "./manage-exam/allow-relogin/allow-relogin
 import { CandidateLookupComponent } from "./manage-exam/candidate-lookup/candidate-lookup.component";
 import { ManageExamComponent } from "./manage-exam/manage-exam.component";
 import { ExpectantCareComponent } from "./monitor-exam/expectant-care/expectant-care.component";
-import { MonitorExamComponent } from "./monitor-exam/monitor-exam.component";
+
 
 
 import { ResearchComponent } from "./monitor-exam/research/research.component";
@@ -18,21 +18,25 @@ import { StartExamComponent } from "./start-exam/start-exam.component";
 import { WhiteListComponent } from "./white-list/white-list.component";
 import { OsceComponent } from "./monitor-exam/osce/osce.component";
 import { DownloadedExamDetailsComponent } from "./downloaded-exams/downloaded-exam-details/downloaded-exam-details.component";
+import { DownloadPassportComponent } from "./download-passport/download-passport.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "dashboard" },
   { path: "dashboard", component: DashboardComponent },
   { path: "download-exam", component: DownloadExamComponent },
-  { path: "activities-logs", component: ActivitiesLogComponent },
+  {path: "download-passport", component: DownloadPassportComponent},
+  // { path: "activities-logs", component: ActivitiesLogComponent },
   { path: "white-list", component: WhiteListComponent },
   { path: "start-exam", component: StartExamComponent },
 
-  {path: "downloaded-exams", component: DownloadedExamsComponent},
-  {path: "downloaded-exams", 
-children: [{
+  { path: "downloaded-exams", component: DownloadedExamsComponent },
+  {
+    path: "downloaded-exams",
+    children: [{
 
-  path: 'details/:programName/:examId/:programId', component: DownloadedExamDetailsComponent
-}]},
+      path: 'details/:programName/:examId/:programId', component: DownloadedExamDetailsComponent
+    }]
+  },
   {
     path: "monitor-exam",
     children: [
@@ -62,4 +66,4 @@ children: [{
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ExamManagerRoutingModule {}
+export class ExamManagerRoutingModule { }

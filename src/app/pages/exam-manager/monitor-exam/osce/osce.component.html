@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-12">
     <div class="row">
-      <div class="col-xxl-6 col-lg-6">
+      <!-- <div class="col-xxl-6 col-lg-6">
         <div class="card card-body card-hover">
           <div class="d-flex justify-content-between">
             <div class="avatar-sm">
@@ -24,24 +24,6 @@
         </div>
       </div>
 
-      <!-- <div class="col-xxl-4 col-lg-6">
-        <div class="card card-body card-hover">
-          <div class="d-flex justify-content-between">
-            <div class="avatar-sm">
-              <div
-                class="avatar-title bg-soft-primary text-primary fs-17 rounded"
-              >
-                <i class="ri-shut-down-line"></i>
-              </div>
-            </div>
-            <div class="text-end">
-              <h6>Active Systems</h6>
-              <h2>4</h2>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
       <div class="col-xxl-6 col-lg-6">
         <div class="card card-body card-hover">
           <div class="d-flex justify-content-between">
@@ -58,347 +40,452 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="col-xl-4 col-md-6" *ngFor=" let osceMonitor of monitorCards">
+      <div class="col-xl-4 col-md-6" *ngFor="let osceMonitor of monitorCards">
         <div class="card card-animate">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-grow-1">
-                        <p class="text-uppercase  fw-medium mb-0  ">{{osceMonitor.programName}}</p>
-                        <p class="fs-13 mb-0 fw-meduim text-muted">{{osceMonitor.procedureName}}</p>
-                    </div>
-                    
-                </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
-                    <div>
-                        <div>
-                            <h4 class="fs-22 fw-semibold ff-secondary mb-1 text-success" >{{osceMonitor.totalObjectivesCompleted}} /<span class="counter-value"></span> {{osceMonitor.totalCandidates}}</h4>
-                           
-                            <p class="fs-12 text-muted">Completed Objective Station</p> 
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="flex-grow-1">
+                <p class="text-uppercase fw-medium mb-0">
+                  {{ osceMonitor.programName }}
+                </p>
+                <p class="fs-13 mb-0 fw-meduim text-muted">
+                  {{ osceMonitor.procedureName }}
+                </p>
+              </div>
+            </div>
+            <div class="d-flex align-items-end justify-content-between mt-4">
+              <div>
+                <div>
+                  <h4 class="fs-22 fw-semibold ff-secondary mb-1 text-success">
+                    {{ osceMonitor.totalActivitiesCompleted }} /<span
+                      class="counter-value"
+                    ></span>
+                    {{ osceMonitor.totalCandidates }}
+                  </h4>
 
-                           <div class="">
-                            <!-- <h5 class="text-success fs-14 mb-0">
-                                <i class="align-middle fs-13 ri-arrow-right-up-line"></i> 40%
-                            </h5> -->
-                        </div>
-                        </div>
-                        <div>
-                          <h4 class="fs-22 fw-semibold ff-secondary mb-1 text-success" >{{osceMonitor.totalActivitiesCompleted}} /<span class="counter-value"></span> {{osceMonitor.totalCandidates}}</h4>
-                         
-                          <p class="fs-12 text-muted">Completed Activities Station</p> 
-
-                        
-                      </div>
-                        
-                    </div>
-                    <!-- <a href="javascript:void(0);" class="text-decoration-underline">Completed Status</a> -->
-                    <!-- <div class="avatar-sm flex-shrink-0">
-                        <span class="avatar-title bg-soft-primary rounded fs-3">
-                            <i class=" align-middle fs-18 mdi  me-2 text-info"> 1</i>
-                        </span>
-                    </div> -->
+                  <p class="fs-12 text-muted">Completed Procedure Station</p>
                 </div>
-            </div><!-- end card body -->
+                <div>
+                  <h4 class="fs-22 fw-semibold ff-secondary mb-1 text-success">
+                    {{ osceMonitor.totalObjectivesCompleted }} /<span
+                      class="counter-value"
+                    ></span>
+                    {{ osceMonitor.totalCandidates }}
+                  </h4>
+
+                  <p class="fs-12 text-muted">Completed Question Station</p>
+                </div>
+              </div>
+             
+            </div>
+          </div>
+         
         </div>
       </div>
-      
-
-
     </div>
-    <!-- end row -->
+
   </div>
-  <!-- end col -->
+  
 </div>
-<!-- end row -->
+
 
 <div class="card">
   <div class="card-body">
-    <h6 class="mb-3">Objective Monitor</h6>
     <div class="d-flex justify-content-between">
-
-    
-    <div class="search-box d-inline-block mb-2">
-      <input type="text" class="form-control search" placeholder="Search exam number..." />
-      <i class="ri-search-line search-icon"></i>
+      <h5 class="mb-3 text-uppercase">Question Station Monitor</h5>
+      <h6>Total Candidate(s): {{objectivesToMonitor.length}}</h6>
     </div>
+    
+    <div class="d-flex justify-content-end">
+      <!-- <div class="search-box d-inline-block mb-2">
+        <input
+          type="text"
+          class="form-control search"
+          placeholder="Search exam number..."
+        />
+        <i class="ri-search-line search-icon"></i>
+      </div> -->
 
-    <select #objectiveDropBoxRef (change)="captureProgramForObjective(objectiveDropBoxRef.value)" class="form-select  mb-3 w-25" aria-label="Default select example">
+      <select
+        #objectiveDropBoxRef
+        (change)="captureProgramForObjective(objectiveDropBoxRef.value)"
+        class="form-select mb-3 w-25"
+        aria-label="Default select example"
+      >
         <option disabled selected>Filter by program</option>
-        <option *ngFor="let program of programs" value="{{program.id}}">{{program.name}}</option>
-        </select>
+        <option *ngFor="let program of programs" value="{{ program.id }}">
+          {{ program.name }}
+        </option>
+      </select>
+      
     </div>
     <div class="table-responsive">
-      <table class="table table-gridjs">
+      <!-- <table class="table table-gridjs">
         <thead>
           <tr>
             <th class="sort" data-sort="name">NAME</th>
             <th class="sort" data-sort="exam-no">EXAM NO.</th>
             <th class="sort" data-sort="program">PROGRAM</th>
             <th class="sort" data-sort="institution">INSTITUTION</th>
-            <!-- <th class="sort" data-sort="email">EXAMINER</th> -->
             <th class="sort" data-sort="station">STATION & STATUS</th>
-            <!-- <th class="sort" data-sort="start-time">START TIME</th>
-            <th class="sort" data-sort="end-time">END-TIME</th> -->
-            
+           
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let objectiveMonitor of objectivesToMonitor">
-            <td>{{objectiveMonitor.name}}</td>
-            <td>  {{objectiveMonitor.examNumber}}</td>
-            <td>{{objectiveMonitor.programName}}</td>
-            <td>{{objectiveMonitor.institution}}</td>
-            <!-- <td>
-                Patrick Johnson
-
-            </td> -->
+            <td>{{ objectiveMonitor.name }}</td>
+            <td>{{ objectiveMonitor.examNumber }}</td>
+            <td>{{ objectiveMonitor.programName }}</td>
+            <td>{{ objectiveMonitor.institution }}</td>
             <td>
-            
-              <ng-container *ngFor="let procedure of objectiveMonitor.procedureLists" >
-                <a class="d-flex align-items-center text-start" data-bs-toggle="collapse"  aria-expanded="false">
-                  <div class=" ms-1">
-                      <h6 class="fs-13 mb-1">{{procedure.procedureName}}</h6>
-                      <p class="text-muted mb-0">{{procedure.examinerName}}</p>
+              <ng-container
+                *ngFor="let procedure of objectiveMonitor.procedureLists"
+              >
+                <a
+                  class="d-flex align-items-center text-start"
+                  data-bs-toggle="collapse"
+                  aria-expanded="false"
+                >
+                  <div class="ms-1">
+                    <h6 class="fs-13 mb-1">{{ procedure.procedureName }}</h6>
+                    <p class="text-muted mb-0">{{ procedure.examinerName }}</p>
 
-                      
-                      <p class="text-muted mb-0">{{procedure.startTime | date : "dd/MM/yyyy hh:mm a"}} - {{procedure.endTime | date : "dd/MM/yyyy hh:mm a"}}</p>
-                 
-                 
-                      
-                      <!-- <span
-                      class="badge badge-soft-success"
-                      *ngIf="procedure.endTime != null"
-                    >
-                      Completed</span
-                    >
-                    <span
-                      class="badge badge-soft-danger"
-                      *ngIf="procedure.startTime == null && procedure.endTime == null"
-                    >
-                      Not started</span
-                    >
+                    <p class="text-muted mb-0 fs-12">
+                   Start Time <span class="badge badge-soft-success fs-12" *ngIf="procedure.startTime != null"> {{ procedure.startTime | date : "dd/MM/yyyy hh:mm a" }}</span>    -
+                   End Time  <span class="badge badge-soft-danger fs-12" *ngIf="procedure.endTime != null" > {{ procedure.endTime | date : "dd/MM/yyyy hh:mm a" }}</span>  
+                    </p>
 
-                    <span
-                      class="badge badge-soft-primary"
-                      *ngIf="procedure.startTime != null && procedure.endTime == null"
-                    >
-                      In progress</span
-                    > -->
-                 
-                    </div>
+                  </div>
                 </a>
               </ng-container>
-              
-                  
-
-                   <!-- <div class="d-flex  justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-2-circle me-2 text-success"></i>
-                 </div>
-                   <div class="d-flex justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-3-circle me-2 text-success"></i>
-                 </div>
-                   <div class="d-flex justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-4-circle me-2 text-info"></i>
-                 </div>
-                   <div class="d-flex justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-5-circle me-2 text-muted"></i>
-                 </div>
-                   <div class="d-flex  justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-6-circle me-2 text-muted"></i>
-                 </div> -->
-                
-               
 
             </td>
-            
+          </tr>
+        </tbody>
+      </table> -->
+
+      <p-table
+      [value]="objectivesToMonitor"
+      [tableStyle]="{ 'min-width': '100%' }"
+      #dt1
+      dataKey="id"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">
+            <div class="flex justify-content-between align-items-center">
+              NAME
+              <p-sortIcon field="name"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="name"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th pSortableColumn="examNumber">
+            <div class="flex justify-content-between align-items-center">
+              EXAM NO.
+              <p-sortIcon field="examNumber"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="examNumber"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th pSortableColumn="programName">
+            <div class="flex justify-content-between align-items-center">
+              PROGRAM
+              <p-sortIcon field="programName"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="programName"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+
+          <th pSortableColumn="institution">
+            <div class="flex justify-content-between align-items-center">
+              INSTITUTION
+              <p-sortIcon field="institution"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="institution"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+         
+
+          
+
+
+
+          <th pSortableColumn="status">
+            <div class="flex justify-content-between align-items-center">
+              STATUS
+              <p-sortIcon field="status"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="status"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+          
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body" let-objectiveMonitor>
+        <tr>
+            <td>{{ objectiveMonitor.name }}</td>
+            <td>{{ objectiveMonitor.examNumber }}</td>
+            <td>{{ objectiveMonitor.programName }}</td>
+            <td>{{ objectiveMonitor.institution }}</td>
+
+            <td>
+              <ng-container
+              *ngFor="let procedure of objectiveMonitor.procedureLists"
+            >
+              <a
+                class="d-flex align-items-center text-start"
+                data-bs-toggle="collapse"
+                aria-expanded="false"
+              >
+                <div class="ms-1">
+                  <h6 class="fs-13 mb-1 text-success">
+                    {{ procedure.procedureName }}
+                  </h6>
+                  <p class="text-muted mb-0">{{ procedure.examinerName }}</p>
+
+                  <p class="text-muted mb-0 fs-12">
+                    Start Time <span class="badge badge-soft-success fs-12" *ngIf="procedure.startTime != null"> {{ procedure.startTime | date : "dd/MM/yyyy hh:mm a" }}</span>    -
+                    End Time  <span class="badge badge-soft-danger fs-12" *ngIf="procedure.endTime != null" > {{ procedure.endTime | date : "dd/MM/yyyy hh:mm a" }}</span>  
+                     </p>
+
+                </div>
+              </a>
+            </ng-container>
+          </td>
            
-            
-          </tr>
-          <!-- <tr>
-            <td>Noah Edet</td>
-            <td>17CD00GH</td>
-            <td>BASIC NURSING</td>
-            <td>Patrick Johnson</td>
-            <td>
-                Patrick Johnson
-
-            </td>
-            <td>
-            
-                    <div class="d-flex justify-content-evenly align-center align-items-center">
-                      Station <i class=" align-middle fs-18 mdi mdi-numeric-1-circle me-2 text-success"></i>
-                   </div>
-
-                   <div class="d-flex  justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-2-circle me-2 text-success"></i>
-                 </div>
-                   <div class="d-flex justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-3-circle me-2 text-success"></i>
-                 </div>
-                   <div class="d-flex justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-4-circle me-2 text-info"></i>
-                 </div>
-                   <div class="d-flex justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-5-circle me-2 text-muted"></i>
-                 </div>
-                   <div class="d-flex  justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-6-circle me-2 text-muted"></i>
-                 </div>
-                
-               
-
-            </td>
-            
-            <td>09:43</td>
-            <td>10:43</td>
-            
-          </tr>
-          <tr>
-            <td>Noah Edet</td>
-            <td>17CD00GH</td>
-            <td>BASIC NURSING</td>
-            <td>Patrick Johnson</td>
-            <td>
-                Patrick Johnson
-
-            </td>
-            <td>
-            
-                    <div class="d-flex justify-content-evenly align-center align-items-center">
-                      Station <i class=" align-middle fs-18 mdi mdi-numeric-1-circle me-2 text-success"></i>
-                   </div>
-
-                   <div class="d-flex  justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-2-circle me-2 text-success"></i>
-                 </div>
-                   <div class="d-flex justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-3-circle me-2 text-success"></i>
-                 </div>
-                   <div class="d-flex justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-4-circle me-2 text-info"></i>
-                 </div>
-                   <div class="d-flex justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-5-circle me-2 text-muted"></i>
-                 </div>
-                   <div class="d-flex  justify-content-evenly align-center align-items-center">
-                    Station <i class=" align-middle fs-18 mdi mdi-numeric-6-circle me-2 text-muted"></i>
-                 </div>
-                
-               
-
-            </td>
-            
-            <td>09:43</td>
-            <td>10:43</td>
-          
-          </tr> -->
-
-          
 
          
-        </tbody>
-      </table>
+           
+        </tr>
+      </ng-template>
+    </p-table>
+
+      
+
     </div>
   </div>
 </div>
 
-
 <div class="card">
   <div class="card-body">
-    <h6 class="mb-3">Procedure Monitor</h6>
     <div class="d-flex justify-content-between">
-
-    
-    <div class="search-box d-inline-block mb-2">
-      <input type="text" class="form-control search" placeholder="Search exam number..." />
-      <i class="ri-search-line search-icon"></i>
+      <h5 class="mb-3 text-uppercase">Procedure Station Monitor</h5>
+      <h6>Total Candidate(s): {{proceduresToMonitor.length}}</h6>
     </div>
+    
+    <div class="d-flex justify-content-end">
+      <!-- <div class="search-box d-inline-block mb-2">
+        <input
+          type="text"
+          class="form-control search"
+          placeholder="Search exam number..."
+        />
+        <i class="ri-search-line search-icon"></i>
+      </div> -->
 
-    <select #procedureDropBoxRef (change)="captureProgramForProcedure(procedureDropBoxRef.value)" class="form-select  mb-3 w-25" aria-label="Default select example">
+      <select
+        #procedureDropBoxRef
+        (change)="captureProgramForProcedure(procedureDropBoxRef.value)"
+        class="form-select mb-3 w-25"
+        aria-label="Default select example"
+      >
         <option disabled selected>Filter by program</option>
-        <option *ngFor="let program of programs" value="{{program.id}}">{{program.name}}</option>
-        </select>
+        <option *ngFor="let program of programs" value="{{ program.id }}">
+          {{ program.name }}
+        </option>
+      </select>
     </div>
     <div class="table-responsive">
-      <table class="table table-gridjs">
+      <!-- <table class="table table-gridjs">
         <thead>
           <tr>
             <th class="sort" data-sort="name">NAME</th>
             <th class="sort" data-sort="exam-no">EXAM NO.</th>
             <th class="sort" data-sort="program">PROGRAM</th>
             <th class="sort" data-sort="institution">INSTITUTION</th>
-            <!-- <th class="sort" data-sort="email">EXAMINER</th> -->
             <th class="sort" data-sort="station">STATION & STATUS</th>
-            <!-- <th class="sort" data-sort="start-time">START TIME</th>
-            <th class="sort" data-sort="end-time">END-TIME</th> -->
-            
+
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let procedureMonitor of proceduresToMonitor">
-            <td>{{procedureMonitor.name}}</td>
-            <td>  {{procedureMonitor.examNumber}}</td>
-            <td>{{procedureMonitor.programName}}</td>
-            <td>{{procedureMonitor.institution}}</td>
-            <!-- <td>
-                Patrick Johnson
-
-            </td> -->
+            <td>{{ procedureMonitor.name }}</td>
+            <td>{{ procedureMonitor.examNumber }}</td>
+            <td>{{ procedureMonitor.programName }}</td>
+            <td>{{ procedureMonitor.institution }}</td>
+           
             <td>
-            
-              <ng-container *ngFor="let procedure of procedureMonitor.procedureLists" >
-                <a class="d-flex align-items-center text-start" data-bs-toggle="collapse"  aria-expanded="false">
+              <ng-container
+                *ngFor="let procedure of procedureMonitor.procedureLists"
+              >
+                <a
+                  class="d-flex align-items-center text-start"
+                  data-bs-toggle="collapse"
+                  aria-expanded="false"
+                >
                   <div class="ms-1">
-                      <h6 class="fs-13 mb-1 text-success">{{procedure.procedureName}}</h6>
-                      <p class="text-muted mb-0">{{procedure.examinerName}}</p>
+                    <h6 class="fs-13 mb-1 text-success">
+                      {{ procedure.procedureName }}
+                    </h6>
+                    <p class="text-muted mb-0">{{ procedure.examinerName }}</p>
 
-                      
-                      <p class="text-muted mb-0">{{procedure.startTime | date : "dd/MM/yyyy hh:mm a"}} - {{procedure.endTime | date : "dd/MM/yyyy hh:mm a"}}</p>
-                 
-                 
-                      
-                      <!-- <span
-                      class="badge badge-soft-success"
-                      *ngIf="procedure.endTime != null"
-                    >
-                      Completed</span
-                    >
-                    <span
-                      class="badge badge-soft-danger"
-                      *ngIf="procedure.startTime == null && procedure.endTime == null"
-                    >
-                      Not started</span
-                    >
+                    <p class="text-muted mb-0 fs-12">
+                      Start Time <span class="badge badge-soft-success fs-12" *ngIf="procedure.startTime != null"> {{ procedure.startTime | date : "dd/MM/yyyy hh:mm a" }}</span>    -
+                      End Time  <span class="badge badge-soft-danger fs-12" *ngIf="procedure.endTime != null" > {{ procedure.endTime | date : "dd/MM/yyyy hh:mm a" }}</span>  
+                       </p>
 
-                    <span
-                      class="badge badge-soft-primary"
-                      *ngIf="procedure.startTime != null && procedure.endTime == null"
-                    >
-                      In progress</span
-                    > -->
-                 
-                    </div>
+                  </div>
                 </a>
               </ng-container>
-              
-                  
-
-                
-                
-               
-
             </td>
-            
-           
-            
           </tr>
+        </tbody>
+      </table> -->
+
+
+
+
+      <p-table
+      [value]="proceduresToMonitor"
+      [tableStyle]="{ 'min-width': '100%' }"
+      #dt1
+      dataKey="id"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">
+            <div class="flex justify-content-between align-items-center">
+              NAME
+              <p-sortIcon field="name"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="name"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th pSortableColumn="examNumber">
+            <div class="flex justify-content-between align-items-center">
+              EXAM NO.
+              <p-sortIcon field="examNumber"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="examNumber"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+          <th pSortableColumn="programName">
+            <div class="flex justify-content-between align-items-center">
+              PROGRAM
+              <p-sortIcon field="programName"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="programName"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+
+          <th pSortableColumn="institution">
+            <div class="flex justify-content-between align-items-center">
+              INSTITUTION
+              <p-sortIcon field="institution"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="institution"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
          
+
           
 
+
+
+          <th pSortableColumn="status">
+            <div class="flex justify-content-between align-items-center">
+              STATUS
+              <p-sortIcon field="status"></p-sortIcon>
+              <p-columnFilter
+                type="text"
+                field="status"
+                display="menu"
+                class="ml-auto"
+              ></p-columnFilter>
+            </div>
+          </th>
+          
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body" let-procedureMonitor>
+        <tr>
+            <td>{{ procedureMonitor.name }}</td>
+            <td>{{ procedureMonitor.examNumber }}</td>
+            <td>{{ procedureMonitor.programName }}</td>
+            <td>{{ procedureMonitor.institution }}</td>
+
+            <td>
+              <ng-container
+              *ngFor="let procedure of procedureMonitor.procedureLists"
+            >
+              <a
+                class="d-flex align-items-center text-start"
+                data-bs-toggle="collapse"
+                aria-expanded="false"
+              >
+                <div class="ms-1">
+                  <h6 class="fs-13 mb-1 text-success">
+                    {{ procedure.procedureName }}
+                  </h6>
+                  <p class="text-muted mb-0">{{ procedure.examinerName }}</p>
+
+                  <p class="text-muted mb-0 fs-12">
+                    Start Time <span class="badge badge-soft-success fs-12" *ngIf="procedure.startTime != null"> {{ procedure.startTime | date : "dd/MM/yyyy hh:mm a" }}</span>    -
+                    End Time  <span class="badge badge-soft-danger fs-12" *ngIf="procedure.endTime != null" > {{ procedure.endTime | date : "dd/MM/yyyy hh:mm a" }}</span>  
+                     </p>
+
+                </div>
+              </a>
+            </ng-container>
+          </td>
+           
+
          
-        </tbody>
-      </table>
+           
+        </tr>
+      </ng-template>
+    </p-table>
     </div>
   </div>
 </div>

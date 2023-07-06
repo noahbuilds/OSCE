@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { StartExam } from "../models/exam.model";
-import { OsceModel } from "../models/osce.model";
+import { AvailableExamModel } from "../models/available-exam.model";
 import { ResourceCreated } from "../models/resource.created";
 
 @Injectable({
@@ -21,8 +21,8 @@ export class ManageOsceService {
     );
   }
 
-  getAvailableOsce(): Observable<OsceModel> {
-    return this.http.get<OsceModel>(
+  getAvailableOsce(): Observable<AvailableExamModel> {
+    return this.http.get<AvailableExamModel>(
       `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_osce/osce_to_start`,
       { withCredentials: true }
     );

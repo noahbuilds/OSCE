@@ -29,7 +29,7 @@ export class ManagerAuthService {
   return this.http.post (
     `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/authentication`,
     loginData,
-    { headers, responseType: "text", withCredentials: true }
+    { headers, withCredentials: true }
   )
   .pipe(mergeMap(() => this.getLoggedInAccount()));
   }
@@ -41,9 +41,15 @@ export class ManagerAuthService {
     ).pipe(
       map((value)=>{
          this.managerAcctService.setCurrentUser(value);
-        console.log(value)
+        // console.log(value)
           return value
       })
     )
+  }
+
+  logout(): Observable<string>{
+    return this.http.get<string>(`
+    http://${environment.developmentIP}/caosce/examdelivery/api/logout`,
+     {withCredentials: true})
   }
 }

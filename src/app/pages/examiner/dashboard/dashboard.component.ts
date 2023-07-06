@@ -47,16 +47,16 @@ export class DashboardComponent implements OnInit {
       { label: 'Dashboard', active: true },
     ];
     this.getExaminerData()
-    console.log(this.currentExaminerData)
+    // console.log(this.currentExaminerData)
     this.getDashboardData(this.currentExaminerData.programId)
   }
-getDashboardData(programId:string):Subscription{
-  return this.dashboardService.getDashboardData(programId).subscribe({
+getDashboardData(programId:string){
+   this.dashboardService.getDashboardData(programId).subscribe({
     next: (data:DashboardModel)=>{
       this.dashboardData =data
     },
     complete: ()=>{
-      console.log(this.dashboardData)
+      // console.log(this.dashboardData)
     }
   })
 }

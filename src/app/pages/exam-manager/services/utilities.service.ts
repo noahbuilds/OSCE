@@ -7,6 +7,8 @@ export class UtilitiesService {
 
   osceStarted :boolean = false;
   vivaStarted: boolean = false;
+  researchStarted: boolean =false;
+  expectantCareStarted: boolean =false
 
   constructor() { }
 }

@@ -1,27 +1,27 @@
-import { Component, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
-import { ManagerAccount } from "src/app/authentication/model/manager-account";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ManagerAccountService } from "src/app/authentication/services/manager-account.service";
 import {
   CandidateModel,
-  VivaMonitorModel,
-} from "../../models/viva-monitor.model";
+  ProgramModel,
+  MonitorModel,
+} from "../../models/monitor.model";
 import { MonitorVivaService } from "../../services/monitor-viva.service";
 import { ManageVivaService } from "../../services/manage-viva.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import { VivaModel } from "../../models/viva.model";
+import { Status } from "src/app/shared/enum/status";
+import { Subscription, timer } from "rxjs";
 
 @Component({
   selector: "app-viva",
   templateUrl: "./viva.component.html",
   styleUrls: ["./viva.component.scss"],
 })
-export class VivaComponent implements OnInit {
+export class VivaComponent implements OnInit, OnDestroy {
   breadCrumbItems!: Array<{}>;
-  vivaMonitor: VivaMonitorModel;
-  vivaMonitorByProgram: CandidateModel[];
-  currentManager: ManagerAccount;
-  availableVivaToMonitor: VivaModel;
+  vivaMonitor: MonitorModel;
+  programs: ProgramModel[] = [];
+  candidateStatus = Status;
+  refreshTimerSub$: Subscription
 
   constructor(
     private manageVivaService: ManageVivaService,
@@ -35,41 +35,75 @@ export class VivaComponent implements OnInit {
       { label: "Monitor VIVA", active: true },
     ];
 
-   
-    this.monitorViva(this.managerAccountService.getUser().examId)
+    this.monitorViva(this.managerAccountService.getUser().examId);
+    this.getProgramsTakingViva(this.managerAccountService.getUser().examId);
+    this.refreshMonitorData()
   }
 
-  monitorViva(examId: string): Subscription {
-    return this.monitorVivaService.monitorViva(examId).subscribe({
-      next: (data: VivaMonitorModel) => {
+  monitorViva(examId: string) {
+    this.monitorVivaService.monitorViva(examId).subscribe({
+      next: (data: MonitorModel) => {
         this.vivaMonitor = data;
+        this.getCandidateStatus()
       },
     });
   }
 
-  monitorByProgram(examId: string, programId: string): Subscription {
-    return this.monitorVivaService
+  monitorVivaByProgram(examId: string, programId: string) {
+    this.monitorVivaService
       .monitorVivaCandidatesByProgram(examId, programId)
       .subscribe({
         next: (data: CandidateModel[]) => {
-          this.vivaMonitorByProgram = data;
+          this.vivaMonitor.candidateList = data;
+          this.getCandidateStatus()
         },
       });
   }
 
-  getAvailableVivaToMonitor() {
-    this.manageVivaService.getAvailableViva().subscribe({
-      next: (data) => {
-        this.availableVivaToMonitor = data;
+
+  getCandidateStatus(){
+    this.vivaMonitor.candidateList.forEach(candidate => {
+      if(candidate.stamp != null){
+        candidate.status = Status.COMPLETED
+      }
+      else{
+        candidate.status =  Status.PENDING
+      }
+    });
+  }
+  getProgramsTakingViva(examId: string) {
+    this.manageVivaService.getProgramsTakingViva(examId).subscribe({
+      next: (data: ProgramModel[]) => {
+        this.programs = data;
       },
       error: (err: HttpErrorResponse) => {
         console.log(err.error.message);
       },
-      complete() {
-        console.log(this.availableVivaToMonitor);
-      },
     });
   }
 
- 
+  captureProgram(programId: string) {
+    this.monitorVivaByProgram(
+      this.managerAccountService.getUser().examId,
+      programId
+    );
+    
+  }
+
+  refreshMonitorData(){
+    
+      this.refreshTimerSub$ = timer(60000, 60000).subscribe((value)=>{
+        this.monitorViva(this.managerAccountService.getUser().examId)
+      })
+    
+    
+  }
+
+  ngOnDestroy(): void {
+    if(this.refreshTimerSub$ != null){
+      this.refreshTimerSub$.unsubscribe()
+    }
+    
+    
+  }
 }

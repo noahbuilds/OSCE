@@ -10,7 +10,16 @@
     width: 100%;
    
  }
- 
- .attemptedQuestion{
-    background: blue;
- }
+ .timer-animation {
+    animation-name: timer-animation;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    border-radius: 50px;
+    font-size: 10px;
+  }
+  @keyframes timer-animation {
+    to {
+      font-size: 15px;
+    }
+  }

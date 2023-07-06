@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { CandidateModel, CandidateProcedureItem, CandidateResponse } from "../models/candidate";
 
 @Injectable({
@@ -14,13 +14,13 @@ export class CandidateExamItemsService {
   candidateExamDetails: CandidateModel;
 
   currentItemIndex: number = 0;
-  previousResponses: CandidateResponse[] = []
+  savedResponses: CandidateResponse[] = []
 
   private currentQuestionSubject: BehaviorSubject<CandidateProcedureItem> =
     new BehaviorSubject(null);
     currentQuestion$ = this.currentQuestionSubject.asObservable();
 
-  publishCurrententQuestion(currentQuestion: CandidateProcedureItem) {
+  publishCurrentQuestion(currentQuestion: CandidateProcedureItem) {
     this.currentQuestionSubject.next(currentQuestion);
   }
 
@@ -34,7 +34,7 @@ export class CandidateExamItemsService {
     this.currentQuestion =
       this.candidateExamDetails.candidateProcedureItems[this.currentItemIndex];
     this.currentQuestion.currentQuestionNumber = this.currentItemIndex;
-    this.publishCurrententQuestion(this.currentQuestion);
+    this.publishCurrentQuestion(this.currentQuestion);
     return this.currentQuestion;
   }
 
@@ -44,14 +44,13 @@ export class CandidateExamItemsService {
       this.candidateExamDetails.candidateProcedureItems.length
     )
       return;
-    console.log("Next Question called");
     this.currentQuestion =
       this.candidateExamDetails.candidateProcedureItems[
         ++this.currentItemIndex
       ];
     this.currentQuestion.currentQuestionNumber = this.currentItemIndex;
 
-    this.publishCurrententQuestion(this.currentQuestion);
+    this.publishCurrentQuestion(this.currentQuestion);
   }
 
   previousQuestion(): void {
@@ -63,7 +62,7 @@ export class CandidateExamItemsService {
       ];
     this.currentQuestion.currentQuestionNumber = this.currentItemIndex;
 
-    this.publishCurrententQuestion(this.currentQuestion);
+    this.publishCurrentQuestion(this.currentQuestion);
   }
 
   navigateTo(index: number){
@@ -73,7 +72,7 @@ export class CandidateExamItemsService {
     ];
     this.currentItemIndex = index;
     this.currentQuestion.currentQuestionNumber = this.currentItemIndex
-    this.publishCurrententQuestion(this.currentQuestion);
+    this.publishCurrentQuestion(this.currentQuestion);
 
   }
 
@@ -84,11 +83,23 @@ export class CandidateExamItemsService {
           itemId : item.itemId,
           optionId: item.selectedOption
         }
-        this.previousResponses.push(savedResponse)
+        if(!this.alreadyExits(item.itemId)){
+          this.savedResponses.push(savedResponse)
+        }
+        
         
       }
     
     });
-    return this.previousResponses
+   
+    return this.savedResponses
+  }
+
+  alreadyExits(itemId: string): boolean {
+    var found = this.savedResponses.find(
+      (id) => id.itemId === itemId
+    );
+
+    return found == null ? false : true;
   }
 }

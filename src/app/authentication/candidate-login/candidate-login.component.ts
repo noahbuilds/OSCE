@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CandidateAuthService } from '../services/candidate-auth.service';
-
+import { UtilitiesService } from 'src/app/pages/candidate/services/utilities.service';
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-candidate-login',
   templateUrl: './candidate-login.component.html',
@@ -22,7 +23,12 @@ export class CandidateLoginComponent implements OnInit {
  checkSubmit: boolean = false;
  error: boolean = false;
 
- constructor(private formBuilder: FormBuilder, private router:Router,private candidateAuthService: CandidateAuthService) { }
+ constructor(private formBuilder: FormBuilder, 
+  private router:Router,
+  private candidateAuthService: CandidateAuthService,
+  private utilitiesService: UtilitiesService,
+  private readonly notifierService: NotifierService
+  ) { }
 
  ngOnInit(): void {
    /**
@@ -31,6 +37,8 @@ export class CandidateLoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
      username: ['', [Validators.required]],
    });
+   this.utilitiesService.isExamStarted =false
+   this.utilitiesService.isExamEnded =false
  }
 
  // convenience getter for easy access to form fields
@@ -52,7 +60,7 @@ export class CandidateLoginComponent implements OnInit {
     this.error_msg = 'username is invalid';
     return;
   }
-  console.log(this.loginForm.value);
+  // console.log(this.loginForm.value);
   this.router
   .navigate(['/candidate/login'])
   .catch((reason) => console.log(reason));
@@ -66,7 +74,7 @@ export class CandidateLoginComponent implements OnInit {
     this.candidateAuthService.login(signIn).subscribe(
       (value) => {
         //todo: navigate
-        console.log(value);
+        // console.log(value);
         this.router
           .navigate(['/candidate/instruction'])
           .catch((reason) => console.log(reason));
@@ -74,8 +82,9 @@ export class CandidateLoginComponent implements OnInit {
       (err: HttpErrorResponse) => {
         //todo: show error
         this.error = true;
-        this.error_msg = err.message;
+        this.error_msg = err.error.message;
         this.submitted = false;
+        this.notifierService.notify("error", err.error.message)
       }
     );
   }

@@ -25,4 +25,11 @@ export class IpService {
       `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_ips`
       ,payload, {withCredentials: true})
   }
+
+  deleteIP(ip: string):Observable<ResourceCreated>{
+    return this.http.delete<ResourceCreated>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_ips/${ip}`
+    , {withCredentials: true})
+  }
+
 }

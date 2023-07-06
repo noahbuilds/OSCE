@@ -1,154 +1,313 @@
 <app-breadcrumbs
-  title="MARK RESEARCH > ORTHOLOGY"
+  title="MARK RESEARCH > {{ currentExaminerData.programName }}"
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
-<div class="card">
-    <div class="card-body">
-        <div class="d-flex justify-content-between gap-4">
-         
-                <div class="mb-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <button (click)="openGrader(grader)"class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
-                        </div>
-                </div>
-                
-          
-            <div>
-                    <button (click)="openMarkingGuide(markingGuide)" class="btn btn-sm btn-soft-primary">View marking guide</button>
-            </div>
-        </div>
-       
-        
-    <h6 class="mb-3">All graded candidate(s)</h6> 
-    <div class="d-flex justify-content-between">
-  
-      
-        <div class="search-box d-inline-block mb-2">
-          <input type="text" class="form-control search" placeholder="Search..." />
-          <i class="ri-search-line search-icon"></i>
-        </div>
-    
-        <select class="form-select  mb-3 w-25" aria-label="Default select example">
-            <option selected>Filter</option>
-            <option value="1">BASIC NURSING</option>
-            <option value="2">ORTHOLOGY</option>
-            <option value="3">NURSING MATHS</option>
-            </select>
-        </div>
-    <div class="table-responsive">
-      <table class="table table-gridjs">
-        <thead>
-        <tr>
-        <th class="sort" data-sort="name">Name</th>
-        <th class="sort" data-sort="email">EXAM NO.</th>
-        <th class="sort" data-sort="company">EXAMINER</th>
-        <th class="sort" data-sort="position">SCORE</th>
 
-        <th class="sort" data-sort="country">ACTION</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Noah Edet</td>
-          <td>17CD00GH</td>
-          <td>Babatunde Fashola</td>
-          <td>89</td>
-          <td> <button class="btn btn-sm btn-success"> Completed</button></td>
-         </tr> 
-        </tbody>
-      </table>
+<ng-container *ngIf="currentExaminerData != null">
+  <div class="d-flex justify-content-between gap-4">
+    <div class="mb-4">
+      <h6 class="text-muted">Enter exam number of candidate to grade</h6>
+      <div class="input-group">
+        <input
+          #examNumberRef
+          type="text"
+          class="form-control"
+          placeholder="Enter exam number"
+          onfocus="this.value=''"
+          required
+        />
+
+        <button
+          (click)="
+            getCandidateForGrading(
+              examNumberRef.value,
+              currentExaminerData.programId,
+              grader
+            )
+          "
+          class="btn btn-outline-primary"
+          type="button"
+          id="button-addon2"
+          [disabled]="processingSearch"
+        >
+          <span *ngIf="processingSearch == false">Search</span>
+          <span *ngIf="processingSearch == true">Searching...</span>
+        </button>
+      </div>
     </div>
   </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-end">
+        <h6 class="mb-3">
+          Completed ({{ successfullyGradedCount }} of
+          {{ gradedCandidatesByProgram.length }})
+        </h6>
+      </div>
 
+      <div class="table-responsive">
+        <p-table
+          [value]="gradedCandidatesByProgram"
+          [tableStyle]="{ 'min-width': '100%' }"
+          #dt1
+          dataKey="id"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="name">
+                <div class="flex justify-content-between align-items-center">
+                  NAME
+                  <p-sortIcon field="name"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="name"
+                    display="menu"
+                    class="ml-auto"
+                  ></p-columnFilter>
+                </div>
+              </th>
+              <th pSortableColumn="examNumber">
+                <div class="flex justify-content-between align-items-center">
+                  EXAM NO.
+                  <p-sortIcon field="examNumber"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="examNumber"
+                    display="menu"
+                    class="ml-auto"
+                  ></p-columnFilter>
+                </div>
+              </th>
+              <th pSortableColumn="programName">
+                <div class="flex justify-content-between align-items-center">
+                  PROGRAM
+                  <p-sortIcon field="programName"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="programName"
+                    display="menu"
+                    class="ml-auto"
+                  ></p-columnFilter>
+                </div>
+              </th>
 
-  
-        <ng-template #markingGuide role="document" let-modal>
-          <div class="card ">
-            <div class="text-center mt-1">
-                <div class="card-header">
-                    <h3>Marking Guide</h3>
-                    <p class="text-muted mb-0">This will guide you on how to grade cadidate's in this section</p>
+              <th pSortableColumn="institution">
+                <div class="flex justify-content-between align-items-center">
+                  INSTITUTION
+                  <p-sortIcon field="institution"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="institution"
+                    display="menu"
+                    class="ml-auto"
+                  ></p-columnFilter>
                 </div>
-            
-            </div>
-            <div class="card-body">
-                <div class="mb-1">
-                    <ol>
-                        <li>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugit aut numquam
-                            repudiandae, nam eligendi sapiente eveniet
-                            corrupti fugiat officiis quam qui suscipit. Veritatis cupiditate animi nihil! Est, deleniti
-                            quia. <strong> (5marks)</strong>
-                        </li> <br>
-                        <li>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugit aut numquam
-                            repudiandae, nam eligendi sapiente eveniet
-                            corrupti fugiat officiis quam qui suscipit. Veritatis cupiditate animi nihil! Est, deleniti
-                            quia. <strong> (5marks)</strong>
-                        </li> <br>
-                        <li>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugit aut numquam
-                            repudiandae, nam eligendi sapiente eveniet
-                            corrupti fugiat officiis quam qui suscipit. Veritatis cupiditate animi nihil! Est, deleniti
-                            quia. <strong> (5marks)</strong>
-                        </li>  <br>
-                        <li>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi fugit aut numquam
-                            repudiandae, nam eligendi sapiente eveniet
-                            corrupti fugiat officiis quam qui suscipit. Veritatis cupiditate animi nihil! Est, deleniti
-                            quia. <strong> (5marks)</strong>
-                        </li>
-                    </ol>
-    
-                    
+              </th>
+              <th pSortableColumn="examinerName">
+                <div class="flex justify-content-between align-items-center">
+                  EXAMINER
+                  <p-sortIcon field="examinerName"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="examinerName"
+                    display="menu"
+                    class="ml-auto"
+                  ></p-columnFilter>
                 </div>
-                <button class="btn  btn-danger float-end">
-                    Close
-                </button>
-    
-            </div>
-    
+              </th>
+
+              <th pSortableColumn="stamp">
+                <div class="flex justify-content-between align-items-center">
+                  DATE
+                  <p-sortIcon field="stamp"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="stamp"
+                    display="menu"
+                    class="ml-auto"
+                  ></p-columnFilter>
+                </div>
+              </th>
+
+              <th pSortableColumn="score">
+                <div class="flex justify-content-between align-items-center">
+                  SCORE
+                  <p-sortIcon field="score"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="score"
+                    display="menu"
+                    class="ml-auto"
+                  ></p-columnFilter>
+                </div>
+              </th>
+
+              <th pSortableColumn="status">
+                <div class="flex justify-content-between align-items-center">
+                  STATUS
+                  <p-sortIcon field="status"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="status"
+                    display="menu"
+                    class="ml-auto"
+                  ></p-columnFilter>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+          >
+          <ng-template pTemplate="body" let-candidate>
+            <tr>
+              <td>{{ candidate.name }}</td>
+              <td>{{ candidate.examNumber }}</td>
+              <td>{{ candidate.programName }}</td>
+              <td>{{ candidate.institution }}</td>
+              <td>{{ candidate.examinerName }}</td>
+              <td>{{ candidate.stamp | date : "dd/MM/yyyy hh:mm a" }}</td>
+
+              <td>{{ candidate.score }}</td>
+
+              <td>
+                <span
+                  class="badge badge-soft-success"
+                  *ngIf="candidate.status == candidateStatus.COMPLETED"
+                >
+                  Completed</span
+                >
+                <span
+                  class="badge badge-soft-danger"
+                  *ngIf="candidate.status == candidateStatus.PENDING"
+                >
+                  Pending</span
+                >
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <ng-template #markingGuide role="document" let-modal>
+      <div class="card">
+        <div class="text-center mt-1">
+          <div class="card-header">
+            <h3>Marking Guide</h3>
+            <p class="text-muted mb-0">
+              This will guide you on how to grade cadidate's in this section
+            </p>
+          </div>
         </div>
-        </ng-template>
+        <div class="card-body">
+          <div class="mb-1">
+            <ol>
+              <li>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
+                fugit aut numquam repudiandae, nam eligendi sapiente eveniet
+                corrupti fugiat officiis quam qui suscipit. Veritatis cupiditate
+                animi nihil! Est, deleniti quia. <strong> (5marks)</strong>
+              </li>
+              <br />
+              <li>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
+                fugit aut numquam repudiandae, nam eligendi sapiente eveniet
+                corrupti fugiat officiis quam qui suscipit. Veritatis cupiditate
+                animi nihil! Est, deleniti quia. <strong> (5marks)</strong>
+              </li>
+              <br />
+              <li>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
+                fugit aut numquam repudiandae, nam eligendi sapiente eveniet
+                corrupti fugiat officiis quam qui suscipit. Veritatis cupiditate
+                animi nihil! Est, deleniti quia. <strong> (5marks)</strong>
+              </li>
+              <br />
+              <li>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi
+                fugit aut numquam repudiandae, nam eligendi sapiente eveniet
+                corrupti fugiat officiis quam qui suscipit. Veritatis cupiditate
+                animi nihil! Est, deleniti quia. <strong> (5marks)</strong>
+              </li>
+            </ol>
+          </div>
+          <button class="btn btn-danger float-end" (click)="cancel()">
+            Close
+          </button>
+        </div>
+      </div>
+    </ng-template>
 
-        <ng-template #grader>
-            <div class="card ">
-                <div class="d-flex justify-content-end">
-                    <i class="btn btn-close p-3" (click)="cancel()"></i>
-                </div>
-                
-                <div class="text-center mt-1 card-header">
-                    <h3>Candidate Grading</h3>
-                    <p class="text-muted mb-0"> You are about to grade Candidate with the following details below</p>
-                   
-                </div>
-               
-                <div class="mt-4 card-body">
-                    <div class="mb-3">
-                       
-                        <div class="text-center">
-                            <img class="img-thumbnail" src="assets/images/users/avatar-7.jpg" alt="candidate Passport"> 
-                        </div> <br>
+    <ng-template #grader>
+      <div class="card">
+        <div class="d-flex justify-content-end">
+          <i class="btn btn-close p-3" (click)="cancel()"></i>
+        </div>
 
-                       <div class="text-start">
-                        <p> <strong> Candidate Name:</strong> Noah Edet</p>
-                        <p> <strong> Exam Number:</strong>  17CD005322</p>  
-                        <p> <strong> Program:</strong>  NMCM PROGRAM</p>  
-                        <p> <strong> Institution:</strong>  MSSP</p> 
-                       </div>
+        <div class="text-center mt-1 card-header">
+          <h3>Candidate Grading</h3>
+          <p class="text-muted mb-0">
+            You are about to grade Candidate with the following details below
+          </p>
+        </div>
 
-                                       
-                            <label for="exampleFormControlInput1" ><strong> Candidate Grade:</strong>  {{grade.value}} </label>
-                            <div class="input-group mb-3 mt-3">
-                                <input type="text" class="form-control" #grade placeholder="Input Candidate Grade" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-primary" type="button" id="button-addon2">Grade</button>
-                            </div>
-                           
-                    </div>
-        
-                </div>
-        
+        <div class="mt-4 card-body">
+          <div class="mb-3">
+            <div class="text-center">
+              <img
+                class="img-thumbnail"
+                [src]="image"
+                alt="candidate Passport"
+                style="width: 120px; height: 140px"
+              />
             </div>
-        </ng-template>
-        
+            <br />
+
+            <div class="text-start">
+              <p>
+                <strong> Candidate Name:</strong> {{ candidateToGrade.name }}
+              </p>
+              <p>
+                <strong> Exam Number:</strong> {{ candidateToGrade.examNumber }}
+              </p>
+              <p>
+                <strong> Program:</strong> {{ candidateToGrade.programName }}
+              </p>
+              <p>
+                <strong> Institution:</strong>
+                {{ candidateToGrade.institution }}
+              </p>
+            </div>
+
+            <label for="exampleFormControlInput1"
+              ><strong> Candidate Grade:</strong> {{ candidateToGrade.score }}
+            </label>
+            <div class="input-group mb-3 mt-3">
+              <input
+                type="number"
+                step="0.1"
+                class="form-control"
+                [disabled]="candidateToGrade.vivaScoreId != null"
+                #grade
+                placeholder="Input Candidate Grade"
+                aria-label="Recipient's username"
+                aria-describedby="button-addon2"
+              />
+              <button
+                class="btn btn-primary"
+                type="button"
+                id="button-addon2"
+                [disabled]="
+                  candidateToGrade.vivaScoreId != null ||
+                  gradingCandidate == true
+                "
+                (click)="gradeCandidate(candidateToGrade.id, grade.value)"
+              >
+                Grade
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-container>

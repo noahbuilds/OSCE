@@ -3,115 +3,157 @@
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
+<button
+  class="btn btn-primary"
+  [disabled]="processingDownload"
+  (click)="downloadExam()"
+>
+  <span *ngIf="processingDownload == true">Downloading...</span>
+  <span *ngIf="processingDownload == false">
+    Download OSCE, VIVA, RESEARCH & CLIENT CARE</span
+  >
+</button>
+<div class="border-bottom my-3"></div>
 
-<button class="btn btn-primary">Download OSCE & VIVA </button>
-  <div class="border-bottom my-3"></div>
-
-
-
-
-  <div class="card card-body">
-    <div class="d-flex row ">
-      <div class=" col-xl-6 mx-0 px-0">
-         
-          <div class="sticky-side-div">
-              <div class="">
-                  <div class="card-header border-bottom-dashed">
-                      <h5 class="card-title mb-0">POST NURSING EXAM </h5>
-                  </div>
-                  <div class="">
-                      <div class="card-body">
-                          
-                          <div class="table-card">
-                              <table class="table mb-0">
-                                  <tbody>
-                                      <tr>
-                                          <td class="fw-medium">Total Examiner(s)</td>
-                                          <td>56</td>
-                                      </tr>
-                                      <tr>
-                                          <td class="fw-medium">Total Candidate(s)</td>
-                                          <td>3000</td>
-                                      </tr>
-                                      <tr>
-                                          <td class="fw-medium">Total Program(s)</td>
-                                          <td>25</td>
-                                      </tr>
-                                      
-                                      <tr>
-                                          <td class="fw-medium">VIVA Date</td>
-                                          <td>05 Jan, 2022</td>
-                                      </tr>
-                                      <tr>
-                                          <td class="fw-medium">OSCE Date</td>
-                                          <td>05 Jan, 2022</td>
-                                      </tr>
-    
-                               
-                                  </tbody>
-                              </table><!--end table-->
-                          </div>
-                      </div>
-                  </div>
-              
-              
-                </div>
+<div *ngIf="downloadedExam != null">
+  <ngb-accordion
+    #acc="ngbAccordion"
+    class="kanban-accordion"
+    activeIds=""
+    [closeOthers]="true"
+  >
+    <ngb-panel id="lead-1">
+      <ng-template ngbPanelTitle>
+        <div class="card mb-4">
+          <a
+            class="card-header bg-soft-primary p-3 text-start d-block"
+            data-bs-toggle="collapse"
+            role="button"
+            aria-expanded="false"
+            aria-controls="contactInitiated"
+          >
+            <div class="avatar-sm mb-3">
+              <div
+                class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+              >
+                <i class="ri-download-cloud-2-line"></i>
               </div>
-             
-               
-      </div>
-  
-     
-      
-      
-      <div class="col-xl-6 mx-0 px-0">
-         
-        <div class="sticky-side-div">
-            <div class="">
-                <div class="card-header border-bottom-dashed">
-                    <h5 class="card-title mb-0 text-center">POST NURSING EXAM PROGRAM DETAILS </h5>
-                </div>
-                <div class="">
-                    <div class="card-body">
-                        
-                        <div class="table-card" style="height: 41vh;">
-                          <ngx-simplebar>
-                            <div class="table-responsive card-body" style="height: 41vh;">
-                                <table class="table table-gridjs">
-                                    <thead>
-                                      <tr>
-                                        <th class="sort" data-sort="name">Program name</th>
-                                        <th class="sort" data-sort="email">Total Examiner(s)</th>
-                                        <th class="sort" data-sort="position">Total Candidate(s)</th>
-                                      </tr>
-                                    </thead>
-                            
-                                    <tbody *ngFor="let item of items">
-                                      <tr>
-                                        <td>BASIC NURSING</td>
-                                        <td>20</td>
-                                        <td>200</td>
-                                        
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                            </div>
-                        </ngx-simplebar>
-                        </div>
-                    </div>
-                </div>
             </div>
+            <h5 class="card-title text-uppercase fw-semibold mb-1 fs-15">
+              {{ downloadedExam.examName }}
+            </h5>
+            <div class="d-flex gap-1 row-12">
+              <div
+                class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2 col-3"
+              >
+                <div class="avatar-xs">
+                  <div
+                    class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+                  >
+                    OS
+                  </div>
+                </div>
+                <p class="text-muted mb-0">
+                  OSCE DATE:
+                  <span class="fw-medium">{{ downloadedExam.osceDate }}</span>
+                </p>
+              </div>
+              <div
+                class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2"
+              >
+                <div class="avatar-xs">
+                  <div
+                    class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+                  >
+                    RE
+                  </div>
+                </div>
+                <p class="text-muted mb-0">
+                  RESEARCH DATE:
+                  <span class="fw-medium">{{
+                    downloadedExam.researchDate
+                  }}</span>
+                </p>
+              </div>
+              <div
+                class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2"
+              >
+                <div class="avatar-xs">
+                  <div
+                    class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+                  >
+                    VI
+                  </div>
+                </div>
+                <p class="text-muted mb-0">
+                  VIVA DATE:
+                  <span class="fw-medium">{{ downloadedExam.vivaDate }}</span>
+                </p>
+              </div>
+              <div
+                class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2"
+              >
+                <div class="avatar-xs">
+                  <div
+                    class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+                  >
+                    EX
+                  </div>
+                </div>
+                <p class="text-muted mb-0">
+                  EXPECTANT CARE / CLIENT CARE DATE:
+                  <span class="fw-medium">{{
+                    downloadedExam.clientCareDate
+                  }}</span>
+                </p>
+              </div>
             </div>
-           
-             
-    </div>
-    
-  
-  
-           
-                  
-    </div>
-  </div>
 
+            <!-- <a> Click to view more</a> -->
+          </a>
+        </div>
+        <!--end card-->
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <ngb-accordion
+          #acc="ngbAccordion"
+          [closeOthers]="true"
+          *ngFor="let program of downloadedExam.programs"
+        >
+          <ngb-panel id="static-1">
+            <ng-template ngbPanelTitle>
+              <a
+                class="d-flex align-items-center align-content-between text-start"
+                data-bs-toggle="collapse"
+                role="button"
+                aria-expanded="false"
+                aria-controls="contactInitiated1"
+              >
+                <div class="avatar-sm">
+                  <div
+                    class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+                  >
+                    {{ program.programName.charAt(0)
+                    }}{{ program.programName.charAt(1) }}
+                  </div>
+                </div>
 
-
+                <div
+                  class="flex-grow-1 ms-3 align-center align-content-center align-items-center"
+                >
+                  <h6 class="fs-15 mb-1">{{ program.programName }}</h6>
+                </div>
+                <div class="d-flex justify-content-start gap-2">
+                  <h6 class="fs-15 mb-1">Total Examiner:</h6>
+                  <p class="text-muted mb-0">{{ program.totalExaminers }}</p>
+                  <h6 class="fs-15 mb-1">Total Candidate:</h6>
+                  <p class="text-muted mb-0">{{ program.totalCandidates }}</p>
+                </div>
+              </a>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>

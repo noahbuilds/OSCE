@@ -50,5 +50,16 @@ export class ManageExamService {
     , {withCredentials: true})
   }
 
+  uploadResearch(examId: string): Observable< ResourceCreated>{
+    return this.http.get<ResourceCreated>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_exam/exam/${examId}/upload_research`
+    , {withCredentials: true})
+  }
+
+  uploadExpectantCare(examId: string): Observable <ResourceCreated>{
+    return this.http.get<ResourceCreated>(
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/manage_exam/exam/${examId}/upload_clinical_care`
+    , {withCredentials: true})
+  }
 
 }

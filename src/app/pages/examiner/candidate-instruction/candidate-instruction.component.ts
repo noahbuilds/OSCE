@@ -17,7 +17,11 @@ export class CandidateInstructionComponent implements OnInit {
   candidateInstruction: InstructionModel;
   currentExaminer: ExaminerAccount;
   procedures: Procedure[];
-  capturedName: string = ''
+  proceduresTest = [
+    { id: 1, name: "num1" },
+    { id: 2, name: "num2" },
+  ];
+  capturedName: string = "";
   constructor(
     private instructionService: InstructionService,
     private examinerAccountService: ExaminerAccountService
@@ -34,32 +38,33 @@ export class CandidateInstructionComponent implements OnInit {
   }
 
   getCandidateInstruction(procedureId: string) {
-     this.instructionService
-      .getCandidateInstruction(procedureId)
-      .subscribe({
-        next: (data: InstructionModel) => {
-          this.candidateInstruction = data;
-        },
-        complete: () => {
-          console.log(this.candidateInstruction);
-        },
-        error(err: HttpErrorResponse) {
-          console.log(err.error.message);
-        },
-      });
+    this.instructionService.getCandidateInstruction(procedureId).subscribe({
+      next: (data: InstructionModel) => {
+        this.candidateInstruction = data;
+      },
+      complete: () => {
+        // console.log(this.candidateInstruction);
+      },
+      error(err: HttpErrorResponse) {
+        console.log(err.error.message);
+      },
+    });
   }
 
-  captureProcedure(procedureId: string) {
-    this.getCandidateInstruction(procedureId);
+  captureProcedure(event: any) {
+    let captured = event;
+    // console.log( captured.id + captured.name)
+    this.getCandidateInstruction(captured.id);
+    this.capturedName = captured.name;
   }
 
   getAllProcedures(programId: string) {
-     this.instructionService.getProcedures(programId).subscribe({
+    this.instructionService.getProcedures(programId).subscribe({
       next: (data: Procedure[]) => {
         this.procedures = data;
       },
       complete: () => {
-        console.log(this.procedures);
+        // console.log(this.procedures);
       },
       error: (err: HttpErrorResponse) => {
         console.log(err.error.message);
@@ -68,7 +73,10 @@ export class CandidateInstructionComponent implements OnInit {
   }
 
   getCurrentExaminer() {
-   this.currentExaminer = this.examinerAccountService.getUser();
+    this.currentExaminer = this.examinerAccountService.getUser();
+  }
 
+  printCandidateInstruction() {
+    window.print();
   }
 }

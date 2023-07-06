@@ -6,7 +6,7 @@
   
   <div class="card card-body" *ngFor="let downloadedExam of downloadedExams">
     <div class="d-flex row ">
-      <div class=" col-xl-6 mx-0 px-0" >
+      <!-- <div class=" col-xl-6 mx-0 px-0" >
          
           <div class="sticky-side-div">
               <div class="">
@@ -40,22 +40,48 @@
                                           <td class="fw-medium">OSCE Date</td>
                                           <td>{{downloadedExam.osceDate | date : "dd/MM/yyyy hh:mm a"}}</td>
                                       </tr>
+                                      <tr>
+                                          <td class="fw-medium">RESEARCH Date</td>
+                                          <td>{{downloadedExam.researchDate | date : "dd/MM/yyyy hh:mm a"}}</td>
+                                      </tr>
+                                      <tr>
+                                          <td class="fw-medium">CLIENT CARE Date</td>
+                                          <td>{{downloadedExam.clientCareDate | date : "dd/MM/yyyy hh:mm a"}}</td>
+                                      </tr>
     
                                       <tr>
                                           <td class="fw-medium">OSCE</td>
                                           <td>
-                                            <span class="badge badge-soft-success" *ngIf="downloadedExam.osceUploaded == true">Taken</span>
-                                            <span class="badge badge-soft-danger" *ngIf="downloadedExam.osceUploaded == false">Not Taken</span>
-                                            <button class="badge btn-success mx-2" (click)="uploadOsce()"><span *ngIf="downloadedExam.osceUploaded == true"> Uploaded OSCE</span> <span *ngIf="downloadedExam.osceUploaded== false"> Upload OSCE</span></button>
+                                            <span class="badge badge-soft-success" *ngIf="downloadedExam.osceEndedDate != null">Taken</span>
+                                            <span class="badge badge-soft-danger" *ngIf="downloadedExam.osceEndedDate == null">Not Taken</span>
+                                            <button class="badge btn-success mx-2" (click)="uploadOsce(downloadedExam.examId)"><span *ngIf="downloadedExam.osceUploaded == true"> Uploaded OSCE</span> <span *ngIf="downloadedExam.osceUploaded== false"> Upload OSCE</span></button>
                                           </td>
                                       </tr>
                                       <tr>
                                           <td class="fw-medium">VIVA</td>
                                           <td>
-                                            <span class="badge badge-soft-success" *ngIf="downloadedExam.vivaUploaded == true">Taken</span>
-                                            <span class="badge badge-soft-danger" *ngIf="downloadedExam.vivaUploaded == false">Not Taken</span>
+                                            <span class="badge badge-soft-success" *ngIf="downloadedExam.vivaEndedDate != null">Taken</span>
+                                            <span class="badge badge-soft-danger" *ngIf="downloadedExam.vivaEndedDate == null">Not Taken</span>
 
-                                            <button class="badge  btn-success mx-2" (click)="uploadViva()"> <span *ngIf="downloadedExam.vivaUploaded == true"> Uploaded VIVA</span> <span *ngIf="downloadedExam.vivaUploaded == false"> Upload VIVA</span> </button>
+                                            <button class="badge  btn-success mx-2" (click)="uploadViva(downloadedExam.examId)"> <span *ngIf="downloadedExam.vivaUploaded == true"> Uploaded VIVA</span> <span *ngIf="downloadedExam.vivaUploaded == false"> Upload VIVA</span> </button>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td class="fw-medium">EXPECTANT CARE / CLIENT CARE</td>
+                                          <td>
+                                            <span class="badge badge-soft-success" *ngIf="downloadedExam.clientCareEndedDate != null">Taken</span>
+                                            <span class="badge badge-soft-danger" *ngIf="downloadedExam.clientCareEndedDate == null">Not Taken</span>
+
+                                            <button class="badge  btn-success mx-2" (click)="uploadExpectantCare(downloadedExam.examId)"> <span *ngIf="downloadedExam.clientCareUploaded == true"> Uploaded CLIENT CARE</span> <span *ngIf="downloadedExam.clientCareUploaded == false"> Upload CLIENT CARE</span> </button>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td class="fw-medium">RESEARCH</td>
+                                          <td>
+                                            <span class="badge badge-soft-success" *ngIf="downloadedExam.researchEndedDate != null">Taken</span>
+                                            <span class="badge badge-soft-danger" *ngIf="downloadedExam.researchEndedDate == null">Not Taken</span>
+
+                                            <button class="badge  btn-success mx-2" (click)="uploadResearch(downloadedExam.examId)"> <span *ngIf="downloadedExam.researchUploaded == true"> Uploaded RESEARCH</span> <span *ngIf="downloadedExam.researchUploaded == false"> Upload RESEARCH</span> </button>
                                           </td>
                                       </tr>
                                   </tbody>
@@ -73,8 +99,7 @@
   
      
       
-      
-      <div class="col-xl-6 mx-0 px-0">
+       <div class="col-xl-6 mx-0 px-0">
          
         <div class="sticky-side-div">
             <div class="">
@@ -115,14 +140,251 @@
             </div>
            
              
-    </div>
+    
+    
+    
+          </div> -->
     
   
   
+        <ngb-accordion #acc="ngbAccordion" class="kanban-accordion" activeIds="" [closeOthers]="true">
+     
+    <ngb-panel id="lead-1">
+      <ng-template ngbPanelTitle>
+        <div class="card mb-4">
+          <a class="card-header bg-soft-primary p-3 text-start d-block" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="contactInitiated">
+            <div class="avatar-sm mb-3">
+              <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                  <i class="ri-download-cloud-2-line"></i>
+              </div>
+          </div>
+          <div class="card-header border-bottom-dashed">
+            <h5 class="card-title mb-0">{{downloadedExam.examName.toUpperCase()}} </h5>
+        </div>
+            <div class="d-flex gap-1 row-12">
+              
+              <!-- <div class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2">
+                <div class="avatar-xs ">
+                  <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                      RE
+                  </div>
+                  </div>
+                <p class="text-muted mb-0">RESEARCH DATE: <span class="fw-medium">5/11/22</span></p>
+              </div>
+              <div class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2">
+                <div class="avatar-xs ">
+                  <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                      VI
+                  </div>
+                  </div>
+                <p class="text-muted mb-0">VIVA DATE: <span class="fw-medium">5/11/22</span></p>
+              </div>
+              <div class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2">
+                <div class="avatar-xs ">
+                  <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                      EX
+                  </div>
+                  </div>
+                <p class="text-muted mb-0">EXPECTANT CARE / CLIENT CARE DATE: <span class="fw-medium">5/11/22</span></p>
+              </div> -->
+
+
+              <div class="d-flex gap-1 row-12">
+                <div class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2 col-3">
+                  <div class="avatar-xs ">
+                    <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                        OS
+                    </div>
+                    </div>
+                  <p class="text-muted mb-0">OSCE DATE: <span class="fw-medium">{{downloadedExam.osceDate | date : "dd/MM/yyyy hh:mm a"}}</span></p>
+                </div>
+                <div class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2">
+                  <div class="avatar-xs ">
+                    <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                        RE
+                    </div>
+                    </div>
+                  <p class="text-muted mb-0">RESEARCH DATE: <span class="fw-medium">{{downloadedExam.researchDate | date : "dd/MM/yyyy hh:mm a"}}</span></p>
+                </div>
+                <div class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2">
+                  <div class="avatar-xs ">
+                    <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                        VI
+                    </div>
+                    </div>
+                  <p class="text-muted mb-0">VIVA DATE: <span class="fw-medium">{{downloadedExam.vivaDate | date : "dd/MM/yyyy hh:mm a"}}</span></p>
+                </div>
+                <div class="d-flex col-xl-3 align-center align-content-center align-items-center gap-2">
+                  <div class="avatar-xs ">
+                    <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
+                        EX
+                    </div>
+                    </div>
+                  <p class="text-muted mb-0">EXPECTANT CARE / CLIENT CARE DATE: <span class="fw-medium">{{downloadedExam.clientCareDate | date : "dd/MM/yyyy hh:mm a"}}</span></p>
+                </div>
+
+              </div>
+            </div>
+
+            <a> Click to view more</a>
+          
+          </a>
+        </div><!--end card-->
+      </ng-template>
+
+      <ng-template ngbPanelContent>
+
+       
+ 
+        <div class="d-flex row">
+          <div class=" col-xl-6 mx-0 px-0" >
+         
+            <div class="sticky-side-div">
+                <div class="">
+                    
+                    <div class="">
+                        <div class="card-body">
+                            
+                            <div class="table-card">
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-medium">Total Examiner(s)</td>
+                                            <td>{{downloadedExam.totalExaminers}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium">Total Candidate(s)</td>
+                                            <td>{{downloadedExam.totalCandidates}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium">Total Program(s)</td>
+                                            <td>{{downloadedExam.totalPrograms}}</td>
+                                        </tr>
+                                              <tr>
+                                            <td class="fw-medium">OSCE</td>
+                                            <td>
+                                              <span class="badge badge-soft-success" *ngIf="downloadedExam.osceEndedDate != null">Taken</span>
+                                              <span class="badge badge-soft-danger" *ngIf="downloadedExam.osceEndedDate == null">Not Taken</span>
+                                              <button *ngIf="downloadedExam.osceEndedDate != null" class="badge btn-success mx-2" [disabled]="processingUploadOsce" (click)="uploadOsce(downloadedExam.examId)">
+                                                <span *ngIf="downloadedExam.osceUploaded == true && processingUploadOsce== false "> Uploaded OSCE</span> 
+                                                <span *ngIf="downloadedExam.osceUploaded== false && processingUploadOsce== false "> Upload OSCE</span>
+                                                <span *ngIf="processingUploadOsce== true"> Uploading...</span>
+                                              </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium">VIVA</td>
+                                            <td>
+                                              <span class="badge badge-soft-success" *ngIf="downloadedExam.vivaEndedDate != null">Taken</span>
+                                              <span class="badge badge-soft-danger" *ngIf="downloadedExam.vivaEndedDate == null">Not Taken</span>
+  
+                                              <button *ngIf="downloadedExam.vivaEndedDate != null" class="badge  btn-success mx-2" (click)="uploadViva(downloadedExam.examId)"> 
+                                                <span *ngIf="downloadedExam.vivaUploaded == true && processingUploadViva== false"> Uploaded VIVA</span> 
+                                                <span *ngIf="downloadedExam.vivaUploaded == false && processingUploadViva== false"> Upload VIVA</span> 
+                                                <span *ngIf=" processingUploadViva== true"> Uploading...</span> 
+                                              </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium">EXPECTANT CARE / CLIENT CARE</td>
+                                            <td>
+                                              <span class="badge badge-soft-success" *ngIf="downloadedExam.clientCareEndedDate != null">Taken</span>
+                                              <span class="badge badge-soft-danger" *ngIf="downloadedExam.clientCareEndedDate == null">Not Taken</span>
+  
+                                              <button *ngIf="downloadedExam.clientCareEndedDate != null" class="badge  btn-success mx-2" (click)="uploadExpectantCare(downloadedExam.examId)"> 
+                                                <span *ngIf="downloadedExam.clientCareUploaded == true && processingUploadExpectantCare == false"> Uploaded CLIENT CARE</span> 
+                                                <span *ngIf="downloadedExam.clientCareUploaded == false && processingUploadExpectantCare == false"> Upload CLIENT CARE</span> 
+                                                <span *ngIf="processingUploadExpectantCare == true"> Uploading...</span> 
+                                              </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-medium">RESEARCH</td>
+                                            <td>
+                                              <span class="badge badge-soft-success" *ngIf="downloadedExam.researchEndedDate != null">Taken</span>
+                                              <span class="badge badge-soft-danger" *ngIf="downloadedExam.researchEndedDate == null">Not Taken</span>
+  
+                                              <button *ngIf="downloadedExam.researchEndedDate != null" class="badge  btn-success mx-2" (click)="uploadResearch(downloadedExam.examId)"> 
+                                                <span *ngIf="downloadedExam.researchUploaded == true && processingUploadResearch == false"> Uploaded RESEARCH</span> 
+                                                <span *ngIf="downloadedExam.researchUploaded == false && processingUploadResearch == false"> Upload RESEARCH</span> 
+                                                <span *ngIf="processingUploadResearch == true"> Uploading...</span> 
+                                              </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                
+                
+                  </div>
+                </div>
+               
+                 
+        </div>
+    
+       
+        
+         <div class="col-xl-6 mx-0 px-0">
            
+          <div class="sticky-side-div">
+              <div class="">
+                  <div class="card-header border-bottom-dashed">
+                      <h5 class="card-title mb-0 text-center">{{downloadedExam.examName}} PROGRAM DETAILS </h5>
+                  </div>
+                  <div class="">
+                      <div class="card-body">
+                          
+                          <div class="table-card" style="height: 41vh;">
+                            <ngx-simplebar>
+                              <div class="table-responsive card-body" style="height: 41vh;">
+                                  <table class="table table-gridjs table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th class="sort" data-sort="name">Program name</th>
+                                          <th class="sort" data-sort="email">Total Examiner(s)</th>
+                                          <th class="sort" data-sort="position">Total Candidate(s)</th>
+                                          <th class="sort" data-sort="position">Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody  class="table-hover" *ngFor="let program of downloadedExam.programs">
+                                        <tr>
+                                          <td>{{program.programName}}</td>
+                                          <td>{{program.totalExaminers}}</td>
+                                          <td>{{program.totalCandidates}}</td>
+                                          <td> <button class="btn btn-sm btn-soft-primary" (click)="viewExaminers(program.examId, program.programId, program.programName)">View Examiners</button> </td>
+                                          
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                              </div>
+                          </ngx-simplebar>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              </div>
+             
+               
+      
+      
+      
+            </div>
+        </div>
+      
+
+
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>   
                   
     </div>
+
+    
   </div>
  
 
  
+
+  

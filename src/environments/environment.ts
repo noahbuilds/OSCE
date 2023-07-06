@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
+  // developmentIP: '13.40.140.183:8088',
   developmentIP: '192.168.0.131:8088',
+  // developmentIP: location.hostname+':8088',
   defaultauth: 'fackbackend',
   firebaseConfig: {
     apiKey: '',

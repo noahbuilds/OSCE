@@ -20,9 +20,13 @@
     "DOWNLOAD_EXAM":{
       "TEXT":"Download Exam"
     },
+    "DOWNLOAD_PASSPORT":{
+      "TEXT":"Download Passports"
+    },
     "DOWNLOADED_EXAM":{
       "TEXT":"Downloaded Exams"
     },
+    
     "WHITE_LIST":{
       "TEXT":"White List"
     },
@@ -35,7 +39,7 @@
         "VIVA": "VIVA",
         "OSCE": "OSCE",
         "RESEARCH": "Research",
-        "EXPECTANT_CARE": "Expectant Care"
+        "EXPECTANT_CARE": "Expectant Care / Client Care"
       }
     },
     "LAYOUTS": {
@@ -60,7 +64,7 @@
       "TEXT":"Mark VIVA"
     },
     "MARK_EXPECTANT_CARE":{
-      "TEXT":"Mark Expectant Care"
+      "TEXT":"Mark Expectant Care / Client Care"
     },
     "MARK_RESEARCH":{
       "TEXT":"Mark Research"
@@ -72,7 +76,7 @@
       "TEXT":" View Candidate Instruction"
     },
     "PROCEDURE_INSTRUCTION":{
-      "TEXT":"View Procedure Instruction"
+      "TEXT":"View Procedure Requirement"
     },
     "LOGS":{
       "TEXT":"Activities Logs"
@@ -83,14 +87,14 @@
         "MARK_RESEARCH": "Research",
         "MARK_PROCEDURE": "Procedure",
         "MARK_VIVA": "VIVA",
-        "MARK_EXPECTANT_CARE": "Expectant Care"
+        "MARK_EXPECTANT_CARE": "Expectant Care / Client Care"
       }
     },
     "VIEW":{
       "TEXT":"View",
       "LIST": {
         "CANDIDATE_INSTRUCTION": "Candidate Instruction",
-        "PROCEDURE_INSTRUCTION": "Procedure Instruction"
+        "PROCEDURE_INSTRUCTION": "Procedure Requirement"
       }
     },
     "SETTINGS":{

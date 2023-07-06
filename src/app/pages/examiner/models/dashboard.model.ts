@@ -4,6 +4,18 @@ export interface DashboardModel {
     candidateCount?: number;
     candidateCompletedCount?: number;
   };
+  
+  researchProgress: {
+    programName: string,
+    candidateCompletedCount: number,
+    candidateCount: number
+  },
+  clientCareProgress: {
+    programName: string,
+    candidateCompletedCount: number,
+    candidateCount: number
+  },
+
   procedureProgressList?: Array<ProgressStatus>;
   objectiveProgressList?: Array<ProgressStatus>;
   procedureCandidateProgressList?: Array<CandidateProgress>;

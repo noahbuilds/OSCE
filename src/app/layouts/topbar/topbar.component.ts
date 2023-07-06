@@ -14,6 +14,10 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ExaminerAuthService } from 'src/app/authentication/services/examiner-auth.service';
+import { ManagerAuthService } from 'src/app/authentication/services/manager-auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-topbar',
@@ -41,7 +45,10 @@ export class TopbarComponent implements OnInit {
     private authFackservice: AuthfakeauthenticationService,
     private router: Router,
     private examinerAccountService: ExaminerAccountService,
-    private managerAccountService: ManagerAccountService
+    private managerAccountService: ManagerAccountService,
+    private examinerAuthService: ExaminerAuthService,
+    private managerAuthService: ManagerAuthService,
+    private notifierService: NotifierService
   ) {}
 
   ngOnInit(): void {
@@ -59,12 +66,12 @@ export class TopbarComponent implements OnInit {
       this.flagvalue = val.map((element) => element.flag);
     }
      
-    // if(this.examinerAccountService.getUser() != null){
-    //   this.username = this.examinerAccountService.getUser().username;
-    // }else if( this.managerAccountService.getUser() != null){
-    //   this.username =this.managerAccountService.getUser().username;
+    if(this.examinerAccountService.getUser() != null){
+      this.username = this.examinerAccountService.getUser().username;
+    }else if( this.managerAccountService.getUser() != null){
+      this.username =this.managerAccountService.getUser().username;
 
-    // }
+    }
 
   }
 
@@ -163,12 +170,29 @@ export class TopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    if (environment.defaultauth === 'firebase') {
-      this.authService.logout();
-    } else {
-      this.authFackservice.logout();
+    if(this.examinerAccountService.getUser() != null){
+      
+      this.examinerAuthService.logout().subscribe({
+        next:(value)=> {
+          this.examinerAccountService.currentUser = null
+          this.router.navigate(['examiner/login'])
+        },
+        error:(err: HttpErrorResponse)=> {
+          this.notifierService.notify('error', `${err.error.message}`)
+        },
+      })
+    }else if( this.managerAccountService.getUser() != null){
+      
+      this.managerAuthService.logout().subscribe({
+        next:(value)=> {
+          this.managerAccountService.currentUser = null
+          this.router.navigate(['manager/login'])
+        },
+        error:(err: HttpErrorResponse)=> {
+          this.notifierService.notify('error', `${err.error.message}`)
+        },
+      })
     }
-    this.router.navigate(['/auth/login']);
   }
 
   routeToProfile() {

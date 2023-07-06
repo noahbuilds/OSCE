@@ -18,21 +18,21 @@ export const LEAD_EXAMINER_MENU: MenuItem[] = [
         label: 'EXAMINER_ITEMS.MARK.LIST.MARK_VIVA',
         link: '/examiner/mark-viva',
       },
-      // {
-      //   id: 2,
-      //   label: 'EXAMINER_ITEMS.MARK.LIST.MARK_RESEARCH',
-      //   link: '/examiner/mark-research',
-      // },
+      {
+        id: 2,
+        label: 'EXAMINER_ITEMS.MARK.LIST.MARK_RESEARCH',
+        link: '/examiner/mark-research',
+      },
       {
         id: 3,
         label: 'EXAMINER_ITEMS.MARK.LIST.MARK_PROCEDURE',
         link: '/examiner/mark-procedure',
       },
-      // {
-      //   id: 4,
-      //   label: 'EXAMINER_ITEMS.MARK.LIST.MARK_EXPECTANT_CARE',
-      //   link: '/examiner/mark-expectant-care',
-      // }
+      {
+        id: 4,
+        label: 'EXAMINER_ITEMS.MARK.LIST.MARK_EXPECTANT_CARE',
+        link: '/examiner/mark-expectant-care',
+      }
     ]
   },
 
@@ -53,12 +53,12 @@ export const LEAD_EXAMINER_MENU: MenuItem[] = [
       }
     ],
   },
-  {
-    id: 7,
-    label: 'EXAMINER_ITEMS.LOGS.TEXT',
-    link: '/examiner/activity-logs',
-    icon: 'user-check',
-  }
+  // {
+  //   id: 7,
+  //   label: 'EXAMINER_ITEMS.LOGS.TEXT',
+  //   link: '/examiner/activity-logs',
+  //   icon: 'user-check',
+  // }
 ];
 export const EXAMINER_MENU: MenuItem[] = [
   {
@@ -78,29 +78,29 @@ export const EXAMINER_MENU: MenuItem[] = [
         label: 'EXAMINER_ITEMS.MARK.LIST.MARK_VIVA',
         link: '/examiner/mark-viva',
       },
-      // {
-      //   id: 2,
-      //   label: 'EXAMINER_ITEMS.MARK.LIST.MARK_RESEARCH',
-      //   link: '/examiner/mark-research',
-      // },
+      {
+        id: 2,
+        label: 'EXAMINER_ITEMS.MARK.LIST.MARK_RESEARCH',
+        link: '/examiner/mark-research',
+      },
       {
         id: 3,
         label: 'EXAMINER_ITEMS.MARK.LIST.MARK_PROCEDURE',
         link: '/examiner/mark-procedure',
       },
-      // {
-      //   id: 4,
-      //   label: 'EXAMINER_ITEMS.MARK.LIST.MARK_EXPECTANT_CARE',
-      //   link: '/examiner/mark-expectant-care',
-      // }
+      {
+        id: 4,
+        label: 'EXAMINER_ITEMS.MARK.LIST.MARK_EXPECTANT_CARE',
+        link: '/examiner/mark-expectant-care',
+      }
     ]
   },
-  {
-    id: 7,
-    label: 'EXAMINER_ITEMS.LOGS.TEXT',
-    link: '/examiner/activity-logs',
-    icon: 'user-check',
-  }
+  // {
+  //   id: 7,
+  //   label: 'EXAMINER_ITEMS.LOGS.TEXT',
+  //   link: '/examiner/activity-logs',
+  //   icon: 'user-check',
+  // }
 ];
 
 export const MANAGER_MENU: MenuItem[] = [
@@ -132,21 +132,21 @@ export const MANAGER_MENU: MenuItem[] = [
         label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.VIVA',
         link: '/manager/monitor-exam/viva',
       },
-      // {
-      //   id: 2,
-      //   label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.RESEARCH',
-      //   link: '/manager/monitor-exam/research',
-      // },
+      {
+        id: 2,
+        label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.RESEARCH',
+        link: '/manager/monitor-exam/research',
+      },
       {
         id: 3,
         label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.OSCE',
         link: '/manager/monitor-exam/osce',
       },
-      // {
-      //   id: 4,
-      //   label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.EXPECTANT_CARE',
-      //   link: '/manager/monitor-exam/expectant-care',
-      // },
+      {
+        id: 4,
+        label: 'MANAGER_ITEMS.MONITOR_EXAM.LIST.EXPECTANT_CARE',
+        link: '/manager/monitor-exam/expectant-care',
+      },
     ]
   },
   {
@@ -157,22 +157,28 @@ export const MANAGER_MENU: MenuItem[] = [
   },
   {
     id: 17,
+    label: 'MANAGER_ITEMS.DOWNLOAD_PASSPORT.TEXT',
+    link: '/manager/download-passport',
+    icon: 'image',
+  },
+  {
+    id: 18,
     label: 'MANAGER_ITEMS.DOWNLOADED_EXAM.TEXT',
     link: '/manager/downloaded-exams',
     icon: 'layers',
   },
   {
-    id: 18,
+    id: 19,
     label: 'MANAGER_ITEMS.WHITE_LIST.TEXT',
     link: '/manager/white-list',
     icon: 'check',
   },
-  {
-    id: 19,
-    label: 'MANAGER_ITEMS.LOGS.TEXT',
-    link: '/manager/activities-logs',
-    icon: 'user-check',
-  }
+  // {
+  //   id: 20,
+  //   label: 'MANAGER_ITEMS.LOGS.TEXT',
+  //   link: '/manager/activities-logs',
+  //   icon: 'user-check',
+  // }
 ];
 
 

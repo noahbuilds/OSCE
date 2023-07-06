@@ -42,12 +42,15 @@ export class ExaminerLoginComponent implements OnInit {
       username: ['', [Validators.required]],
       password: ['', Validators.required],
     });
+
   }
 
   // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
+
+  
 
   onSubmit(): void {
     this.error = false;
@@ -62,7 +65,7 @@ export class ExaminerLoginComponent implements OnInit {
       this.error_msg = 'username is invalid';
       return;
     }
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     this.router
     .navigate(['/examiner/login'])
     .catch((reason) => console.log(reason));
@@ -74,7 +77,7 @@ export class ExaminerLoginComponent implements OnInit {
       this.examinerAuthService.login(this.loginForm.value).subscribe(
         (value) => {
           //todo: navigate
-          console.log(value);
+          // console.log(value);
           this.router
             .navigate(['/examiner/dashboard'])
             .catch((reason) => console.log(reason));
@@ -82,8 +85,10 @@ export class ExaminerLoginComponent implements OnInit {
         (err: HttpErrorResponse) => {
           //todo: show error
           this.error = true;
-          this.error_msg = err.message;
+          this.error_msg = err.error.message;
           this.submitted = false;
+          this.notifier.notify("error", err.error.message)
+          console.log(err.error.message)
         }
       );
     }

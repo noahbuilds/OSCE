@@ -1,0 +1,11 @@
+<app-breadcrumbs
+  title="DOWNLOAD PASSPORT"
+  [breadcrumbItems]="breadCrumbItems"
+></app-breadcrumbs>
+
+
+<button class="btn btn-primary" [disabled]="processingDownloadPassport" (click)="downloadPassport()"> 
+    <span *ngIf="processingDownloadPassport == true">Downloading...</span> 
+    <span *ngIf="processingDownloadPassport == false"> Download Passport</span> 
+   </button>
+    <div class="border-bottom my-3"></div>

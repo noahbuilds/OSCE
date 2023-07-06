@@ -1,201 +1,443 @@
 <app-breadcrumbs
-  title="DASHBOARD"
+  title="DASHBOARD / {{ currentExaminerData.programName }} / {{
+    currentExaminerData.procedureName
+  }}"
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
-<div class="row" >
-    <!-- <div class="col-md-6">
-        <app-monitor-expectant-care></app-monitor-expectant-care>
+<div class="row">
+  <!-- VIVA -->
+  <div
+    class="col-md-12"
+    *ngIf="dashboardData != null && dashboardData.vivaProgress != null"
+  >
+    <div class="card card-animate">
+      <div class="card-body">
+        <h6 class="text-uppercase">VIVA Progress</h6>
+        <h6 class="text-muted fs-12">
+          {{ dashboardData.vivaProgress.programName }}
+        </h6>
+        <div class="d-flex align-items-center"></div>
+        <div class="d-flex align-items-end justify-content-between mt-4">
+          <div>
+            <div>
+              <h4 class="fs-22 fw-semibold ff-secondary mb-1">
+                {{ dashboardData.vivaProgress.candidateCompletedCount }} /<span
+                  class="counter-value"
+                >
+                  {{ dashboardData.vivaProgress.candidateCount }}</span
+                >
+              </h4>
 
-    </div> -->
-    <div class="col-md-12" *ngIf="dashboardData != null && dashboardData.vivaProgress != null">
-        <div class="card card-animate">
-            <div class="card-body">
-                <h6 class="text-uppercase text-muted">VIVA Progress</h6>
-                <h6 class=" text-muted">{{dashboardData.vivaProgress.programName}}</h6>
-                <div class="d-flex align-items-center">
-      
-                   
-                    <!-- <div class="flex-grow-1">
-                        <p class=" text-muted fw-medium mb-0 fw-medium">VIVA name goes here</p>
-                    </div> -->
-                    
-                </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
-                    <div>
-                        <div>
-                            <h4 class="fs-22 fw-semibold ff-secondary mb-1" > {{dashboardData.vivaProgress.candidateCompletedCount}} /<span class="counter-value"> {{dashboardData.vivaProgress.candidateCount}}</span> </h4>
-                           
-                            <p class="text-muted">Completed</p> 
-      
-                           <div class="">
-                            <h5 class="text-success fs-14 mb-0">
-                                <i class="align-middle fs-13 ri-arrow-right-up-line"></i> {{((dashboardData.vivaProgress.candidateCompletedCount/dashboardData.vivaProgress.candidateCount) * 100).toFixed(2)}}%
-                            </h5>
-                        </div>
-                        </div>
-                        
-                        
-                    </div>
-                    
-                </div>
-            </div><!-- end card body -->
-        </div>
-    </div>
-    <div class="col-md-12" *ngIf="dashboardData != null  && dashboardData.procedureProgressList !=null">
-        <div class="card card-height-100">
-            <div class="card-header border-bottom-dashed align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1 text-uppercase">Procedure progress</h4>
-                
-            </div><!-- end cardheader -->
-            <div class="card-body" >
-              
-    
-                <ul class="list-group list-group-flush border-dashed mb-0">
-                    <li class="list-group-item px-0" *ngFor="let procedure of dashboardData.procedureProgressList">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0 avatar-xs">
-                                <span class="avatar-title bg-primary p-1 rounded-circle">
-                                    {{procedure.procedureName.charAt(0)}}
-                                </span>
-                            </div>
-                            <div class="flex-grow-1 ms-2">
-                                <h6 class="mb-1">{{procedure.procedureName}}</h6>
-                                <!-- <p class="fs-12 mb-0 text-muted"><i class="mdi mdi-circle fs-10 align-middle text-primary me-1"></i>
-                                    BTC
-                                </p> -->
-                            </div>
-                            <div class="flex-shrink-0 text-end">
-                                <h6 class="mb-1">COMPLETED / EXPECTED</h6>
-                                <p class="text-success fs-12 mb-0">{{procedure.completedCandidates}} / {{procedure.totalCandidates}}</p>
-                            </div>
-                        </div>
-                    </li><!-- end -->
-                    
-                </ul><!-- end -->
-            </div><!-- end card body -->
-        </div>
-    </div>
+              <p class="text-muted">Completed</p>
 
-
-    <div class="col-md-12" *ngIf="dashboardData != null  && dashboardData.objectiveProgressList !=null">
-        <div class="card card-height-100">
-            <div class="card-header border-bottom-dashed align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1 text-uppercase">Objective progress</h4>
-                
-            </div><!-- end cardheader -->
-            <div class="card-body" >
-               <!-- <apx-chart [series]="simpleDonutChart.series" [labels]="simpleDonutChart.labels"
-                          [chart]="simpleDonutChart.chart" [plotOptions]="simpleDonutChart.plotOptions"
-                          [dataLabels]="simpleDonutChart.dataLabels" [legend]="simpleDonutChart.legend"
-                          [stroke]="simpleDonutChart.stroke" [yaxis]="simpleDonutChart.yaxis"
-                          [colors]="simpleDonutChart.colors"></apx-chart> -->
-    
-                <ul class="list-group list-group-flush border-dashed mb-0">
-                    <li class="list-group-item px-0" *ngFor="let objective of dashboardData.objectiveProgressList">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0 avatar-xs">
-                                <span class="avatar-title bg-primary p-1 rounded-circle">
-                                    {{objective.procedureName.charAt(0)}}
-                                </span>
-                            </div>
-                            <div class="flex-grow-1 ms-2">
-                                <h6 class="mb-1">{{objective.procedureName}}</h6>
-                                <!-- <p class="fs-12 mb-0 text-muted"><i class="mdi mdi-circle fs-10 align-middle text-primary me-1"></i>
-                                    BTC
-                                </p> -->
-                            </div>
-                            <div class="flex-shrink-0 text-end">
-                                <h6 class="mb-1">COMPLETED / EXPECTED</h6>
-                                <p class="text-success fs-12 mb-0">{{objective.completedCandidates}} / {{objective.totalCandidates}}</p>
-                            </div>
-                        </div>
-                    </li><!-- end -->
-                    
-                </ul><!-- end -->
-            </div><!-- end card body -->
-        </div>
-    </div>
-
-   
-    <div class="col-md-12" *ngIf="dashboardData != null && dashboardData.procedureObjectiveCandidateProgressList != null">
-        <div class=" card card-body table-responsive">
-            <div class="d-flex align-items-center justify-content-between mb-4">
-              <h6 class="mb-0">PROCEDURE OBJECTIVE STATION CANDIDATE PROGRESS TABLE</h6>
+              <div class="">
+                <h5 class="text-success fs-14 mb-0">
+                  <i class="align-middle fs-13 ri-arrow-right-up-line"></i>
+                  {{
+                    (
+                      (dashboardData.vivaProgress.candidateCompletedCount /
+                        dashboardData.vivaProgress.candidateCount) *
+                      100
+                    ).toFixed(2)
+                  }}%
+                </h5>
+              </div>
             </div>
-            <!-- Captions -->
-    <table class="table caption-top table-nowrap">
-        <thead class="table-light">
-        <tr>
-        <th scope="col">S/N</th>
-        <th scope="col">Name</th>
-        <th scope="col">Exam no.</th>
-        <th scope="col">Institution</th>
-    
-        <!-- <th scope="col">Station</th> -->
-        <th scope="col">Start-Time</th>
-        <th scope="col">End-Time</th>
-        </tr>
-        </thead>
-        <tbody *ngFor="let candidate of dashboardData.procedureObjectiveCandidateProgressList; let i = index">
-        <tr>
-        <th scope="row">{{i + 1}}</th>
-        <td>{{candidate.name}}</td>
-        <td>{{candidate.examNumber}}</td>
-        <td>{{candidate.institution}}</td>
-        <!-- <td>{{candidate.examinerName}}</td> -->
-        <!-- <td>5</td> -->
-        <td>{{candidate.startTime | date: 'dd/MM/yyyy hh:mm a'}}</td>
-        <td>{{candidate.endTime | date: 'dd/MM/yyyy hh:mm a'}}</td>
-        </tr>
-        </tbody>
-        </table>
           </div>
-    </div>
-
-    <div class="col-md-12" *ngIf="dashboardData !=null && dashboardData.procedureCandidateProgressList != null">
-      <!-- <div class="card"  style="width: fit-content;"> -->
-    <div class=" card card-body table-responsive">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-          <h6 class="mb-0">PROCEDURE CANDIDATE PROGRESS TABLE</h6>
-          <!-- <button class="btn btn-outline-secondary btn-sm">All Transaction</button> -->
         </div>
-        <!-- Captions -->
-<table class="table caption-top table-nowrap">
-    <thead class="table-light">
-    <tr>
-        <th scope="col">S/N</th>
-        <th scope="col">Name</th>
-        <th scope="col">Exam no.</th>
-        <th scope="col">Institution</th>
-        <th scope="col">Examiner</th>
-    
-        <!-- <th scope="col">Station</th> -->
-        <th scope="col">Start-Time</th>
-        <th scope="col">End-Time</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let candidate of dashboardData.procedureCandidateProgressList; let i =index">
-    <th scope="row">{{i + 1}}</th>
-    <td>{{candidate.name}}</td>
-    <td>{{candidate.examNumber}}</td>
-    <td>{{candidate.institution}}</td>
-    <td>{{candidate.examinerName}}</td>
-    <!-- <td>5</td> -->
-    <td>{{candidate.startTime | date: 'dd/MM/yyyy hh:mm a'}}</td>
-    <td>{{candidate.endTime | date: 'dd/MM/yyyy hh:mm a'}}</td>
-    
-    </tr>
-    </tbody>
-    
-    </table>
       </div>
-    <!-- </div> -->
-    
-    
+      <!-- end card body -->
     </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <div
+    class="col-md-12"
+    *ngIf="dashboardData != null && dashboardData.researchProgress != null"
+  >
+    <div class="card card-animate">
+      <div class="card-body">
+        <h6 class="text-uppercase">RESEARCH Progress</h6>
+        <h6 class="text-muted fs-12">
+          {{ dashboardData.researchProgress.programName }}
+        </h6>
+        <div class="d-flex align-items-center"></div>
+        <div class="d-flex align-items-end justify-content-between mt-4">
+          <div>
+            <div>
+              <h4 class="fs-22 fw-semibold ff-secondary mb-1">
+                {{
+                  dashboardData.researchProgress.candidateCompletedCount
+                }}
+                /<span class="counter-value">
+                  {{ dashboardData.researchProgress.candidateCount }}</span
+                >
+              </h4>
+
+              <p class="text-muted">Completed</p>
+
+              <div class="">
+                <h5 class="text-success fs-14 mb-0">
+                  <i class="align-middle fs-13 ri-arrow-right-up-line"></i>
+                  {{
+                    (
+                      (dashboardData.researchProgress.candidateCompletedCount /
+                        dashboardData.researchProgress.candidateCount) *
+                      100
+                    ).toFixed(2)
+                  }}%
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end card body -->
+    </div>
+  </div>
+
+  <!-- CLIENT CARE -->
+  <div
+    class="col-md-12"
+    *ngIf="dashboardData != null && dashboardData.clientCareProgress != null"
+  >
+    <div class="card card-animate">
+      <div class="card-body">
+        <h6 class="text-uppercase">CLIENT CARE Progress</h6>
+        <h6 class="text-muted fs-12">
+          {{ dashboardData.clientCareProgress.programName }}
+        </h6>
+        <div class="d-flex align-items-center"></div>
+        <div class="d-flex align-items-end justify-content-between mt-4">
+          <div>
+            <div>
+              <h4 class="fs-22 fw-semibold ff-secondary mb-1">
+                {{
+                  dashboardData.clientCareProgress.candidateCompletedCount
+                }}
+                /<span class="counter-value">
+                  {{ dashboardData.clientCareProgress.candidateCount }}</span
+                >
+              </h4>
+
+              <p class="text-muted">Completed</p>
+
+              <div class="">
+                <h5 class="text-success fs-14 mb-0">
+                  <i class="align-middle fs-13 ri-arrow-right-up-line"></i>
+                  {{
+                    (
+                      (dashboardData.clientCareProgress
+                        .candidateCompletedCount /
+                        dashboardData.clientCareProgress.candidateCount) *
+                      100
+                    ).toFixed(2)
+                  }}%
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end card body -->
+    </div>
+  </div>
+
+  <div
+    class="col-md-12"
+    *ngIf="dashboardData != null && dashboardData.procedureProgressList != null"
+  >
+    <div class="card card-height-100">
+      <div class="card-header border-bottom-dashed align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1 text-uppercase">
+          Procedure progress
+        </h4>
+      </div>
+      <!-- end cardheader -->
+      <div class="card-body">
+        <ul class="list-group list-group-flush border-dashed mb-0">
+          <li
+            class="list-group-item px-0"
+            *ngFor="let procedure of dashboardData.procedureProgressList"
+          >
+            <div class="d-flex align-center align-items-center">
+              <div class="flex-shrink-0 avatar-xs">
+                <span class="avatar-title bg-primary p-1 rounded-circle">
+                  {{ procedure.procedureName.charAt(0) }}
+                </span>
+              </div>
+              <div class="flex-grow-1 ms-2">
+                <h6 class="mb-1">{{ procedure.procedureName }}</h6>
+              </div>
+              <div class="flex-shrink-0 text-end">
+                <h6 class="mb-1">COMPLETED / EXPECTED</h6>
+                <p class="text-success fs-12 mb-0">
+                  {{ procedure.completedCandidates }} /
+                  {{ procedure.totalCandidates }}
+                </p>
+              </div>
+            </div>
+          </li>
+          <!-- end -->
+        </ul>
+        <!-- end -->
+      </div>
+      <!-- end card body -->
+    </div>
+  </div>
+
+  <div
+    class="col-md-12"
+    *ngIf="dashboardData != null && dashboardData.objectiveProgressList != null"
+  >
+    <div class="card card-height-100">
+      <div class="card-header border-bottom-dashed align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1 text-uppercase">
+          Question Station progress
+        </h4>
+      </div>
+      <!-- end cardheader -->
+      <div class="card-body">
+        <ul class="list-group list-group-flush border-dashed mb-0">
+          <li
+            class="list-group-item px-0"
+            *ngFor="let objective of dashboardData.objectiveProgressList"
+          >
+            <div class="d-flex align-center align-items-center">
+              <div class="flex-shrink-0 avatar-xs">
+                <span class="avatar-title bg-primary p-1 rounded-circle">
+                  {{ objective.procedureName.charAt(0) }}
+                </span>
+              </div>
+              <div class="flex-grow-1 ms-2">
+                <h6 class="mb-1">{{ objective.procedureName }}</h6>
+              </div>
+              <div class="flex-shrink-0 text-end">
+                <h6 class="mb-1">COMPLETED / EXPECTED</h6>
+                <p class="text-success fs-12 mb-0">
+                  {{ objective.completedCandidates }} /
+                  {{ objective.totalCandidates }}
+                </p>
+              </div>
+            </div>
+          </li>
+          <!-- end -->
+        </ul>
+        <!-- end -->
+      </div>
+      <!-- end card body -->
+    </div>
+  </div>
+
+  <div
+    class="col-md-12"
+    *ngIf="
+      dashboardData != null &&
+      dashboardData.procedureObjectiveCandidateProgressList != null
+    "
+  >
+    <div class="card card-body table-responsive">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h6 class="mb-0">QUESTION STATION CANDIDATE PROGRESS TABLE</h6>
+      </div>
+
+      <p-table
+        [value]="dashboardData.procedureObjectiveCandidateProgressList"
+        [tableStyle]="{ 'min-width': '100%' }"
+        #dt1
+        dataKey="id"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">
+              <div class="flex justify-content-between align-items-center">
+                NAME
+                <p-sortIcon field="name"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="name"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="examNumber">
+              <div class="flex justify-content-between align-items-center">
+                EXAM NO.
+                <p-sortIcon field="examNumber"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="examNumber"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th pSortableColumn="institution">
+              <div class="flex justify-content-between align-items-center">
+                INSTITUTION
+                <p-sortIcon field="institution"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="institution"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th pSortableColumn="startTime">
+              <div class="flex justify-content-between align-items-center">
+                START TIME
+                <p-sortIcon field="startTime"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="startTime"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th pSortableColumn="endTime">
+              <div class="flex justify-content-between align-items-center">
+                END TIME
+                <p-sortIcon field="endTime"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="endTime"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        >
+        <ng-template pTemplate="body" let-candidate>
+          <tr>
+            <td>{{ candidate.name }}</td>
+            <td>{{ candidate.examNumber }}</td>
+            <td>{{ candidate.institution }}</td>
+            <td>{{ candidate.startTime | date : "dd/MM/yyyy hh:mm a" }}</td>
+            <td>{{ candidate.endTime | date : "dd/MM/yyyy hh:mm a" }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+  <div
+    class="col-md-12"
+    *ngIf="
+      dashboardData != null &&
+      dashboardData.procedureCandidateProgressList != null
+    "
+  >
+    <div class="card card-body table-responsive">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h6 class="mb-0">PROCEDURE CANDIDATE PROGRESS TABLE</h6>
+      </div>
+
+      <p-table
+        [value]="dashboardData.procedureCandidateProgressList"
+        [tableStyle]="{ 'min-width': '100%' }"
+        #dt1
+        dataKey="id"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">
+              <div class="flex justify-content-between align-items-center">
+                NAME
+                <p-sortIcon field="name"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="name"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="examNumber">
+              <div class="flex justify-content-between align-items-center">
+                EXAM NO.
+                <p-sortIcon field="examNumber"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="examNumber"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th pSortableColumn="institution">
+              <div class="flex justify-content-between align-items-center">
+                INSTITUTION
+                <p-sortIcon field="institution"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="institution"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="examinerName">
+              <div class="flex justify-content-between align-items-center">
+                EXAMINER
+                <p-sortIcon field="examinerName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="examinerName"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th pSortableColumn="startTime">
+              <div class="flex justify-content-between align-items-center">
+                START TIME
+                <p-sortIcon field="startTime"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="startTime"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+
+            <th pSortableColumn="endTime">
+              <div class="flex justify-content-between align-items-center">
+                END TIME
+                <p-sortIcon field="endTime"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="endTime"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        >
+        <ng-template pTemplate="body" let-candidate>
+          <tr>
+            <td>{{ candidate.name }}</td>
+            <td>{{ candidate.examNumber }}</td>
+            <td>{{ candidate.institution }}</td>
+            <td>{{ candidate.examinerName }}</td>
+            <td>{{ candidate.startTime | date : "dd/MM/yyyy hh:mm a" }}</td>
+            <td>{{ candidate.endTime | date : "dd/MM/yyyy hh:mm a" }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
 </div>
-
-
-

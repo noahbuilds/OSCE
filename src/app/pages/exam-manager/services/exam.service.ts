@@ -14,9 +14,9 @@ export class ExamService {
 
   constructor(private http: HttpClient) { }
 
-  downloadExam(centerId:string): Observable<ExamModel>{
+  downloadExam(): Observable<ExamModel>{
     return this.http.get<ExamModel>(
-      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/download/download_exam/${centerId}`,
+      `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/download/download_exam`,
       { withCredentials: true }
     )
   }

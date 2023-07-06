@@ -23,6 +23,9 @@ import { CandidateExamService } from "../services/candidate-exam.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { StandardChoiceComponent } from "./standard-choice/standard-choice.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NotifierService } from "angular-notifier";
+import { UtilitiesService } from "../services/utilities.service";
+import { PassportService } from "../services/passport.service";
 
 @Component({
   selector: "app-exam-page",
@@ -30,7 +33,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./exam-page.component.scss"],
 })
 export class ExamPageComponent implements OnInit, OnDestroy {
-  //timerSub: Subscription;
+
   currentQuestionNumber: number = 0;
   currentQuestion: CandidateProcedureItem;
   itemsLength: number;
@@ -46,6 +49,8 @@ export class ExamPageComponent implements OnInit, OnDestroy {
   examEnded: boolean = false;
   endExamTimerSub$: Subscription;
   processingEndExam: boolean = false;
+  image: any = null
+
 
   @ViewChild(StandardChoiceComponent)
   standandChoiceRef!: StandardChoiceComponent;
@@ -53,17 +58,17 @@ export class ExamPageComponent implements OnInit, OnDestroy {
   @HostListener("document:keypress", ["$event"])
   handleKeyboardEvent(event: KeyboardEvent) {
     this.keyPressed = event.key;
-    //shortCuts
-
     this.useShortcut();
   }
   constructor(
     private router: Router,
-    private timeService: TimeService,
     private candidateExamItemsService: CandidateExamItemsService,
     private candidateAccountService: CandidateAccountService,
     private candidateExamService: CandidateExamService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private notifierService: NotifierService,
+    private utilitiesService: UtilitiesService,
+    private passportService: PassportService
   ) {}
 
   ngOnInit(): void {
@@ -71,19 +76,65 @@ export class ExamPageComponent implements OnInit, OnDestroy {
 
     this.currentQuestionNumber =
       this.candidateExamItemsService.currentQuestion.currentQuestionNumber;
+
     this.candidateExamDetails =
       this.candidateExamItemsService.candidateExamDetails;
+
     this.currentCandidate = this.candidateAccountService.getUser();
+
     this.isAssessmentOn = true;
+
     this.startTimer();
-    this.startAutoSave();
+    // this.startAutoSave();
+
     this.candidateExamItemsService
       .getCandidateProcedureItems()
       .forEach((element) => {
         this.questionIDs.push(element.itemId);
       });
     this.itemsLength = this.questionIDs.length;
+  this.attemptedQuestions = this.candidateExamItemsService.getSavedResponses()
+    
+  this.fetchImage(this.candidateAccountService.getUser().examNumber)
   }
+
+
+
+  fetchImage(examNumber:string) {
+
+    // console.log("about fetching",'/image/fetch/'+regNumber);
+   
+     examNumber = examNumber.toLocaleUpperCase();
+   
+     this.passportService.getPassport('/image/fetch/'+examNumber).subscribe(
+   
+       data => {
+   
+         // this.image =  data;
+         this.createImageFromBlob(data);
+      //   console.log(data, "this is data");
+       },
+       (err:HttpErrorResponse) =>{
+         console.log(err);
+       }
+     );
+   
+   
+   }
+   
+   createImageFromBlob(image: Blob) {
+     let reader = new FileReader();
+     reader.addEventListener("load", () => {
+       this.image = reader.result;
+     }, false);
+   
+     if (image) {
+       reader.readAsDataURL(image);
+     }
+   }
+
+
+
   nextQuestion(): void {
     this.candidateExamItemsService.nextQuestion();
     this.currentQuestionNumber =
@@ -99,11 +150,19 @@ export class ExamPageComponent implements OnInit, OnDestroy {
   }
 
   
+ 
+  
+
+
+ 
 
   endExam(timedOut: boolean): void {
     this.processingEndExam = true;
-    this.timerSub$.unsubscribe();
-    this.autoSaveSub$.unsubscribe();
+    if(this.timerSub$ != null){
+      this.timerSub$.unsubscribe();
+    }
+    
+    // this.autoSaveSub$.unsubscribe();
     this.isAssessmentOn = false
 
     this.candidateExamService
@@ -115,6 +174,11 @@ export class ExamPageComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (value) => {
           Swal.close()
+          this.utilitiesService.isExamStarted = false
+          this.utilitiesService.isExamEnded = true
+          this.candidateExamItemsService.savedResponses = []
+          this.attemptedQuestions = []
+          
           this.router.navigate(["candidate/end-exam"]);
         },
         error: (err: HttpErrorResponse) => {
@@ -122,20 +186,19 @@ export class ExamPageComponent implements OnInit, OnDestroy {
           this.processingEndExam = false;
         },
         complete: () => {
-          this.endExamTimerSub$.unsubscribe();
+          if(this.endExamTimerSub$ != null){
+            this.endExamTimerSub$.unsubscribe();
+          }
           this.processingEndExam = false;
 
-          // this.ngOnDestroy();
+        //  this.displayWarningTimer = false
+          
           
         },
       });
   }
 
-  ngOnDestroy(): void {
-    this.timerSub$.unsubscribe();
-    this.autoSaveSub$.unsubscribe();
-    // console.log("i have been destroyed");
-  }
+ 
 
   startTimer() {
     this.timerSub$ = timer(1000, 1000).subscribe((value) => {
@@ -153,6 +216,10 @@ export class ExamPageComponent implements OnInit, OnDestroy {
       } else {
         --this.candidateExamDetails.seconds;
       }
+
+      this.checkForWarning()
+
+      
 
       if (
         this.candidateExamDetails.minute == 0 &&
@@ -182,7 +249,14 @@ export class ExamPageComponent implements OnInit, OnDestroy {
           });
         }
 
+
+        
+
         //return;
+      }
+
+      if( this.candidateExamDetails.seconds % 30 == 0){
+        this.autoSave()
       }
     });
   }
@@ -194,67 +268,112 @@ export class ExamPageComponent implements OnInit, OnDestroy {
     let minuteText = minute < 10 ? "0" + minute : "" + minute;
     let secondsText = seconds < 10 ? "0" + seconds : "" + seconds;
 
+  
+
     return minuteText + " : " + secondsText;
   }
 
-  useShortcut(): void {
-    for (let i = 0; i < this.shortcutKeys.length; i++) {
-      switch (this.keyPressed.toLowerCase()) {
-        case `${this.shortcutKeys[i]}`:
-          this.candidateExamItemsService.currentQuestion.selectedOption =
-            this.candidateExamItemsService.currentQuestion.options[`${i}`].id;
-          //  console.log( this.candidateExamItemsService.currentQuestion.options)
-        
-          this.standandChoiceRef.captureResponse(
-            this.candidateExamItemsService.currentQuestion.options[`${i}`].id,
-            this.candidateExamItemsService.currentQuestion.itemId
-          );
-          break;
-      }
+  checkForWarning(){
+  
+    if((this.candidateExamDetails.minute == 3) &&
+     (this.candidateExamDetails.seconds == 0 )){
+      this.displayWarning('You have used 7 minutes for this assessment');
+     
+      
     }
+    if((this.candidateExamDetails.minute == 2) && 
+    (this.candidateExamDetails.seconds == 0 )){
 
-    // switch(this.keyPressed.toLowerCase()){
-    //   case `a`:
-    //     this.candidateExamItemsService.currentQuestion.selectedOption =
-    //         this.candidateExamItemsService.currentQuestion.options[0].id;
-    //         this.standandChoiceRef.captureResponse(
-    //           this.candidateExamItemsService.currentQuestion.options[0].id,
-    //           this.candidateExamItemsService.currentQuestion.itemId
-    //         );
-    //   break;
-    //   case `b`:
-    //     this.candidateExamItemsService.currentQuestion.selectedOption =
-    //         this.candidateExamItemsService.currentQuestion.options[1].id;
-    //         this.standandChoiceRef.captureResponse(
-    //           this.candidateExamItemsService.currentQuestion.options[1].id,
-    //           this.candidateExamItemsService.currentQuestion.itemId
-    //         );
-    //         break
-    //         case `c`:
-    //           this.candidateExamItemsService.currentQuestion.selectedOption =
-    //               this.candidateExamItemsService.currentQuestion.options[2].id;
-    //               this.standandChoiceRef.captureResponse(
-    //                 this.candidateExamItemsService.currentQuestion.options[2].id,
-    //                 this.candidateExamItemsService.currentQuestion.itemId
-    //               );
-    //               break
-    //               case `d`:
-    //                 this.candidateExamItemsService.currentQuestion.selectedOption =
-    //                     this.candidateExamItemsService.currentQuestion.options[3].id;
-    //                     this.standandChoiceRef.captureResponse(
-    //                       this.candidateExamItemsService.currentQuestion.options[3].id,
-    //                       this.candidateExamItemsService.currentQuestion.itemId
-    //                     );
-    //                     break
-    //                     case `e`:
-    //                       this.candidateExamItemsService.currentQuestion.selectedOption =
-    //                           this.candidateExamItemsService.currentQuestion.options[4].id;
-    //                           this.standandChoiceRef.captureResponse(
-    //                             this.candidateExamItemsService.currentQuestion.options[4].id,
-    //                             this.candidateExamItemsService.currentQuestion.itemId
-    //                           );
-    //                           break
+      
+    
+      this.displayWarning('You have used 8 minutes for this assessment');
+    
+    }
+    if((this.candidateExamDetails.minute == 1) &&
+     (this.candidateExamDetails.seconds == 0 )){
+
+      
+      this.displayWarning('You have used 9 minutes for this assessment');
+      
+    }
+  }
+
+  displayWarning(message: string) {
+    // this.displayWarningTimer = true
+    this.notifierService.notify(
+      "error",
+      message
+    );
+    this.playAudio()
+
+}
+
+startWarningTimerAnimation(): boolean{
+  if((this.candidateExamDetails.minute <= 3  && this.candidateExamDetails.minute >= 0) 
+  && (this.candidateExamDetails.seconds >= 0 && this.candidateExamDetails.seconds <= 59)){
+    return true
+  }
+  return false
+}
+
+playAudio(){
+  let audio = new Audio();
+  audio.src = "assets/sound/beep-04.wav";
+  audio.load();
+  audio.play();
+}
+
+  useShortcut(): void {
+    // for (let i = 0; i < this.shortcutKeys.length; i++) {
+    //   switch (this.keyPressed.toLowerCase()) {
+    //     case `${this.shortcutKeys[i]}`:
+    //       this.candidateExamItemsService.currentQuestion.selectedOption =
+    //         this.candidateExamItemsService.currentQuestion.options[`${i}`].id;
+    //       //  console.log( this.candidateExamItemsService.currentQuestion.options)
+        
+    //       this.standandChoiceRef.captureResponse(
+    //         this.candidateExamItemsService.currentQuestion.options[`${i}`].id,
+    //         this.candidateExamItemsService.currentQuestion.itemId
+    //       );
+    //       break;
+    //   }
     // }
+
+    switch(this.keyPressed.toLowerCase()){
+      case `a`:
+        this.candidateExamItemsService.currentQuestion.selectedOption =
+            this.candidateExamItemsService.currentQuestion.options[0].id;
+            this.standandChoiceRef.captureResponse(
+              this.candidateExamItemsService.currentQuestion.options[0].id,
+              this.candidateExamItemsService.currentQuestion.itemId
+            );
+      break;
+      case `b`:
+        this.candidateExamItemsService.currentQuestion.selectedOption =
+            this.candidateExamItemsService.currentQuestion.options[1].id;
+            this.standandChoiceRef.captureResponse(
+              this.candidateExamItemsService.currentQuestion.options[1].id,
+              this.candidateExamItemsService.currentQuestion.itemId
+            );
+            break
+            case `c`:
+              this.candidateExamItemsService.currentQuestion.selectedOption =
+                  this.candidateExamItemsService.currentQuestion.options[2].id;
+                  this.standandChoiceRef.captureResponse(
+                    this.candidateExamItemsService.currentQuestion.options[2].id,
+                    this.candidateExamItemsService.currentQuestion.itemId
+                  );
+                  break
+                  case `d`:
+                    this.candidateExamItemsService.currentQuestion.selectedOption =
+                        this.candidateExamItemsService.currentQuestion.options[3].id;
+                        this.standandChoiceRef.captureResponse(
+                          this.candidateExamItemsService.currentQuestion.options[3].id,
+                          this.candidateExamItemsService.currentQuestion.itemId
+                        );
+                        break
+                        
+    }
 
     if (this.currentQuestionNumber != 0) {
       switch (this.keyPressed.toLowerCase()) {
@@ -281,20 +400,25 @@ export class ExamPageComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (value) => {},
         error: (err: HttpErrorResponse) => {
+          // console.log(err.status)
+          if(err.status == 409){
+            this.utilitiesService.isExamEnded = true
+            this.router.navigate(['candidate/login'])
+          }
           console.log(err.error.message);
         },
       });
   }
 
-  startAutoSave() {
-    if (!this.isAssessmentOn) {
-      return;
-    }
+  // startAutoSave() {
+  //   if (!this.isAssessmentOn) {
+  //     return;
+  //   }
 
-    this.autoSaveSub$ = timer(60 * 1000, 60 * 1000).subscribe((value) => {
-      this.autoSave();
-    });
-  }
+  //   this.autoSaveSub$ = timer(30 * 1000, 30 * 1000).subscribe((value) => {
+  //     this.autoSave();
+  //   });
+  // }
 
   generatePayload(): CandidateResponseDTO {
     let payload = {
@@ -352,6 +476,7 @@ export class ExamPageComponent implements OnInit, OnDestroy {
     return "f5f7fa";
   }
 
+
   showExamEndingLoader(){
     Swal.fire({
       title: "Processing Please wait",
@@ -363,5 +488,29 @@ export class ExamPageComponent implements OnInit, OnDestroy {
         Swal.showLoading();
       },
     });
+  }
+
+
+
+  ngOnDestroy(): void {
+    if(this.timerSub$ != null){
+      this.timerSub$.unsubscribe();
+    }
+    if(this.autoSaveSub$ != null){
+      this.autoSaveSub$.unsubscribe();
+    }
+    
+   if( this.endExamTimerSub$ != null){
+    this.endExamTimerSub$.unsubscribe()
+   }
+
+    this.candidateExamDetails = null
+    this.isAssessmentOn = false
+    this.utilitiesService.isExamStarted = false
+    // this.displayWarningTimer = false;
+    this.candidateExamItemsService.savedResponses = []
+    this.attemptedQuestions = []
+    this.utilitiesService.isExamEnded = false
+    // console.log("i have been destroyed");
   }
 }

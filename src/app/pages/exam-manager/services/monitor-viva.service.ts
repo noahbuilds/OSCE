@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { CandidateModel, VivaMonitorModel } from "../models/viva-monitor.model";
+import { CandidateModel, MonitorModel } from "../models/monitor.model";
 
 @Injectable({
   providedIn: "root",
@@ -10,8 +10,8 @@ import { CandidateModel, VivaMonitorModel } from "../models/viva-monitor.model";
 export class MonitorVivaService {
   constructor(private http: HttpClient) {}
 
-  monitorViva(examId: string): Observable<VivaMonitorModel> {
-    return this.http.get<VivaMonitorModel>(
+  monitorViva(examId: string): Observable<MonitorModel> {
+    return this.http.get<MonitorModel>(
       `http://${environment.developmentIP}/caosce/examdelivery/api/exammanager/monitor/viva/${examId}`,
       { withCredentials: true }
     );

@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { StartExam } from "../models/exam.model";
 import { ResourceCreated } from "../models/resource.created";
-import { CandidateModel, ProgramModel, ProgramProgressModel } from "../models/viva-monitor.model";
+import { CandidateModel, ProgramModel, ProgramProgressModel } from "../models/monitor.model";
 import { VivaModel } from "../models/viva.model";
 
 @Injectable({

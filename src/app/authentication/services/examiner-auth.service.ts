@@ -28,7 +28,7 @@ export class ExaminerAuthService {
       .post(
         `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/authentication`,
         loginData,
-        { headers, responseType: "text", withCredentials: true }
+        { headers, withCredentials: true }
       )
       .pipe(mergeMap(() => this.getLoggedInAccount()));
   }
@@ -40,9 +40,15 @@ export class ExaminerAuthService {
     ).pipe(
       map((value)=>{
          this.examinerAccountService.setCurrentUser(value);
-        console.log(value)
+        // console.log(value)
           return value
       })
     );
+  }
+
+  logout(): Observable<string>{
+    return this.http.get<string>(`
+    http://${environment.developmentIP}/caosce/examdelivery/api/logout`,
+     {withCredentials: true})
   }
 }

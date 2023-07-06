@@ -63,7 +63,7 @@ export class SignInComponent implements OnInit {
       this.error_msg = 'username is invalid';
       return;
     }
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     this.router
     .navigate(['itembank'])
     .catch((reason) => console.log(reason));

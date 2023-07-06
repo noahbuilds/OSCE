@@ -30,7 +30,7 @@ export class CandidateAuthService {
   return this.http.post (
     `http://${environment.developmentIP}/caosce/examdelivery/api/candidate/authentication`,
     loginData,
-    { headers, responseType: "text", withCredentials: true }
+    { headers, withCredentials: true }
   )
   .pipe(mergeMap(() => this.getLoggedInAccount()));
   }
@@ -42,7 +42,7 @@ export class CandidateAuthService {
     ).pipe(
       map((value)=>{
          this.candidateAccountService.setCurrentUser(value);
-        console.log(value)
+        // console.log(value)
           return value
       })
     )

@@ -5,16 +5,25 @@
 
 <div class="row">
   <div class="col-12">
-
-    <!-- <div class="rounded-1 alert alert-danger" *ngIf="!isVivaAvailable && !isOsceAvailable">
-      <span><strong> NO VIVA AND OSCE AVAILABLE TO START</strong> </span>
-    </div> -->
-
     <div class="rounded-1 alert alert-danger" *ngIf="showVivaError">
-      <span><strong> {{vivaErrorMessage}}</strong> </span>
+      <span
+        ><strong> {{ vivaErrorMessage }}</strong>
+      </span>
     </div>
     <div class="rounded-1 alert alert-danger" *ngIf="showOsceError">
-      <span><strong> {{osceErrorMessage}}</strong> </span>
+      <span
+        ><strong> {{ osceErrorMessage }}</strong>
+      </span>
+    </div>
+    <div class="rounded-1 alert alert-danger" *ngIf="showExpectantCareError">
+      <span
+        ><strong> {{ expectantCareErrorMessage }}</strong>
+      </span>
+    </div>
+    <div class="rounded-1 alert alert-danger" *ngIf="showResearchError">
+      <span
+        ><strong> {{ researchErrorMessage }}</strong>
+      </span>
     </div>
 
     <div class="row">
@@ -30,16 +39,28 @@
             </div>
             <div class="align-bottom col-10 mx-2">
               <h6>OSCE</h6>
-              <p class="text-muted">{{osceData.examName}}</p>
+              <p class="text-muted">{{ osceData.examName }}</p>
             </div>
           </div>
-          <div class="d-flex justify-content-end" *ngIf="showStartOsceErrorMessage">
-            <p><span>{{startOsceErrorMessage}}</span></p>
+          <div
+            class="d-flex justify-content-end"
+            *ngIf="showStartOsceErrorMessage"
+          >
+            <p>
+              <span>{{ startOsceErrorMessage }}</span>
+            </p>
           </div>
-          <span *ngIf="isOsceOn != null && isOsceOn.started">OSCE exam Started successfully</span>
-          <span *ngIf=" getOsceStarted() == true ">OSCE exam running</span>
+          <span *ngIf="isOsceOn != null && isOsceOn.started"
+            >OSCE exam Started successfully</span
+          >
+          <!-- <span *ngIf=" getOsceStarted() == true ">OSCE exam running</span> -->
           <div class="d-flex justify-content-end">
-            <button class="btn btn-sm btn-primary" [disabled]="getOsceStarted() == true" (click)="startOsceExam(osceData.id)">Start OSCE</button>
+            <button
+              class="btn btn-sm btn-primary"
+              (click)="startOsceExam(osceData.id)"
+            >
+              Start OSCE
+            </button>
           </div>
         </div>
       </div>
@@ -57,22 +78,142 @@
             </div>
             <div class="align-bottom col-10 mx-2">
               <h6>VIVA</h6>
-              <p class="text-muted">{{vivaData.examName}}</p>
+              <p class="text-muted">{{ vivaData.examName }}</p>
             </div>
           </div>
 
-          <div class="d-flex justify-content-end" *ngIf="showStartVivaErrorMessage">
-            <p><span>{{startVivaErrorMessage}}</span></p>
+          <div
+            class="d-flex justify-content-end"
+            *ngIf="showStartVivaErrorMessage"
+          >
+            <p>
+              <span>{{ startVivaErrorMessage }}</span>
+            </p>
           </div>
-          <span *ngIf="isVivaOn != null && isVivaOn.started">VIVA exam Started successfully</span>
-          <span *ngIf="getVivaStarted() == true">VIVA exam running</span>
+          <span *ngIf="isVivaOn != null && isVivaOn.started"
+            >VIVA exam Started successfully</span
+          >
+          <!-- <span *ngIf="getVivaStarted() == true">VIVA exam running</span> -->
           <div class="d-flex justify-content-end">
-            
-        
-            <button class="btn btn-sm btn-primary" [disabled]="getVivaStarted() == true" (click)="startVivaExam(vivaData.id)">Start VIVA</button>
+            <button
+              class="btn btn-sm btn-primary"
+              (click)="startVivaExam(vivaData.id)"
+            >
+              Start VIVA
+            </button>
           </div>
         </div>
       </div>
+
+      <!-- Research -->
+      <div class="col-xxl-6 col-lg-6" *ngIf="isResearchAvailable">
+        <div class="card card-body">
+          <div class="d-flex">
+            <div class="avatar-sm mb-3">
+              <div
+                class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+              >
+                RE
+              </div>
+            </div>
+            <div class="align-bottom col-10 mx-2">
+              <h6>RESEARCH</h6>
+              <p class="text-muted">{{ researchData.examName }}</p>
+            </div>
+          </div>
+
+          <div
+            class="d-flex justify-content-end"
+            *ngIf="showStartResearchErrorMessage"
+          >
+            <p>
+              <span>{{ startResearchErrorMessage }}</span>
+            </p>
+          </div>
+          <span *ngIf="isResearchOn != null && isResearchOn.started"
+            >RESEARCH exam Started successfully</span
+          >
+          <!-- <span *ngIf="getResearchStarted() == true">Research exam running</span> -->
+          <div class="d-flex justify-content-end">
+            <button
+              class="btn btn-sm btn-primary"
+              (click)="startResearch(researchData.id)"
+            >
+              Start RESEARCH
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPECTANT CARE -->
+      <!-- <div class="col-xxl-6 col-lg-6" *ngIf="isExpectantCareAvailable">
+        <div class="card card-body">
+          <div class="d-flex">
+            <div class="avatar-sm mb-3">
+              <div
+                class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+              >
+                EX
+              </div>
+            </div>
+            <div class="align-bottom col-10 mx-2">
+              <h6>EXPECTANT CARE / CLIENT CARE</h6>
+              <p class="text-muted">{{expectantCareData.examName}}</p>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end" *ngIf="showStartExpectantCareErrorMessage">
+            <p><span>{{startExpectantCareErrorMessage}}</span></p>
+          </div>
+          <span *ngIf="isExpectantCareOn != null && isExpectantCareOn.started">EXPECTANT CARE exam Started successfully</span>
+          <span *ngIf="getExpectantCareStarted() == true">Expectant Care exam running</span>
+          <div class="d-flex justify-content-end">
+            
+        
+            <button class="btn btn-sm btn-primary" [disabled]="getExpectantCareStarted() == true" (click)="startExpectantCare(expectantCareData.id)">Start EXPECTANT CARE</button>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="col-xxl-6 col-lg-6" *ngIf="isExpectantCareAvailable">
+        <div class="card card-body">
+          <div class="d-flex">
+            <div class="avatar-sm mb-3">
+              <div
+                class="avatar-title bg-soft-primary text-primary fs-17 rounded"
+              >
+                EX
+              </div>
+            </div>
+            <div class="align-bottom col-10 mx-2">
+              <h6>EXPECTANT CARE / CLIENT CARE</h6>
+              <p class="text-muted">{{ expectantCareData.examName }}</p>
+            </div>
+          </div>
+
+          <div
+            class="d-flex justify-content-end"
+            *ngIf="showStartExpectantCareErrorMessage"
+          >
+            <p>
+              <span>{{ startExpectantCareErrorMessage }}</span>
+            </p>
+          </div>
+          <span *ngIf="isExpectantCareOn != null && isExpectantCareOn.started"
+            >EXPECTANT CARE / CLIENT CARE exam Started successfully</span
+          >
+          <!-- <span *ngIf="getExpectantCareStarted() == true">EXPECTANT CARE / CLIENT CARE exam running</span> -->
+          <div class="d-flex justify-content-end">
+            <button
+              class="btn btn-sm btn-primary"
+              (click)="startExpectantCare(expectantCareData.id)"
+            >
+              Start CLIENT CARE
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- end col -->
     </div>
     <!-- end row -->
@@ -80,5 +221,3 @@
   <!-- end col -->
 </div>
 <!-- end row -->
-
-

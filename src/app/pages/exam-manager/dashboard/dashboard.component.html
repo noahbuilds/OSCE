@@ -23,7 +23,7 @@
 <div class="row" *ngIf="dashboardData != null">
     <div class="col-12">
         <div class="row">   
-            <div class="col-xxl-4 col-lg-4">
+            <div class=" col-lg-4">
                 <div class="card card-body card-animate">
                     <div class="avatar-sm mb-3">
                         <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
@@ -41,7 +41,7 @@
                 </div>
             </div><!-- end col -->
 
-            <div class="col-xxl-4 col-lg-4">
+            <div class=" col-lg-4">
                 <div class="card card-body card-animate">
                     <div class="avatar-sm mb-3">
                         <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
@@ -49,16 +49,18 @@
                         </div>
                     </div>
                     <h4 class="card-title">Exams Taken</h4>
-                    <div class="d-flex gap-2 justify-content-start">
+                    <div class="d-flex gap-2 justify-content-start flex-wrap">
                         <p class="text-muted">OSCE:</p> <span class="text-muted">{{dashboardData.totalTakenOsce}}</span>
                         <p class="text-muted">VIVA:</p> <span class="text-muted">{{dashboardData.totalTakenViva}}</span>
+                        <p class="text-muted">RESEARCH:</p> <span class="text-muted">{{dashboardData.totalTakenResearch}}</span>
+                        <p class="text-muted">CLIENT CARE:</p> <span class="text-muted">{{dashboardData.totalTakenClientCare}}</span>
                         
                     </div>
                     
                 </div>
             </div><!-- end col -->
 
-            <div class="col-xxl-4 col-lg-4">
+            <div class=" col-lg-4">
                 <div class="card card-body card-animate">
                     <div class="avatar-sm mb-3">
                         <div class="avatar-title bg-soft-primary text-primary fs-17 rounded">
@@ -66,9 +68,11 @@
                         </div>
                     </div>
                     <h4 class="card-title">Uploaded Exams</h4>
-                    <div class="d-flex gap-2  justify-content-start">
+                    <div class="d-flex gap-2  justify-content-start flex-wrap">
                         <p class="text-muted">OSCE:</p> <span class="text-muted">{{dashboardData.totalUploadedOsce}}</span>
                         <p class="text-muted">VIVA:</p> <span class="text-muted">{{dashboardData.totalUploadedViva}}</span>
+                        <p class="text-muted">RESEARCH:</p> <span class="text-muted">{{dashboardData.totalUploadedResearch}}</span>
+                        <p class="text-muted">CLIENT CARE:</p> <span class="text-muted">{{dashboardData.totalUploadedClientCare}}</span>
                     </div>
                    
 

@@ -79,7 +79,7 @@ procedure:any =
     );
   }
 
-  candidateTimedOut(timedOut: boolean, payload: CandidateGradedProcedureDTO) {
+  endExam(timedOut: boolean, payload: CandidateGradedProcedureDTO) {
     return this.http.post(
       `http://${environment.developmentIP}/caosce/examdelivery/api/examiner/markprocedure/end/procedure/${timedOut}`,
       payload,

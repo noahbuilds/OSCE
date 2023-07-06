@@ -1,5 +1,7 @@
 <app-breadcrumbs
-  title="MARK PROCEDURE / {{currentExaminer.procedureName}}"
+  title="MARK PROCEDURE / {{ currentExaminer.programName }} / {{
+    currentExaminer.procedureName
+  }}"
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
@@ -7,7 +9,12 @@
   <div class="mb-4">
     <h6 class="text-muted">Enter exam number of candidate to grade</h6>
     <div class="input-group">
-      <input #examNumberRef type="text" class="form-control" />
+      <input
+        #examNumberRef
+        type="text"
+        class="form-control"
+        onfocus="this.value=''"
+      />
       <button
         (click)="
           getCandidateToGrade(
@@ -21,145 +28,204 @@
         class="btn btn-outline-primary"
         type="button"
         id="button-addon2"
-        [disabled]="isAssessmentOn"
+        [disabled]="processingSearch"
       >
-        Search
+        <span *ngIf="processingSearch == false">Search</span>
+        <span *ngIf="processingSearch == true">Searching...</span>
       </button>
     </div>
   </div>
-
-  <div>
-    <button
-      (click)="openMarkingGuide(markingGuide)"
-      class="btn btn-sm btn-soft-primary"
-    >
-      View marking guide
-    </button>
-  </div>
 </div>
 <div *ngIf="candidateToGrade != null">
-
-<div class="card" *ngIf="isFound">
-  <div class="card-body">
-    <div class="d-flex justify-content-between">
-      <div class="mb-0">
-        <p>
-          <strong> Candidate Name:</strong>
-          {{ candidateToGrade.candidateDetails.name }}
-        </p>
-        <p>
-          <strong> Exam Number:</strong>
-          {{ candidateToGrade.candidateDetails.examNumber }}
-        </p>
-        <p>
-          <strong> Program:</strong>
-          {{ candidateToGrade.candidateDetails.programName }}
-        </p>
-        <p>
-          <strong> Institution:</strong>
-          {{ candidateToGrade.candidateDetails.institution }}
-        </p>
-        <button
-          *ngIf="!isAssessmentOn"
-          class="btn btn-sm btn-outline-success"
-          (click)="startAssessment()"
-        >
-          Start Assesment
-        </button>
-        <button
-          *ngIf="isAssessmentOn"
-          class="btn btn-sm btn-outline-danger"
-          (click)="openEndExamConfirmationDialog(confirmationModal)"
-        >
-          End Assesment
-        </button>
-      </div>
-
-      <div>
-        <div
-          class="d-flex justify-content-center rounded-3 gap-2 bg-danger text-white text-center p-2"
-        >
-          <i class="ri-timer-line align-middle text-white"></i>
-          <span class="text-white align-middle">
-            {{ displayTimerText() }}
-          </span>
-        </div>
-        <img
-          class="img-thumbnail mb-3 w-100 text-center"
-          style="max-height: 90px"
-          src="/assets/images/users/avatar-8.jpg"
-          alt="candidate-image"
-        />
-      </div>
-    </div>
-
-    <ng-container *ngIf="isAssessmentOn">
-      <div class="d-flex justify-content-between card-header mt-5 p-0">
-        <h5>Activities</h5>
-        <h5>Completed ({{candidateToGrade.candidateDetails.activitiesScores.length}} of {{ candidateActivitiesLength }})</h5>
-      </div>
-
-      <div style="height: 50vh">
-        <ngx-simplebar style="max-height: 90%">
-          <ol class="mt-3">
-            <li
-              style="font-size: 16px"
-              *ngFor="
-                let activity of candidateToGrade.activities;
-                let i = index
+  <div class="card" *ngIf="isFound">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <div class="mb-0">
+          <p>
+            <strong> Candidate Name:</strong>
+            {{ candidateToGrade.candidateDetails.name }}
+          </p>
+          <p>
+            <strong> Exam Number:</strong>
+            {{ candidateToGrade.candidateDetails.examNumber }}
+          </p>
+          <p>
+            <strong> Program:</strong>
+            {{ candidateToGrade.candidateDetails.programName }}
+          </p>
+          <p>
+            <strong> Institution:</strong>
+            {{ candidateToGrade.candidateDetails.institution }}
+          </p>
+          <button
+            *ngIf="!isAssessmentOn"
+            class="btn btn-sm btn-outline-success"
+            (click)="startAssessment(activitiesModal)"
+          >
+            <span
+              *ngIf="
+                candidateToGrade.candidateDetails.startTime != null &&
+                candidateToGrade.candidateDetails.endTime == null
               "
+              >Continue Assesment</span
             >
-            <div class="d-flex">
- <span [innerHTML]="activity.activity"></span> 
-            </div>
-            
+            <span
+              *ngIf="
+                candidateToGrade.candidateDetails.startTime == null &&
+                candidateToGrade.candidateDetails.endTime == null
+              "
+              >Start Assesment</span
+            >
+          </button>
+        </div>
 
-              <div class="">
-                <div class="d-flex btn-group w-100 mt-4 mb-5">
-                  <ng-container
-                    *ngFor="
-                      let grade of candidateToGrade.activities[i].gradeList;
-                      let j = index
-                    "
-                  >
-                    <input
-                      (click)="grader(i, grade, activity.id)"
-                      type="radio"
-                      class="btn-check"
-                      name="options-outlined{{ i }}"
-                      id="primary-outlined{{ j }}{{
-                        candidateToGrade.activities[i].id
-                      }}"
-                      autocomplete="off"
-                      [checked]="
-                        checkIfActivityAttempted(
-                          candidateToGrade.activities[i].id,
-                          convertFractionToScore(grade)
-                        )
-                      "
-                    />
-
-                    <label
-                      class="btn btn-outline-primary"
-                      for="primary-outlined{{ j }}{{
-                        candidateToGrade.activities[i].id
-                      }}"
-                      >{{ grade }}</label
-                    >
-                  </ng-container>
-                </div>
-              </div>
-            </li>
-          </ol>
-          <!-- <div class="d-flex justify-content-end">
-            <button class="btn btn-primary">Save</button>
-          </div> -->
-        </ngx-simplebar>
+        <div>
+          <img
+            class="img-thumbnail mb-3 text-center"
+            [src]="image"
+            alt="candidate-image"
+          />
+        </div>
       </div>
-    </ng-container>
-  </div>
-</div>
 
+      <ng-template #activitiesModal>
+        <ng-container *ngIf="isAssessmentOn">
+          <!-- Fullscreen Modals -->
+
+          <div
+            class="d-flex justify-content-between align-content-center align-items-center mx-2 mt-2 card-header modal-header"
+          >
+            <h6>
+              Activities for {{ candidateToGrade.candidateDetails.name }}({{
+                candidateToGrade.candidateDetails.examNumber
+              }})
+            </h6>
+
+            <h6 class="bg-primary btn btn-sm text-white">
+              {{ candidateToGrade.candidateDetails.programName }} /
+              {{ currentExaminer.procedureName }} / {{ totalMaxScore }} Total
+              score
+            </h6>
+
+            <div
+              class="d-flex justify-content-end gap-2 align-items-center align-content-center"
+            >
+              <h6>
+                Completed ({{
+                  candidateToGrade.candidateDetails.activitiesScores.length
+                }}
+                of {{ candidateActivitiesLength }})
+              </h6>
+
+              <i class="ri-timer-line align-middle text-white"></i>
+
+              <span
+                [ngClass]="
+                  startWarningTimerAnimation()
+                    ? [
+                        'timer-animation',
+                        'text-white',
+                        'align-middle',
+                        'btn',
+                        'bg-danger',
+                        'text-white',
+                        'text-center',
+                        'p-2'
+                      ]
+                    : [
+                        'text-white',
+                        'align-middle',
+                        'btn',
+                        'bg-danger',
+                        'text-white',
+                        'text-center',
+                        'p-2'
+                      ]
+                "
+              >
+                {{ displayTimerText() }}
+              </span>
+
+              <button
+                *ngIf="isAssessmentOn"
+                class="btn btn-sm btn-outline-danger"
+                (click)="openEndExamConfirmationDialog(confirmationModal)"
+              >
+                End Assesment
+              </button>
+            </div>
+          </div>
+
+          <div class="modal-body">
+            <!-- <p-scrollPanel [style]="{width: '100%', height: '600px'}" styleClass="custombar1"> -->
+              <div style="max-height: 90vh; overflow-y: scroll;" class="py-5">
+                <div>
+                  <ol class="mt-1">
+                    <li
+                      style="font-size: 16px"
+                      *ngFor="
+                        let activity of candidateToGrade.activities;
+                        let i = index
+                      "
+                    >
+                      <div class="d-flex gap-3">
+                        <span [innerHTML]="activity.activity"></span>
+
+                        <span
+                          class="btn-group-sm d-flex align-content-center align-items-center"
+                        >
+                          <ng-container
+                            *ngFor="
+                              let grade of candidateToGrade.activities[i]
+                                .gradeList;
+                              let j = index
+                            "
+                          >
+                            <input
+                              (click)="grader(i, grade, activity.id)"
+                              type="radio"
+                              class="btn-check btn-sm"
+                              name="options-outlined{{ i }}"
+                              style="border-radius: 0px"
+                              id="primary-outlined{{ j }}{{
+                                candidateToGrade.activities[i].id
+                              }}"
+                              autocomplete="off"
+                              [checked]="
+                                checkIfActivityAttempted(
+                                  candidateToGrade.activities[i].id,
+                                  convertFractionToScore(grade)
+                                )
+                              "
+                            />
+
+                            <label
+                              class="btn btn-outline-primary"
+                              style="border-radius: 0px"
+                              for="primary-outlined{{ j }}{{
+                                candidateToGrade.activities[i].id
+                              }}"
+                              >{{ grade }}</label
+                            >
+                          </ng-container>
+                        </span>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
+
+                <!-- <div class="modal-footer">
+                  <a href="javascript:void(0);" class="btn btn-link link-success fw-medium" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Close</a>
+                  <button type="button" class="btn btn-primary ">Save changes</button>
+              </div> -->
+            </div>
+            <!-- </p-scrollPanel> -->
+            
+          </div>
+        </ng-container>
+      </ng-template>
+    </div>
+  </div>
 </div>
 
 <ng-template #markingGuide role="document" let-modal>
@@ -211,11 +277,11 @@
 
 <ng-template #confirmationModal let-modal>
   <div class="modal-body p-5">
-    <h4 class="mb-4 text-center">Are you sure you want to end this assessment?</h4>
+    <h4 class="mb-4 text-center">
+      Are you sure you want to end this assessment?
+    </h4>
     <div class="row">
-      <p class="text-center text-muted">
-        You won't be able to revert this!
-      </p>
+      <p class="text-center text-muted">You won't be able to revert this!</p>
     </div>
     <div class="d-flex justify-content-center gap-2 mt-2">
       <button
@@ -227,7 +293,7 @@
       </button>
       <button
         type="button"
-        (click)="endExamTimer(false);modal.close('Close click') "
+        (click)="endExamTimer(false); modal.close('Close click')"
         class="btn btn-danger"
       >
         Yes, End Exam

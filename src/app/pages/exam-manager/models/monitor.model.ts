@@ -1,4 +1,5 @@
-export interface VivaMonitorModel {
+import { Status } from "src/app/shared/enum/status"
+export interface MonitorModel {
   startTime: {
     hour: number;
     minute: number;
@@ -17,6 +18,7 @@ export interface CandidateModel {
   institution: string;
   programName: string;
   examinerName: string;
+  status : Status
 }
 
 export interface ProgramProgressModel {

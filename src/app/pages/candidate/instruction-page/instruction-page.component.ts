@@ -1,14 +1,14 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { CandidateAccount, CandidateProcedure } from "src/app/authentication/model/candidate-account";
 import { CandidateAccountService } from "src/app/authentication/services/candidate-account.service";
-import { CandidateModel, CandidateProcedureItem } from "../models/candidate";
+import { CandidateModel } from "../models/candidate";
 import { CandidateExamItemsService } from "../services/candidate-exam-items.service";
 import { CandidateExamService } from "../services/candidate-exam.service";
-
-import { TimeService } from "../services/time.service";
-
+import { Location } from "@angular/common";
+import { UtilitiesService } from "../services/utilities.service";
+import { PassportService } from "../services/passport.service";
 
 
 @Component({
@@ -16,52 +16,110 @@ import { TimeService } from "../services/time.service";
   templateUrl: "./instruction-page.component.html",
   styleUrls: ["./instruction-page.component.scss"],
 })
-export class InstructionPageComponent implements OnInit {
+export class InstructionPageComponent implements OnInit, OnDestroy {
   timeLeft: number = 10;
   currentCandidate: CandidateAccount;
   candidateProcedures: CandidateProcedure[];
-  candidateData: CandidateModel
+  processingStartExamIndex : number 
+  processingStartExam : boolean = false
+  image: any = null
+  examInstruction : string = ''
+
   
-  constructor(private router: Router, private candidateExamItemsService:CandidateExamItemsService, private timeSerivice: TimeService, private candidateAccountService: CandidateAccountService, private candidateExamService: CandidateExamService) { }
+  constructor(private router: Router, 
+    private candidateExamItemsService:CandidateExamItemsService,  
+    private candidateAccountService: CandidateAccountService, 
+    private candidateExamService: CandidateExamService,
+    private locationService: Location,
+    private utilitiesService: UtilitiesService,
+    private passportService: PassportService
+    ) { }
 
   ngOnInit(): void { 
     this.getCurrentCandidate();
     // this.setCandidateItems(this.candidateData.candidateProcedureItems);
     this.getCandidateProcedures()
+    this.getExamInstruction()
   }
 
-   startExam(procedureId:string, objectiveDetailsId: string) {
-
+   startExam(procedureId:string, objectiveDetailsId: string, examIndex: number) {
+    this.processingStartExamIndex = examIndex
+    this.processingStartExam = true
     this.candidateExamService.startExam(procedureId, objectiveDetailsId).subscribe(
       {next: (data: CandidateModel)=> {
         
         this.candidateExamItemsService.candidateExamDetails = data
+        this.utilitiesService.isExamStarted = true
+        this.processingStartExam = false
+        this.processingStartExamIndex = null
       },
       complete :()=> {
+        
         this.router.navigate(["candidate/exam"]);
       },
       error :(err: HttpErrorResponse)=> {
         console.log(err.error.messge)
+       this.processingStartExam = false
+       this.processingStartExamIndex = null
       },
     }
     )
    }
 
- 
-  endExam() {
-    this.router.navigate(["candidate/end-exam"]);
-    console.log("exam has ended");
-  }
 
   getCurrentCandidate(){
      this.currentCandidate = this.candidateAccountService.getUser()
+     this.fetchImage(this.currentCandidate.examNumber)
   }
 
   getCandidateProcedures(){
     this.candidateProcedures = this.currentCandidate.proceduresList
   }
 
-  // setCandidateItems(items: CandidateProcedureItem[]){
-  //   this.candidateExamItemsService.setExamItems(items)
-  // }
+  fetchImage(examNumber:string) {
+
+    // console.log("about fetching",'/image/fetch/'+regNumber);
+   
+     examNumber = examNumber.toLocaleUpperCase();
+   
+     this.passportService.getPassport('/image/fetch/'+examNumber).subscribe(
+   
+       data => {
+   
+         // this.image =  data;
+         this.createImageFromBlob(data);
+      //   console.log(data, "this is data");
+       },
+       (err:HttpErrorResponse) =>{
+         console.log(err);
+       }
+     );
+   
+   
+   }
+   
+   createImageFromBlob(image: Blob) {
+     let reader = new FileReader();
+     reader.addEventListener("load", () => {
+       this.image = reader.result;
+     }, false);
+   
+     if (image) {
+       reader.readAsDataURL(image);
+     }
+   }
+
+ goBack(){
+    this.locationService.back()
+ }
+
+ getExamInstruction(){
+  this.examInstruction = ""
+ }
+
+ ngOnDestroy(): void {
+
+  this.processingStartExam = false
+  this.processingStartExamIndex = null
+ }
 }

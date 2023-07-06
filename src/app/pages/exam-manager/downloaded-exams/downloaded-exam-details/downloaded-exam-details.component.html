@@ -5,66 +5,182 @@
 
 <div class="card">
     <div class="card-body">
-      <h6 class="mb-3 text-uppercase">Examiners in {{programName}} </h6>
+   
       <div class="d-flex justify-content-between">
   
+        <h6 class="mb-3 text-uppercase">Examiners in {{programName}} </h6>
       
-      <div class="search-box d-inline-block mb-2">
-        <input type="text" class="form-control search" placeholder="Search for examiner" />
-        <i class="ri-search-line search-icon"></i>
-      </div>
 
-      <div>
-        <button class="btn btn-sm btn-primary" (click)="goBack()">Back</button>
-      </div>
+     
+        <button class="btn btn-sm btn-primary mb-2" (click)="goBack()">Back</button>
+      
   
-      <!-- <select class="form-select  mb-3 w-25" aria-label="Default select example">
-          <option  disabled selected>Filter by program</option>
-          <option value="1">BASIC NURSING</option>
-          <option value="2">ORTHOLOGY</option>
-          <option value="3">NURSING MATHS</option>
-          </select> -->
       </div>
-      <div class="table-responsive">
-        <table class="table table-gridjs">
-          <thead>
-            <tr>
-              <th class="sort" data-sort="name">Name</th>
-              <th class="sort" data-sort="email">Username</th>
-              <th class="sort" data-sort="email">Email</th>
-              <th class="sort" data-sort="email">Phone number</th>
-              <th class="sort" data-sort="position">Program</th>
-              <th class="sort" data-sort="position">Procedure</th>
-              <th class="sort" data-sort="position">Role</th>
-              <th class="sort" data-sort="position">Status</th>
-              <th class="sort" data-sort="position">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let examiner of examiners">
-              <td>{{examiner.name}}</td>
-              <td>{{examiner.username}}
-              </td>
-              <td>{{examiner.email}}</td>
-              <td>{{examiner.phone}}</td>        
-              <td>{{programName}}</td>
-              <td>{{examiner.procedureName}}</td>
+      <div class="table table-gridjs table-responsive">
+        
+        <p-table
+        [value]="examiners"
+        [tableStyle]="{ 'min-width': '100%' }"
+        #dt1
+        dataKey="id"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">
+              <div class="flex justify-content-between align-items-center">
+                NAME
+                <p-sortIcon field="name"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="name"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="username">
+              <div class="flex justify-content-between align-items-center">
+                USERNAME
+                <p-sortIcon field="username"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="username"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="email">
+              <div class="flex justify-content-between align-items-center">
+                EMAIL
+                <p-sortIcon field="email"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="email"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+      
+            <th pSortableColumn="phone">
+              <div class="flex justify-content-between align-items-center">
+                PHONE NUMBER
+                <p-sortIcon field="phone"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="phone"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+            <th pSortableColumn="programName">
+              <div class="flex justify-content-between align-items-center">
+                PROGRAM
+                <p-sortIcon field="{{programName}}"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="{{programName}}"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+      
+            <th pSortableColumn="procedureName">
+              <div class="flex justify-content-between align-items-center">
+                PROCEDURE
+                <p-sortIcon field="procedureName"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="procedureName"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+      
+            <th pSortableColumn="leader">
+              <div class="flex justify-content-between align-items-center">
+                ROLE
+                <p-sortIcon field="leader"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="leader"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+      
+            <th pSortableColumn="active">
+              <div class="flex justify-content-between align-items-center">
+                STATUS
+                <p-sortIcon field="active"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="active"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter>
+              </div>
+            </th>
+      
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                ACTIONS
+                <!-- <p-sortIcon field="status"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="status"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter> -->
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                PASSWORD
+                <!-- <p-sortIcon field="status"></p-sortIcon>
+                <p-columnFilter
+                  type="text"
+                  field="status"
+                  display="menu"
+                  class="ml-auto"
+                ></p-columnFilter> -->
+              </div>
+            </th>
+            
+          </tr>
+        </ng-template>
+        >
+        <ng-template pTemplate="body" let-examiner>
+          <tr>
+              <td>{{ examiner.name }}</td>
+              <td>{{ examiner.username }}</td>
+              <td>{{ examiner.email }}</td>
+              <td>{{ examiner.phone }}</td>
+              <td>{{ programName }}</td>
+              <td>{{ examiner.procedureName }}</td>
+              
               <td>
                 <span class="badge badge-soft-primary" *ngIf="examiner.leader"> Leader</span> <span class="badge badge-soft-warning" *ngIf="!examiner.leader">Non Leader</span>
                 
               </td>
-
+      
+              
               <td>
-
-            
-
+      
+                  
+      
                 <div  (change)="getValue( $event, examiner.id)"class="form-check form-switch form-switch-md mx-2" dir="ltr">
                   <input   #inputRef value="{{examiner.active}}" type="checkbox" class="form-check-input" id="customSwitchsizelg" [checked]='examiner.active'>
                   </div>
               </td>
               <td><button class="btn btn-sm btn-primary" (click)="openAddProcedureModal(addProcedureModal)"> <span *ngIf="examiner.procedureId == null"> Add procedure</span>  <span *ngIf="examiner.procedureId != null"> Edit Procedure</span></button></td>
-            
-            
+              <td>{{ examiner.password }}</td>
+              
               <ng-template #addProcedureModal role="document" let-modal>
                 <div class="modal-header">
                   <h5 class="modal-title" id="myModalLabel">Add Procedure</h5>
@@ -111,7 +227,7 @@
                           </button>
                           
                           <button  class="btn btn-success"
-
+      
                           (click)="addProcedureToExaminer()">
                             Add Procedure
                           </button>
@@ -121,10 +237,11 @@
                 
                 </div>
               </ng-template>
-            
-            </tr>
-          </tbody>
-        </table>
+          </tr>
+        </ng-template>
+      </p-table>
+
+
       </div>
     </div>
   </div>

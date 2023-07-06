@@ -6,7 +6,6 @@ import { ExamManagerRoutingModule } from './exam-manager-routing.module';
 import { DownloadExamComponent } from './download-exam/download-exam.component';
 import { StartExamComponent } from './start-exam/start-exam.component';
 import { WhiteListComponent } from './white-list/white-list.component';
-import { MonitorExamComponent } from './monitor-exam/monitor-exam.component';
 import { ManageExamComponent } from './manage-exam/manage-exam.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ActivitiesLogComponent } from './activities-log/activities-log.component';
@@ -18,9 +17,11 @@ import { AllowReloginComponent } from './manage-exam/allow-relogin/allow-relogin
 import { DownloadedExamsComponent } from './downloaded-exams/downloaded-exams.component';
 import { OsceComponent } from './monitor-exam/osce/osce.component';
 import { DownloadedExamDetailsComponent } from './downloaded-exams/downloaded-exam-details/downloaded-exam-details.component';
-import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import {  NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { SimplebarAngularModule } from "simplebar-angular";
-
+import {TableModule} from 'primeng/table'
+import { NgbPaginationModule, NgbTypeaheadModule, NgbTooltipModule, NgbDropdownModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { DownloadPassportComponent } from './download-passport/download-passport.component';
 
 
 @NgModule({
@@ -28,7 +29,6 @@ import { SimplebarAngularModule } from "simplebar-angular";
     DownloadExamComponent,
     StartExamComponent,
     WhiteListComponent,
-    MonitorExamComponent,
     ManageExamComponent,
     DashboardComponent,
     ActivitiesLogComponent,
@@ -39,7 +39,8 @@ import { SimplebarAngularModule } from "simplebar-angular";
     AllowReloginComponent,
     DownloadedExamsComponent,
     OsceComponent,
-    DownloadedExamDetailsComponent
+    DownloadedExamDetailsComponent,
+    DownloadPassportComponent
   ],
   imports: [
     CommonModule,
@@ -48,6 +49,11 @@ import { SimplebarAngularModule } from "simplebar-angular";
     NgbDropdownModule,
     NgbNavModule,
     SimplebarAngularModule,
+    TableModule,
+    NgbPaginationModule,
+    NgbTypeaheadModule,
+    NgbTooltipModule,
+    NgbAccordionModule,
 
   ]
 })

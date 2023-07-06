@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ExaminerRoutingModule } from './examiner-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -19,6 +20,9 @@ import { ActivitiesLogComponent } from './activities-log/activities-log.componen
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SimplebarAngularModule } from "simplebar-angular";
 import { MonitorProcedureTableComponent } from './monitor/monitor-procedure-table/monitor-procedure-table.component';
+import {TableModule} from 'primeng/table';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -42,7 +46,10 @@ import { MonitorProcedureTableComponent } from './monitor/monitor-procedure-tabl
     ExaminerRoutingModule,
     SharedModule,
     SimplebarAngularModule,
-    NgbModalModule
+    NgbModalModule,
+    NgSelectModule,
+    TableModule,
+    ScrollPanelModule
   ]
 })
 export class ExaminerModule { }
